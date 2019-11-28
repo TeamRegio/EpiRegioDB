@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e400eb49-0849-47ed-91ea-86d5657afb4c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/lib/python3.7/site-packages/django/db/backends/mysql/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/python3.7/site-packages/django/db/backends/mysql/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/python3.7/site-packages/django/db/backends/mysql/operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/python3.7/site-packages/django/db/backends/mysql/operations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/API.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/API.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/draftEpi2/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/draftEpi2/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/draftEpi2/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/draftEpi2/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/draftEpi2/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/draftEpi2/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/geneQuery/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/geneQuery/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/regionQuery/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/regionQuery/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/remQuery/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/remQuery/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/static/Logo EpiRegio 2.tif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/static/Logo EpiRegio2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/Logo_EpiRegio2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/static/jQuery 3.4.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/jQuery_3.4.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/table_manager/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/table_manager/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/table_manager/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/table_manager/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/ajax_search_celltypes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/ajax_search_celltypes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/remQuery_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/remQuery_search.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1RNTiHwcrVX9h7gTKrDWxmw6nia" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Dev/EpiRegioDBMySQL" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/static" />
+      <recent name="$PROJECT_DIR$/src/Templates" />
+      <recent name="$PROJECT_DIR$/src/static/DataTables" />
+      <recent name="$PROJECT_DIR$/src/newdb" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$USER_HOME$/Dev/EpiRegioDBMySQL" />
+      <recent name="$PROJECT_DIR$/src/Templates" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e400eb49-0849-47ed-91ea-86d5657afb4c" name="Default Changelist" comment="" />
+      <created>1569506679669</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1569506679669</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

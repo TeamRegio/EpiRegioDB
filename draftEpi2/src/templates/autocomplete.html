@@ -1,0 +1,73 @@
+{% include 'navbar.html' %}
+{% load static %}
+<style>
+ul.item-list {
+  font-weight: bold;
+  list-style-type: none;
+  font-family: adhabi;
+}
+
+</style>
+
+<head>
+    <script src="{% static 'ajax.js' %}"></script>
+</head>
+
+<div class="toggle">
+<h3 id="fieldname">Search</h3></div>
+{% csrf_token %}
+<input type="text" id="search" name="search" />
+<div class="item-list" id="search-results">
+</div>
+
+
+<h1 id="myHeader">Hello World!</h1>
+
+<script>
+function chooseCellType(clicked_id){
+    $("#myHeader").append(", "+ $("#"+clicked_id).text());
+}
+</script>
+
+<input type="button" onclick="location.href='http://127.0.0.1:8000/cellsearch_transfer';" value="Linkshere" />
+
+$(document).ready(function(){
+    $("#btn1").click(function(){
+        document.getElementById("myHeader").innerHTML = $("#CTID_0000002").text();
+    });
+
+function chooseCellType(clicked_id){
+    document.getElementById("myHeader").innerHTML = $("#"+clicked_id).text();
+<!--<div>-->
+<!--    <form action="" method="POST">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <input type="submit" />-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--{% block footer %}-->
+<!--{{ form.media }}-->
+<!--{% endblock %}-->
+
+
+
+
+<!--(function($) {-->
+<!--    $('#add-form').click(function() {-->
+<!--        var index = $('#id_inline_test_models-TOTAL_FORMS').val()-->
+<!--        var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()-->
+<!--        newTable.find(':input').each(function() {-->
+<!--            for (attr of ['cellTypeName', 'id'])-->
+<!--                $(this).attr(-->
+<!--                    attr,-->
+<!--                    $(this).attr(attr).replace('__prefix__', index)-->
+<!--                )-->
+<!--        })-->
+<!--        newTable.insertBefore($(this))-->
+<!--        $('#id_inline_test_models-TOTAL_FORMS').val(-->
+<!--            parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1-->
+<!--        )-->
+<!--        newTable.slideDown()-->
+<!--    })-->
+<!--})($)-->

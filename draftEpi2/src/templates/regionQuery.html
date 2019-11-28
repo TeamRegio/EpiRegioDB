@@ -1,0 +1,143 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<!-- INCLUDE STYLES AND FUNCTIONALITY ---------------------------------------------------------------------------------- -->
+
+<head>
+    <script src="{% static 'collected_JS_functions.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+    <script src="{% static 'ajax_cellTypes.js' %}"></script>
+    <script src="{% static 'papaparse.min.js' %}"></script>
+    <script src="{% static 'jquery-validation-1.19.1/dist/jquery.validate.js' %}"></script>
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+</head>
+
+
+<body onbeforeunload="setDefault()" onload="createDropdown(); validateRegionQueryForm()">  <!-- resets our chrField when going back in the browser -->
+
+<!-- INITIATE INPUT FORM ---------------------------------------------------------------------------------- -->
+
+<form id='regionQueryForm' class='django_forms' method="POST" action="/regionQuery_search/" autocomplete="off">
+{% csrf_token %}
+
+<h1 class="queryDescription"><u>Look up Regulatory Elements (REMs) in gene regions:</u></h1>
+<br>
+
+<!-- GET DB Version -------------------------------------------------------------------------------- -->
+
+<div style="display: none;">  <!-- change to inline-block to make visible again -->
+<h1 style="display: inline; " class="inputLabel">Database version:&nbsp;&nbsp;</h1>
+<select style="display: inline;" name="db_version" id="db_version" >
+<option selected='selected' value="db_version_1">Version 1</option>
+</select></div>
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!-- GET REGION ---------------------------------------------------------------------------------- -->
+<div>
+    <table class="regionQueryTable" id="regionQueryTable">
+        <tr>
+            <td><h1 class="inputLabel">Chromosome:</h1>
+            <td><h1 class="inputLabel"> Start:</h1></td>
+            <td><h1 class="inputLabel"> End:</h1></td>
+        </tr>
+
+        <tr id="regionTableRow">
+            <td><div class="custom-select"  id="dropdownChr" style="width:150px;"><select id="chrField" name="chrField">
+                <option value="default">Select:</option>
+                <option value="chr1">chr1</option>
+                <option value="chr2">chr2</option>
+                <option value="chr3">chr3</option>
+                <option value="chr4">chr4</option>
+                <option value="chr5">chr5</option>
+                <option value="chr6">chr6</option>
+                <option value="chr7">chr7</option>
+                <option value="chr8">chr8</option>
+                <option value="chr9">chr9</option>
+                <option value="chr10">chr10</option>
+                <option value="chr11">chr11</option>
+                <option value="chr12">chr12</option>
+                <option value="chr13">chr13</option>
+                <option value="chr14">chr14</option>
+                <option value="chr15">chr15</option>
+                <option value="chr16">chr16</option>
+                <option value="chr17">chr17</option>
+                <option value="chr18">chr18</option>
+                <option value="chr19">chr19</option>
+                <option value="chr20">chr20</option>
+                <option value="chr21">chr21</option>
+                <option value="chr22">chr22</option>
+                <option value="chrX">chrX</option>
+                <option value="chrY">chrY</option>
+            </select></div></td>
+<!--            <td><input class="inputForm" id="chrField" name="chrField" type="number" placeholder="E.g. 12"/></td>-->
+            <td><input class="inputForm" onchange="changeSlider('start_range', 'chrStart'); hideError();" id="chrStart" name="chrStart" type="number" placeholder="E.g. 75460856" min="0"/></td>
+            <td><input class="inputForm" onchange="changeSlider('end_range', 'chrEnd'); hideError();" id="chrEnd" name="chrEnd" type="number" placeholder="E.g. 75460955" min="0"/></td>
+            <td><button type="button" class="ajax_search_list" id="selectRegionButton" name="selectRegionButton" onclick="validateRegion();">Select&nbsp;region </button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="padding-top:10px;"><input oninput="sliderToField('start_range', 'chrStart'); hideError();" type="range" min="577" max="248936581" value="50000000" class="slider" id="start_range"></td>
+            <td style="padding-top:10px;"><input oninput="sliderToField('end_range', 'chrEnd'); hideError();" type="range" min="578" max="248937043" value="50000000" class="slider" id="end_range"></td>
+        </tr>
+
+        <tr>
+            <td style="padding-top:10px;" colspan="2">
+            <p class="selectionHeader" id="container_geneRegionsHeader"> Currently selected:</p>
+            <div class ="selectedButtons" id="container_geneRegions" style="padding-bottom: 2em;"></div></td>
+            <td colspan="2">
+                <div style="visibility: hidden;" class="formError" id="regionErrors"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><div class="uploadCSVForm"><p class="selectionHeader" style="color:black;"><u>Or</u> upload a list of regions as csv:</p>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv" > </div>
+                <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
+            </td>
+            <td colspan="2"><div class="errorMessage"></div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+            <h1 class='inputLabel' id="fieldname">Filter for cell types:</h1>
+                {% csrf_token %}
+            <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types" />
+            </td>
+            <td colspan="3" class="searchButtons" height="100px" width="800px">
+                <div class="ajax_search_list" id="search-results"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+            <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>
+            <div class ='selectedButtons' id="container_cellTypes"> </div>
+            </td>
+        </tr>
+</table>
+</div>
+<br>
+<br>
+
+
+<!-- SUBMIT FORM ---------------------------------------------------------------------------------- -->
+
+<input type="hidden" id="geneRegions" name="geneRegions"/>
+<input type="hidden" id="csvFile" name="csvFile"/>
+<input type="hidden" id="cellTypes" name="cellTypes" />
+
+
+<button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryRegionQuery()">Exemplary Query</button>
+
+<input class="query_database" onclick='ButtonsToInput("container_geneRegions", "geneRegions"); ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="queryRegionsButton" id="queryRegionsButton" value="Query Database"  />
+
+
+
+</form>
+</body>
+
+<!--<button type="button" class='ajax_search_list' id="testingFunction" onclick="testingFunction()">TEST TEST</button>-->

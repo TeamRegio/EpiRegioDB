@@ -1,0 +1,329 @@
+form.django_forms{
+    margin-left: 6em;
+    margin-top: 2em;
+    font-size: 22px;
+    width: 1200px;
+}
+
+h1.queryDescription{
+    font-size:30px;
+    margin-bottom: 0px;
+}
+h1.inputLabel{
+    font-size: 22px;
+    font-family: adhari;
+}
+table.regionQueryTable{
+    width: 1000px;
+    table-layout: fixed;
+}
+
+input.inputForm{
+    width: 90%;
+    font-size: 18px;
+    font-family: adhari;
+    border-top: none ;
+    border-right: none ;
+    border-bottom: solid #cccccc 1px;
+    border-left: solid #cccccc 1px;
+    height: 2em;
+}
+
+div.uploadCSVForm{
+    width: 90%;
+    border: solid #cccccc 1px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+p.selectionHeader{
+    color: #828181;
+    font-size: 16px;
+}
+
+
+/* SELECT **************************************** **************************************** */
+select{
+    font-size: 18px;
+    font-family: adhari;
+    height: 24px;
+}
+
+
+/* CUSTOM SELECT ***************************************** **************************************** /
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+  font-family: Adhari;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    font-family: adhari;
+    border-top: none ;
+    border-right: none ;
+    border-bottom: solid #cccccc 1px;
+    border-left: solid #cccccc 1px;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: black transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent black transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: black;
+  padding: 9px 16px;
+  border-bottom: solid #cccccc 1px;
+  border-left: solid #cccccc 1px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: white;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* SLIDER **************************************** **************************************** */
+
+.slider {
+  -webkit-appearance: none;
+  width: 90%;
+  height: 6px;
+  background: #bfbfbf;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #0d6980;
+  cursor: pointer;
+  border: none;
+}
+
+
+/* BUTTONS **************************************** **************************************** */
+
+input.query_database {padding:5px 15px; background: #073946;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    color: white;
+    border: solid 1px  #033d57;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+    box-shadow: 0 3px  #033d57;
+    margin-left: 20%;}
+
+.query_database:hover {background-color: #0d6980}
+
+.query_database:active {
+  background-color: #033d57;
+  box-shadow: 0 5px #000000;
+  transform: translateY(3px);
+}
+
+button.ajax_search_list {padding: 4px 10px; background: #ffffff;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    border: solid 1px #e6e6e6;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+    box-shadow: 0 2px  #999999;}
+
+button.ajax_search_list:hover {background-color: #e6e6e6}
+
+button.ajax_search_list:active {
+  background-color: #b3b3b3;
+  box-shadow: 0 2px #666;
+  transform: translateY(1px);
+}
+
+button.NoneButton {padding:5px 15px; background: white;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    border: solid 1px  #060d13;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 4px;
+    box-shadow: 0 3px  #060d13;}
+
+
+input.chosenButtons {padding: 4px 10px; background: #ffffff;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    border: solid 1px #333333;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+    box-shadow: 0 2px  #999999;}
+
+input.chosenButtons:hover {background-color: #e6e6e6}
+
+input.chosenButtons:active {
+  background-color: #b3b3b3;
+  box-shadow: 0 2px #666;
+  transform: translateY(1px);
+}
+
+
+button.clearFiles {padding: 4px 10px; background: #ffffff;
+    color: #333333;
+    font-size: 14px;
+    font-family: 'Arial';
+    width: 125px;
+    text-align: left;
+    border: solid 1px #e6e6e6;
+    margin-left: 1px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 12px;
+    cursor: pointer;
+    -webkit-border-radius: 2px;
+    border-radius: 4px;
+    box-shadow: 0 1px  #d6d6d6;}
+
+button.clearFiles:hover {background-color: #e6e6e6}
+
+button.clearFiles:active {
+  background-color: #b3b3b3;
+  box-shadow: 0 2px #666;
+  transform: translateY(1px);
+}
+
+/* TOOLTIPS **************************************** **************************************** */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext_right {
+  visibility: hidden;
+  width: 120px;
+  font-size: 16px;
+  background-color: #073946;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 99;
+  top: -5px;
+  left: 110%;
+  font-family: adhari;
+}
+
+.tooltip:hover .tooltiptext_right{
+  visibility: visible;
+}
+
+.tooltip .tooltiptext_right::after{
+  content: "";
+  position: absolute;
+  top: 30%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #073946 transparent transparent;
+}
+
+.tooltip .tooltiptext_top {
+  visibility: hidden;
+  width: 180px;
+  font-size: 16px;
+  background-color: #073946;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 99;
+  bottom: 110%;
+  font-family: adhari;
+  margin-left: -200px;
+}
+
+.tooltip:hover .tooltiptext_top{
+  visibility: visible;
+}
+
+.tooltip .tooltiptext_top::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 90%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #073946 transparent transparent transparent;
+}
+
+
+
+/* ERROR MESSAGES **************************************** **************************************** */
+
+div.formError {
+  width: 70%;
+  font-size: 18px;
+  background-color: #0d6980;
+  color: #fff;
+  text-align: left;
+  padding: 5px;
+  border-radius: 4px;
+  font-family: adhari;
+}
+

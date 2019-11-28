@@ -1,0 +1,53 @@
+{% include 'navbar.html' %}
+{% load static %}
+<style>
+figure.homefig{
+    float: left;
+}
+div.introBlock{
+    float: left;
+    display: inline;
+}
+figure.questionfig{
+    float: right;
+    margin-top: 2em;
+}
+p {
+    font-family: adhabi;
+    font-size: 22px;
+    text-align: justify;
+    padding: 25px;
+}
+p.contactText{
+    border-bottom: 1px solid #cccccc;
+}
+blockquote {
+    display: block;
+    width: 500px;
+    text-align: left;
+    float: left;
+}
+
+
+</style>
+
+
+<div class="introBlock">
+
+<blockquote>
+<h2>Contact</h2>
+<p class='contactText'> If you have further questions, please contact us via the following email address:
+
+<br>
+<br>
+<b>whichmail@doweprovide?.de</b>
+</p></blockquote>
+
+<figure class="questionfig">
+<img class='questionfig' src="{% static '/Questionmark.png' %}" width="100px" alt = 'contact'/>
+</figure>
+</div>
+
+
+
+

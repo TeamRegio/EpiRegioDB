@@ -1,0 +1,38 @@
+< Thank you for /travelling/ with EpiRegioDB! Please remember to take all your data with you,
+before leaving the website. >
+
+choo choo sound
+
+hide the asci train
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  margin: 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+<div class="tooltip"> <img src="{% static 'Logo EpiRegio2.png' %}" width="400px" alt = 'logo'/>
+  <span class="tooltiptext">
+&nbsp;&nbsp;"@@@""""""""""<br>
+&nbsp;&nbsp;@ &nbsp;&nbsp;&nbsp; _____________<br>
+&nbsp;&nbsp;&nbsp;II___[w]&nbsp;|&nbsp;&nbsp;[i]&nbsp;&nbsp;[z]&nbsp;&nbsp;|||||||<br>
+{======|_|~~~~~~~~~|<br>
+/oO--000'"`-OO---OO-'
+  </span>
+</div>
+
+
+https://www.ensembl.org/info/genome/genebuild/genome_annotation.html

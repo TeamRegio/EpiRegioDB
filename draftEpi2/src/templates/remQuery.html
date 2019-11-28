@@ -1,0 +1,107 @@
+{% include 'navbar.html' %}
+{% load static %}
+
+<style>
+table.remQueryTable{
+    width: 1200px;
+    table-layout: fixed;
+}
+
+input.inputForm{
+    width: 80%;
+    font-size: 18px;
+    font-family: adhari;
+    border-top: none ;
+    border-right: none ;
+    border-bottom: solid #cccccc 1px;
+    border-left: solid #cccccc 1px;
+    height: 2em;
+}
+
+</style>
+
+
+<!-- INCLUDE STYLES AND FUNCTIONALITY ---------------------------------------------------------------------------------- -->
+
+<head>
+    <script src="{% static 'collected_JS_functions.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+    <script src="{% static 'ajax_cellTypes.js' %}"></script>
+    <script src="{% static 'papaparse.min.js' %}"></script>
+    <script src="{% static 'jquery-validation-1.19.1/dist/jquery.validate.js' %}"></script>
+</head>
+
+<body onload="validateREMQueryForm()" >
+
+<!-- INITIATE INPUT FORM ---------------------------------------------------------------------------------- -->
+
+<form id='remQueryForm' class='django_forms' method="POST" action="/REMQuery_search/" autocomplete="off">
+{% csrf_token %}
+
+<h1 class="queryDescription"><u>Look up Regulatory Elements (REMs) by their ID:</u></h1>
+    <br>
+
+<!-- GET DB Version -------------------------------------------------------------------------------- -->
+
+<div style="display: none;">  <!-- change to inline-block to make visible again -->
+<h1 style="display: inline; " class="inputLabel">Database version:&nbsp;&nbsp;</h1>
+<select style="display: inline;" name="db_version" id="db_version" >
+<option selected='selected' value="db_version_1">Version 1</option>
+</select></div>
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+
+<!-- GET REGION ---------------------------------------------------------------------------------- -->
+<div>
+    <table class="remQueryTable">
+        <tr>
+            <td><h1 class="inputLabel">REM ID:</h1>
+        </tr>
+        <tr>
+            <td colspan="2"><input class='inputForm' id="REMIDs" name='REMIDs' type="text"  placeholder="E.g. REM0000001, separate multiple IDs by comma" /> </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><div class="uploadCSVForm" style="margin-top: 30px; margin-bottom: 20px;"><p class="selectionHeader" style="color:black;"><u>Or</u> upload a list of REM IDs as csv:</p>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv" > </div>
+                <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <h1 class='inputLabel' id="fieldname">Filter for cell types:</h1>
+                {% csrf_token %}
+            <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types" />
+            </td>
+            <td colspan="2" class="searchButtons" height="100px" width="800px">
+                <div class="ajax_search_list" id="search-results"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+            <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>
+            <div class ='selectedButtons' id="container_cellTypes"> </div>
+            </td>
+        </tr>
+
+</table>
+</div>
+<br>
+<br>
+
+
+<!-- SUBMIT FORM ---------------------------------------------------------------------------------- -->
+
+<input type="hidden" id="csvFile" name="csvFile"/>
+<input type="hidden" id="cellTypes" name="cellTypes" />
+
+<button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryREMQuery()">Exemplary Query</button>
+
+<input class="query_database" onclick='ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="Save" value="Query Database"  />
+
+</form>
+</body>
+
+

@@ -1,0 +1,52 @@
+{% include 'navbar.html' %}
+{% load static %}
+<style>
+figure.homefig{
+    float: left;
+}
+div.introBlock{
+    float: left;
+}
+figure.contactfig{
+    float: right;
+    margin-top: 3em;
+}
+p {
+    font-family: adhabi;
+    font-size: 22px;
+    text-align: justify;
+    padding: 25px;
+}
+p.contactText{
+    border-bottom: 1px solid #cccccc;
+}
+blockquote {
+    display: block;
+    width: 500px;
+    text-align: left;
+    float: left;
+}
+
+
+</style>
+
+
+<div class="introBlock">
+
+<blockquote>
+<h2>Help</h2>
+<p class='contactText'> If you have any questions or comments regarding this website, or the database, please contact
+us via the following email address. We are glad to hear every kind of feedback.
+<br>
+<br>
+<b>whichmail@doweprovide?.de</b>
+</p></blockquote>
+
+<figure class="contactfig">
+<img class='contactLetter' src="{% static '/Letter.png' %}" width="200px" alt = 'contact'/>
+</figure>
+
+
+
+
+
