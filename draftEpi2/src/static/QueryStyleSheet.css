@@ -41,6 +41,11 @@ p.selectionHeader{
     font-size: 16px;
 }
 
+caption{
+padding:20px;
+font-size: 24px;
+}
+
 
 /* SELECT **************************************** **************************************** */
 select{
@@ -249,6 +254,9 @@ button.clearFiles:active {
   position: relative;
   display: inline-block;
 }
+.tooltip_table{
+    display: align;
+}
 
 .tooltip .tooltiptext_right {
   visibility: hidden;
@@ -281,7 +289,7 @@ button.clearFiles:active {
   border-color: transparent #073946 transparent transparent;
 }
 
-.tooltip .tooltiptext_top {
+.tooltip .tooltiptext_top{
   visibility: hidden;
   width: 180px;
   font-size: 16px;
@@ -302,6 +310,37 @@ button.clearFiles:active {
 }
 
 .tooltip .tooltiptext_top::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 90%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #073946 transparent transparent transparent;
+}
+
+.tooltip_table .tooltiptext_top{
+  visibility: hidden;
+  width: 180px;
+  font-size: 16px;
+  background-color: #073946;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 99;
+  bottom: 65%;
+  font-family: adhari;
+  margin-left: -200px;
+}
+
+.tooltip_table:hover .tooltiptext_top{
+  visibility: visible;
+}
+
+.tooltip_table .tooltiptext_top::after {
   content: "";
   position: absolute;
   top: 100%;
