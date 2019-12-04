@@ -25,8 +25,9 @@ SECRET_KEY = '6%((v6cedv=%ra!bo)^9!3e6@20c@z!37ms#ys!0=)#@vze2xi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = [ 'www.epiregio.de', '141.2.194.221', 'epiregio.de', 'epiregio.uni-frankfurt.de' ]
+ALLOWED_HOSTS = ['68be0b05.ngrok.io']
 
 # Application definition
 
@@ -100,18 +101,26 @@ WSGI_APPLICATION = 'draftEpi2.wsgi.application'
 # }
 
 #mysql database
+#DATABASES = {
+#    'default': {
+#       'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'EpiRegioDB',
+#        'USER': 'root',
+#        'PASSWORD': 'DjangoUnchained42',
+#        'HOST': '127.0.0.1',
+#        'PORT': '3306',
+#    }
+#}
+
+#mysql database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'EpiRegioDB',
-        'USER': 'root',
-        'PASSWORD': 'DjangoUnchained42',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'OPTIONS': {
+            'read_default_file': '/etc/my.cnf',
+        },
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
