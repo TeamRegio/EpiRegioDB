@@ -134,30 +134,30 @@ function changeSlider(slider_id, field_id){
 /* CUSTOM DROPDOWN LIST **************************************** **************************************** */
 
 
-var chr_start_end = {chr1: [11869, 248937043],
-                    chr2: [38814, 242175634],
-                    chr3: [23757, 198228376],
-                    chr4: [49096, 190196190],
+var chr_start_end = {chr1: [8000, 248944655],
+                    chr2: [14154, 242175634],
+                    chr3: [173346, 198230196],
+                    chr4: [100650, 190206737],
                     chr5: [58198, 181472430],
-                    chr6: [95124, 170745977],
-                    chr7: [12704, 159233377],
-                    chr8: [64091, 145056030],
-                    chr9: [12134, 138286430],
+                    chr6: [95124, 170745982],
+                    chr7: [8000, 159233377],
+                    chr8: [60001, 145070549],
+                    chr9: [10154, 138286430],
                     chr10: [14061, 133778699],
                     chr11: [75780, 135075899],
-                    chr12: [12310, 133238549],
-                    ch13: [18174010, 114346637],
+                    chr12: [10000, 133238549],
+                    ch13: [18171247, 114351402],
                     chr14: [16057472, 106879812],
-                    chr15: [19878555, 101979093],
-                    chr16: [11555, 90222678],
-                    chr17: [64099, 83240804],
+                    chr15: [19878555, 101981208],
+                    chr16: [8000, 90226646],
+                    chr17: [61649, 83245396],
                     chr18: [11103, 80247546],
-                    chr19: [60951, 58599801],
-                    chr20: [87250, 64327972],
-                    chr21: [5011799, 46691226],
-                    chr22: [10736171, 50801309],
-                    chrX: [253743, 156027877],
-                    chrY: [2784749, 56855488]}
+                    chr19: [59993, 58607252],
+                    chr20: [87250, 64330704],
+                    chr21: [5008799, 46691226],
+                    chr22: [10736171, 50808150],
+                    chrX: [253252, 156029695],
+                    chrY: [2784749, 56875803]}
 
 function createDropdown(){
     var x, i, j, selElmnt, a, b, c;
@@ -259,9 +259,9 @@ function exemplaryGeneIDQuery(){
 
     if (current === 'id_format') {
         document.getElementById("geneID_numeric").value = "ENSG00000139874, ENSG00000274220";
-        chooseButton("CTID_0000001", "container_cellTypes", "pancreas");
-        chooseButton("CTID_0000036", "container_cellTypes", "hepatocyte");
-        chooseButton("CTID_0000006", "container_cellTypes", "inflammatory macrophage");
+        chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+        chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
+        chooseButton("CTID_0000052", "container_cellTypes", "heart");
         errorMsg = document.getElementById("geneID_numeric-error")
         errorMsg.parentNode.removeChild(errorMsg);
     };
@@ -269,9 +269,9 @@ function exemplaryGeneIDQuery(){
         chooseButton("SSTR1", 'container_geneSymbol', "SSTR1");
         chooseButton("DBR1", 'container_geneSymbol', "DBR1");
         chooseButton("FOXP3", 'container_geneSymbol', "FOXP3");
-        chooseButton("CTID_0000001", "container_cellTypes", "pancreas");
-        chooseButton("CTID_0000036", "container_cellTypes", "hepatocyte");
-        chooseButton("CTID_0000006", "container_cellTypes", "inflammatory macrophage");
+        chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+        chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
+        chooseButton("CTID_0000052", "container_cellTypes", "heart");
         errorMsg = document.getElementById("geneID_symbolic-error")
         errorMsg.parentNode.removeChild(errorMsg);
     };
@@ -279,9 +279,9 @@ function exemplaryGeneIDQuery(){
 
 function exemplaryREMQuery(){
     document.getElementById("REMIDs").value = "REM0000001, REM0000002, REM0000042";
-    chooseButton("CTID_0000001", "container_cellTypes", "pancreas");
-    chooseButton("CTID_0000036", "container_cellTypes", "hepatocyte");
-    chooseButton("CTID_0000006", "container_cellTypes", "inflammatory macrophage");
+    chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+    chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
+    chooseButton("CTID_0000052", "container_cellTypes", "heart");
     errorMsg = document.getElementById("REMIDs-error")
     errorMsg.parentNode.removeChild(errorMsg);
 }
@@ -289,9 +289,9 @@ function exemplaryREMQuery(){
 function exemplaryRegionQuery(){
     chooseRegion("chr4", "55042", "420123", 1);
     chooseRegion("chr2", "1369428", "3456742", 1);
-    chooseButton("CTID_0000001", "container_cellTypes", "pancreas");
-    chooseButton("CTID_0000036", "container_cellTypes", "hepatocyte");
-    chooseButton("CTID_0000006", "container_cellTypes", "inflammatory macrophage");
+    chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+    chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
+    chooseButton("CTID_0000052", "container_cellTypes", "heart");
 }
 
 

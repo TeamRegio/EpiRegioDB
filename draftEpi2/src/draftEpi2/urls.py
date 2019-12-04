@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from home.views import home_view, help_view, contact_view, navbars_view
-from geneQuery.views import geneQuery_view, gene_search_view, crem_view
-from geneQuery.views import search_cellTypes, search_geneSymbol
-from regionQuery.views import regionQuery_view, region_search_view
-from remQuery.views import remQuery_view, rem_search_view
+from home.views import *
+from geneQuery.views import *
+from geneQuery.views import *
+from regionQuery.views import *
+from remQuery.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +33,9 @@ urlpatterns = [
     path('geneQuery_search/', gene_search_view),
     path('celltype_search', search_cellTypes),
     path('genesymbol_search', search_geneSymbol),
+    path('geneQuery_search/gene_details/', gene_details_view),
     path('geneQuery_search/<REMID>/', crem_view, name='crems'),
+
 
     path('regionQuery/', regionQuery_view),
     path('regionQuery_search/', region_search_view),

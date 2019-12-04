@@ -1,10 +1,10 @@
 
 {% if search_text_len > 1 %}
 
-    {% if cellType_search.count > 0 %}
+    {% if len_hits > 0 %}
 
         {% for cellType in cellType_search %}
-            <button type='button' id={{cellType.cellTypeID}} onclick="chooseButton(this.id, 'container_cellTypes')" class="ajax_search_list">{{cellType.cellTypeID__cellTypeName}}</button>
+            <button type='button' id={{cellType.0}} onclick="chooseButton(this.id, 'container_cellTypes')" class="ajax_search_list">{{cellType.1}}</button>
         {% endfor %}
 
     {% else %}
@@ -12,4 +12,3 @@
     {% endif %}
 
 {% endif %}
-

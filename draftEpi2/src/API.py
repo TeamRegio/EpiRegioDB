@@ -14,7 +14,7 @@ from table_manager.models import *
 
 #test functions
 # #TODO: write proper unitests
-def __main__():
+# def __main__():
 #
 # # 	print("API functions")
 # # 	print("Is the database accessible?")
@@ -61,37 +61,35 @@ def __main__():
 #
 
 
-	REMID_list = ['REM0000001', 'REM0000002', 'REM0000003']
-	cellTypes_list = ['pancreas', 'macrophage']
-	REMID = 'REM0000001'
 
 
-	for cellType in cellTypes_list:
-		activity = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).values()
-		print(cellType)
-		print(activity)
-# for pancrease(CTID_0000064) should be equivalent to
-# SELECT * FROM REMActivity WHERE REMID='REM0000001' AND sampleID IN
-# (SELECT sampleID FROM sampleInfo WHERE cellTypeID='CTID_0000064');
-
-
-if __name__ == "__main__":
-	__main__()
+# if __name__ == "__main__":
+# 	__main__()
 
 
 def API_CellTypesActivity(REM, cellTypes_list):
 	REMID = REM['REMID']
-	# matching_samples = []
-	# for line in matching_REMs:
-	# 	if [sampleInfo.objects.get(sampleID=line['sampleID']).values('cellTypeID__cellTypeName')] in cellTypes_list:
-	# 		matching_samples.append(line)
 
 	for cellType in cellTypes_list:
-		activity = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).values('dnase1Log2')
-	print(activity)
-
+		matching_samples = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).values()
+		activity = 0
+		for sample in matching_samples:
+			activity += sample['dnase1Log2']
+		mean_activity = activity/len(matching_samples)
+		REM[cellType + '_dnase1Log2'] = mean_activity
+		REM[cellType + '_samplecount'] = len(matching_samples)
+		# print(REM)
 	return REM
 
+
+def API_CREM(REM):
+
+	# get the additional columns for the CREMS
+	CREMInfo = CREMAnnotation.objects.filter(REMID=REM['REMID']).values()
+	REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
+	REM['CREMID'] = CREMInfo[0]['CREMID']
+
+	return REM
 
 
 
@@ -104,25 +102,52 @@ def API_REMID(REMID_list, cellTypes_list):
 		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
 
 		# get the additional columns for the CREMS
-		CREMInfo = CREMAnnotation.objects.filter(REMID=i).values()
+		this_rem = API_CREM(this_rem)
 
 		# if there are cellTypes that should be filtered for, we do it here for every single REM, to directly add it
 		# to the REMs dictionary
 		if len(cellTypes_list) > 0:
 			this_rem = API_CellTypesActivity(this_rem, cellTypes_list)
 
-		this_rem['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
-		this_rem['CREMID'] = CREMInfo[0]['CREMID']
-
-
 		hit_list.append(this_rem)
-
 
 	return hit_list  # our list of objects, fitting the query_list
 
 
-# for n, single_obj in enumerate(data_set):  # we get back a queryset that we write into a list of objects
-# 	print(single_obj)
-# 	single_obj['REMsPerCREM'] = CREMInfo[n]['REMsPerCREM']  # append the attributes
-# 	single_obj['CREMID'] = CREMInfo[n]['CREMID']
-# 	hit_list.append(single_obj)
+def API_SymbolToENSG(symbol_list):
+
+	hit_list = []
+	for symbol in symbol_list:
+
+		dataset = geneAnnotation.objects.get(geneSymbol=symbol)
+		this_ID = dataset.geneID
+
+		hit_list.append(this_ID)
+
+	return hit_list  # our list of objects, fitting the query_list
+
+
+def API_ENSGID(gene_list, cellTypes_list):
+
+	hit_list = []
+	for i in gene_list:
+		dataset = list(REMAnnotation.objects.filter(geneID=i).values())  # we convert the queryset into a list so we can
+		# add values to it
+		if len(cellTypes_list) > 0:
+			for n in range(len(dataset)):
+				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list)
+				# dataset[n] = API_CREM(dataset[n])
+
+		hit_list = hit_list + dataset
+
+	return hit_list
+
+
+def API_ENSGID_geneInfo(gene_list):
+
+	hit_list=[]
+	for gene in gene_list:
+		dataset = geneAnnotation.objects.filter(geneID=gene).values()
+		hit_list.append(dataset)
+
+	return hit_list

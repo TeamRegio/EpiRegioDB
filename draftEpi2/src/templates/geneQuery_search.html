@@ -1,22 +1,13 @@
 {% include 'navbar.html' %}
 {% load static %}
-<style>
-a.export{
-font-family: adhabi;
-font-size: 18;
-text-align: left;
-font-weight:normal;
-}
-caption{
-padding:20px;
-}
-</style>
+{% load rem_template_tags %}
 
 <head>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/datatables.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/Buttons-1.6.0/css/buttons.dataTables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+    <script src="{% static 'collected_JS_functions.js' %}"></script>
 
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/dataTables.buttons.min.js' %}"></script>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/buttons.flash.min.js' %}"></script>
@@ -29,13 +20,15 @@ padding:20px;
 </head>
 <br>
 <br>
-<p hidden id="export_string"> {{request.session.export_string}} </p>
+
+<input type="hidden" id="query_string" name="query_string" value="{{query_string}}"/>
+<a id="gene_detail_link" href="/geneQuery_search/gene_details/"><button type="submit">See details for queried genes</button></a>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your Query for the genes: <strong id="queried_genes"> {{request.session.query_string}} </strong></caption>
+    <caption>Results based on your Query for the genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
 
     <thead>
         <script>
-            var export_string = document.getElementById("export_string").textContent;
+            var export_string = "{{export_string}}";
 
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -66,25 +59,36 @@ padding:20px;
             <th>Gene Start</th>
             <th>Gene End</th>
             <th>Regression Coefficient</th>
-            <th class="tooltip"> log <i>p</i> Value<span class="tooltiptext_top">
+            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
-            <th>CREMS</th>
+            <th>Cluster of REMs ID</th>
+            {% for cellType in cell_types_list %}
+                <th>{{cellType}} activity</th>
+                <th>{{cellType}} # samples</th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID }}</td>
+            <td>{{ item.geneID_id }}</td>
             <td>{{ item.REMID }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
             <td>{{ item.regressionCoefficient }}</td>
-            <td> {{item.pValue}}</td>
-            <td> <a href="/geneQuery_search/{{ item.REMID }}/"> {{item.REMID}}, {{item.REMID}} </a></td>
+            <td>{{item.pValue}}</td>
+<!--            <td>{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</td>-->
+            <td> <a id="crem_link" href="/geneQuery_search/{{ item.REMID }}/"> {{item.REMID}}, {{item.REMID}} </a></td>
+            {% for cellType in cell_types_list %}
+                <td>{% get_cellType_attr item cellType "activity" %}</td>
+                <td>{% get_cellType_attr item cellType "samplecount" %}</td>
+            {% endfor %}
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
+
+
 
 

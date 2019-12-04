@@ -1,16 +1,6 @@
 {% include 'navbar.html' %}
 {% load static %}
-<style>
-a.export{
-font-family: adhabi;
-font-size: 18;
-text-align: left;
-font-weight:normal;
-}
-caption{
-padding:20px;
-}
-</style>
+{% load rem_template_tags %}
 
 <head>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/datatables.js' %}"></script>
@@ -27,14 +17,13 @@ padding:20px;
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
-<p hidden id="export_string"> {{request.session.export_string}} </p>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your Query for the regions: <strong id="queried_regions"> {{request.session.query_string}} </strong></caption>
+    <caption>Results based on your Query for the REMs: <strong id="queried_REMs"> {{query_string}} </strong></caption>
         <br>
         <br>
     <thead>
         <script>
-            var queried_regions = document.getElementById("export_string").textContent;
+            var queried_REMs = "{{export_string}}";
 
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -49,9 +38,9 @@ padding:20px;
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat(" GeneRegion Query ", queried_regions)},
-                            { extend: 'csv', filename: today.concat(" GeneRegion Query ", queried_regions)},
-                            { extend: 'pdf', filename: today.concat(" GeneRegion Query ", queried_regions), pageSize: "LEGAL", orientation: 'landscape'}
+                            { extend: 'excel', filename: today.concat(" REM Query ", queried_REMs)},
+                            { extend: 'csv', filename: today.concat(" REM Query ", queried_REMs)},
+                            { extend: 'pdf', filename: today.concat(" REM Query ", queried_REMs), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
                  } );
@@ -59,28 +48,36 @@ padding:20px;
 
         </script>
         <tr>
-            <th>Gene ID</th>
             <th>REM ID</th>
+            <th>Gene ID</th>
             <th>Chromosome</th>
             <th>Gene Start</th>
             <th>Gene End</th>
             <th>Regression Coefficient</th>
-            <th class="tooltip"> log <i>p</i> Value<span class="tooltiptext_top">
+            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
             <th>Cluster of REMs ID</th>
+            {% for cellType in cell_types_list %}
+                <th>{{cellType}} activity</th>
+                <th>{{cellType}} # samples </th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID_id }}</td>
             <td>{{ item.REMID }}</td>
+            <td>{{ item.geneID_id }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
             <td>{{ item.regressionCoefficient }}</td>
             <td>{{ item.pValue }}</td>
             <td>{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</td>
+            {% for cellType in cell_types_list %}
+                <td>{% get_cellType_attr item cellType "activity" %}</td>
+                <td>{% get_cellType_attr item cellType "samplecount" %}</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </tbody>

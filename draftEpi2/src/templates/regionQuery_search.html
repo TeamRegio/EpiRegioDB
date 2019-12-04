@@ -1,16 +1,5 @@
 {% include 'navbar.html' %}
 {% load static %}
-<style>
-a.export{
-font-family: adhabi;
-font-size: 18;
-text-align: left;
-font-weight:normal;
-}
-caption{
-padding:20px;
-}
-</style>
 
 <head>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/datatables.js' %}"></script>
@@ -27,14 +16,13 @@ padding:20px;
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
-<p hidden id="export_string"> {{request.session.export_string}} </p>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your Query for the regions: <strong id="queried_regions"> {{request.session.query_string}} </strong></caption>
+    <caption>Results based on your Query for the regions: <strong id="queried_regions"> {{query_string}} </strong></caption>
         <br>
         <br>
     <thead>
         <script>
-            var queried_regions = document.getElementById("export_string").textContent;
+            var queried_regions = "{{export_string}}";
 
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -65,7 +53,7 @@ padding:20px;
             <th>Gene Start</th>
             <th>Gene End</th>
             <th>Regression Coefficient</th>
-            <th class="tooltip"> log <i>p</i> Value<span class="tooltiptext_top">
+            <th class="tooltip"> <i>p</i> Value<span class="tooltiptext_top">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
         </tr>
     </thead>

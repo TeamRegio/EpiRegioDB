@@ -75,10 +75,10 @@
             <td height="150px" width="700px">
                 <br>
                 <div class="toggle">
-                <h1 class='inputLabel' id="fieldname">Filter for cell types:</h1></div>
+                <h1 class='inputLabel' id="fieldname">Filter for cell types/tissues:</h1></div>
                 {% csrf_token %}
 
-                <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types" />
+                <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types/tissues" />
                 <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>
                 <div class ='selectedButtons' id="container_cellTypes"> </div>
             </td>
