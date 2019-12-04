@@ -13,58 +13,54 @@ from table_manager.models import *
 
 
 #test functions
-# #TODO: write proper unitests
-# def __main__():
+#TODO: write proper unitests
+def __main__():
+
+# 	print("API functions")
+# 	print("Is the database accessible?")
 #
-# # 	print("API functions")
-# # 	print("Is the database accessible?")
-# #
-# 	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
-# 	print(REM)
-# #
-# # 	print("all REMs of a gene")
-# # 	REMs = REMAnnotation.objects.filter(geneID = 'ENSG00000139874')
-# # 	for i in REMs:
-# # 		print(i)
-# #
-# # 	print("sampleInfo")
-# # 	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
-# # 	print(sample)
-# #
-# # This is not working because of the missing primary key, which is geneExpressionID in the database ->same for REMActivity TODO: rausfinden wie man combined primary key angibt in mysql
-# 	print("geneExpression")
-# 	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
-# 	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
-# 	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
-# 	print(geneExp)
-# # #
-# # 	print("genomeAnnotation")
-# # 	genome = genomeAnnotation.objects.all()
-# # 	print(genome)
-# #
-# # 	print("celltypes")
-# # 	cellType = cellTypes.objects.get(cellTypeID = 'CTID_0000001')
-# # 	print(cellType)
-# #
-# # 	print("geneAnnotation")
-# # 	geneAnno = geneAnnotation.objects.get(geneID = 'ENSG00000223972')
-# # 	print(geneAnno)
+	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
+	print(REM)
 #
-	# print("CREM")
-	# crem = CREMAnnotation.objects.filter(REMID = 'REM0000001')
-	# print(crem)
+	print("all REMs of a gene")
+	REMs = REMAnnotation.objects.filter(geneID = 'ENSG00000139874')
+	for i in REMs:
+		print(i)
+
+	print("sampleInfo")
+	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
+	print(sample)
 #
-	# print("REMActivity")
-	# REMActiv = REMActivity.objects.filter(REMID = 'REM0000001')[:3].values('sampleID__cellTypeID__cellTypeName')
-	# print(REMActiv)
-#
-#
+# This is not working because of the missing primary key, which is geneExpressionID in the database ->same for REMActivity TODO: rausfinden wie man combined primary key angibt in mysql
+	print("geneExpression")
+	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
+	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
+	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
+	print(geneExp)
+# #
+	print("genomeAnnotation")
+	genome = genomeAnnotation.objects.all()
+	print(genome)
+
+	print("celltypes")
+	cellType = cellTypes.objects.get(cellTypeID = 'CTID_0000001')
+	print(cellType)
+
+	print("geneAnnotation")
+	geneAnno = geneAnnotation.objects.get(geneID = 'ENSG00000223972')
+	print(geneAnno)
+
+	print("CREM")
+	crem = CREMAnnotation.objects.filter(REMID = 'REM0000001')
+	print(crem)
+
+	print("REMActivity")
+	REMActiv = REMActivity.objects.filter(REMID = 'REM0000001')[:3].values('sampleID__cellTypeID__cellTypeName')
+	print(REMActiv)
 
 
-
-
-# if __name__ == "__main__":
-# 	__main__()
+if __name__ == "__main__":
+	__main__()
 
 
 def API_CellTypesActivity(REM, cellTypes_list):
