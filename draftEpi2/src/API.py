@@ -94,7 +94,6 @@ def API_REMID(REMID_list, cellTypes_list):
 
 	hit_list = []
 	for i in REMID_list:
-
 		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
 		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
 

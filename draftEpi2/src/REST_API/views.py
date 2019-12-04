@@ -39,16 +39,16 @@ class GenesInfo(APIView):
 		serializers = GeneInfoSerializer(genes, many = True) #wenn man mehrer objects zuruekgeben mag
 		return Response(serializers.data)
 
-class REM_Info(APIView):
+class REMInfo(APIView):
 
 	def get(self, request,REM_id):
-		REM = API_REMID([REM_id], [])[0][0] #empty cellTypeList
+		REM = API_REMID([REM_id], [])[0] #empty cellTypeList
 		serializers = REMInfoSerializer(REM) # , many = True) wenn man mehrer objects zuruekgeben mag
 		return Response(serializers.data)
 
 
 #TODO: This takes some time ... Do we want to have this functionality?
-class REMs_Info(APIView):
+class REMsInfo(APIView):
 
 	def get(self, request):
 		REMs = REMAnnotation.objects.all()
