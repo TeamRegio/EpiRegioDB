@@ -21,7 +21,7 @@ from geneQuery.views import *
 from geneQuery.views import *
 from regionQuery.views import *
 from remQuery.views import *
-from REST_API.views import *
+from REST_API import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -48,7 +48,8 @@ urlpatterns = [
     path('navbars/', navbars_view),
 
     #REST API
-    path('REST_API/<geneID>/', GeneAnnotation.as_view()),
+    #path('REST_API/<GeneID>/', GeneAnnotation.as_view()),
+    path('REST_API/', include('REST_API.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

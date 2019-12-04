@@ -38,10 +38,10 @@ class cellTypes(models.Model):
 
 # ==========================================================================
 class geneAnnotation(models.Model):
-    chr = models.CharField(max_length=10, blank=True)
+    chr = models.CharField(max_length=10)
     start = models.IntegerField(blank=True)
     end = models.IntegerField(blank=True)
-    geneID = models.CharField(max_length=40, primary_key=True)
+    geneID= models.CharField(max_length=40, primary_key=True)
     geneSymbol = models.CharField(max_length=30, blank=True)
     alternativeGeneID = models.CharField(max_length=30, blank=True)
     isTF = models.BooleanField(blank=True, null=True)

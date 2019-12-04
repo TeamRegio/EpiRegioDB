@@ -1,7 +1,7 @@
 import os
 import sys
 from django.conf import settings
-import pymysql
+#import pymysql
 #sys.path.insert(1, r'website/')#tell python the path of the project
 
 from draftEpi2 import setup #setup function defined in __init__.py of the project (here website)
@@ -16,10 +16,12 @@ from table_manager.models import *
 #TODO: write proper unitests
 def __main__():
 
-# 	print("API functions")
-# 	print("Is the database accessible?")
+	print("API functions")
+	print("Is the database accessible?")
 #
-	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
+	#REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
+	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID')
+
 	print(REM)
 #
 	print("all REMs of a gene")
@@ -30,14 +32,13 @@ def __main__():
 	print("sampleInfo")
 	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
 	print(sample)
-#
-# This is not working because of the missing primary key, which is geneExpressionID in the database ->same for REMActivity TODO: rausfinden wie man combined primary key angibt in mysql
+
 	print("geneExpression")
 	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
 	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
 	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
 	print(geneExp)
-# #
+
 	print("genomeAnnotation")
 	genome = genomeAnnotation.objects.all()
 	print(genome)
@@ -77,7 +78,7 @@ def API_CellTypesActivity(REM, cellTypes_list):
 		# print(REM)
 	return REM
 
-
+#TODO: maybe add one line that explain the functionality of each method
 def API_CREM(REM):
 
 	# get the additional columns for the CREMS
