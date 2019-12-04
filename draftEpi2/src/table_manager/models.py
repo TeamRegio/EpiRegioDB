@@ -114,25 +114,23 @@ class geneExpression(models.Model):
 # ==========================================================================
 class REMActivity(models.Model):
 
-    class Meta:
-        managed = False
-        db_table = 'REMActivity'
-        # unique_together = (('REMID', 'sampleID'))
 
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column='REMID', primary_key=True, on_delete=models.DO_NOTHING)
     sampleID = models.ForeignKey(sampleInfo, to_field="sampleID", db_column='sampleID', on_delete=models.DO_NOTHING)
     dnase1Log2 = models.FloatField(blank=True)
     version = models.IntegerField(blank=True)
 
+    class Meta:
+        managed = False
+        db_table = 'REMActivity'
+        # unique_together = (('REMID', 'sampleID'))
+
     def __str__(self):
-        return str(str(self.REMID))
+        return str(str(self.REMID) + ' ' + str(sampleID) + ' ' + str(dnase1Log2) + ' ' + str(version))
 
 
 # ==========================================================================
 class CREMAnnotation(models.Model):
-    class Meta:
-        managed = False
-        db_table = 'CREMAnnotation'
 
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column="REMID", max_length=30, primary_key=True, on_delete=models.DO_NOTHING)
     CREMID = models.CharField(max_length=30)
@@ -141,3 +139,10 @@ class CREMAnnotation(models.Model):
     end = models.IntegerField(blank=True)
     REMsPerCREM = models.IntegerField(blank=True)
     version = models.IntegerField(blank=True)
+
+    class Meta:
+        managed = False
+        db_table = 'CREMAnnotation'
+
+    def __str__(self):
+        return str(str(self.REMID) + ' ' + str(CREMID) + ' ' + str(chr) + ':' + str(start) + "-" + str(end) + " " + str(REMsPerCREM) + " " + str(version))

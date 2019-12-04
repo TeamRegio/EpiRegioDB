@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+
 
     # own apps
     'remQuery',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'home',
     'regionQuery',
     'table_manager',
+    'REST_API',
 
 ]
 

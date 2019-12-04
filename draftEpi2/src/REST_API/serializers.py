@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from models import geneAnnotation 
+from table_manager.models import geneAnnotation
+#from .models import geneAnnotation 
 
 
-class GeneAnnotationSerializer(Serializers.ModelSerializer):
+class GeneAnnotationSerializer(serializers.ModelSerializer):
 	
 	class Meta:
-		model = GeneAnnotation
+		model = geneAnnotation
 		#fields = ('chr', 'start', 'end', 'geneID', 'geneSymbol', 'alternativeGeneID', 'isTF', 'strand', 'annotationVersion')
 		fileds = '__all__'
 	 
