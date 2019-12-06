@@ -9,7 +9,7 @@ function setDefault() {
 function setDefaultGeneID() {
     document.getElementById("geneID_symbolic").type = "hidden";
     document.getElementById("geneID_numeric").type = "text";
-    document.getElementById("geneHeader").textContent = "Ensemble gene ID:";
+    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
     document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
 }
 
@@ -35,7 +35,7 @@ function switchGeneIDField(){
     if (current === 'id_format') {
     document.getElementById("geneID_symbolic").type = "hidden";
     document.getElementById("geneID_numeric").type = "text";
-    document.getElementById("geneHeader").textContent = "Ensemble gene ID:";
+    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
     document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
 
     var validator = $( "#geneQueryForm" ).validate();
