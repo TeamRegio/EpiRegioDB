@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import *
-from geneQuery.views import search_cellTypes, strip_csv_query
+from geneQuery.views import search_cellTypes, strip_csv_query, crem_view
 from API import API_REMID
 
 
@@ -22,8 +22,15 @@ def remQuery_view(request):
 
 
 def rem_search_view(request):
+
     query = request.POST.get('REMIDs')
     csv_file = request.POST.get('csvFile')
+
+    activ_thresh = request.POST.get('activ_thresh')
+    if len(activ_thresh) > 0:
+        activ_thresh = float(activ_thresh)
+    else:
+        activ_thresh = 0
 
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     if len(cell_types) > 0:
@@ -42,8 +49,12 @@ def rem_search_view(request):
     else:
         export_string = query_list_string
 
+    data = API_REMID(query_list, cell_types_list, activ_thresh)
+    if len(data) == 0:
+        data = None  # if so, we don't display any table in the view
+
     context = {
-        'data': API_REMID(query_list, cell_types_list),
+        'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
         'cell_types_list': cell_types_list,

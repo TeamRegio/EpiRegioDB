@@ -1,15 +1,6 @@
 {% include 'navbar.html' %}
 {% load static %}
 <style>
-a.export{
-font-family: adhabi;
-font-size: 18;
-text-align: left;
-font-weight:normal;
-}
-caption{
-padding:20px;
-}
 img.CREM_img{
     margin-left: 100px;
 }
@@ -32,16 +23,16 @@ img.CREM_img{
 </head>
 
 
-<p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema.png' %}" width="800px" alt = 'cluster schema'/> <span class="tooltiptext_right" style="margin-left: -60px; width: 200px;">This is only a schema, not the actual cluster you selected</span></p>
+<p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema.png' %}" width="800px" alt = 'cluster schema'/>
+    <span class="tooltiptext_right" style="margin-left: -300px; width: 200px;">This is only a schema, not the actual cluster you selected</span></p>
 <br>
 <br>
-<p hidden id="export_string"> {{query}} </p>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>REMs contained in the cluster with the ID <strong id="queried_regions"> {{query}} </strong></caption>
+    <caption>REMs contained in the cluster with the ID: <strong id="queried_regions"> {{query}} </strong> ({{data.0.chr}}, {{data.0.start}} - {{data.0.end}})</caption>
 
     <thead>
         <script>
-            var queried_regions = document.getElementById("export_string").textContent;
+            var queried_regions = "{{query}}";
 
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -66,28 +57,28 @@ img.CREM_img{
 
         </script>
         <tr>
-            <th>Gene ID</th>
             <th>REM ID</th>
+            <th>Gene ID</th>
             <th>Chromosome</th>
-            <th>Gene Start</th>
-            <th>Gene End</th>
-            <th>Regression Coefficient</th>
-            <th class="tooltip"> log <i>p</i> Value<span class="tooltiptext_top">
+            <th>REM start</th>
+            <th>REM end</th>
+            <th>Regression coefficient</th>
+            <th class="tooltip_table" > <i>p</i> Value<span class="tooltiptext_top" style="margin-bottom: 20px;">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID }}</td>
-            <td>{{ item.REMID }}</td>
+            <td>{{ item.REMID_id }}</td>
+            <td>{{ item.REMID_id__geneID }}</td>
             <td>{{ item.chr }}</td>
-            <td>{{ item.start }}</td>
-            <td>{{ item.end }}</td>
-            <td>{{ item.regressionCoefficient }}</td>
-            <td> {{item.pValue}}</td>
+            <td>{{ item.REMID_id__start }}</td>
+            <td>{{ item.REMID_id__end }}</td>
+            <td>{{ item.REMID_id__regressionCoefficient|floatformat:5 }}</td>
+            <td>{{ item.REMID_id__pValue|floatformat:5 }}</td>
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
 

@@ -48,18 +48,18 @@
 
         </script>
         <tr>
+{% if data != None %}
             <th>REM ID</th>
             <th>Gene ID</th>
             <th>Chromosome</th>
-            <th>Gene Start</th>
-            <th>Gene End</th>
-            <th>Regression Coefficient</th>
+            <th>REM start</th>
+            <th>REM end</th>
+            <th>Regression coefficient</th>
             <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
-            <th>Cluster of REMs ID</th>
+            <th>associated REM cluster</th>
             {% for cellType in cell_types_list %}
-                <th>{{cellType}} activity</th>
-                <th>{{cellType}} # samples </th>
+                <th>{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})</th>
             {% endfor %}
         </tr>
     </thead>
@@ -71,16 +71,16 @@
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
-            <td>{{ item.regressionCoefficient }}</td>
-            <td>{{ item.pValue }}</td>
-            <td>{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</td>
+            <td>{{ item.regressionCoefficient|floatformat:5 }}</td>
+            <td>{{ item.pValue|floatformat:5 }}</td>
+            <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</a></td>
             {% for cellType in cell_types_list %}
                 <td>{% get_cellType_attr item cellType "activity" %}</td>
-                <td>{% get_cellType_attr item cellType "samplecount" %}</td>
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody>
+{% endif %}
 </table>
 
 

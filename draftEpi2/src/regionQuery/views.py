@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import genomeAnnotation, geneExpression, sampleInfo, cellTypes, REMActivity, REMAnnotation, geneAnnotation
 from geneQuery.views import search_cellTypes
+from API import API_Region
 # Works similar to the geneID Query app. The views file there is commented more detailed
 
 def regionQuery_view(request):
@@ -30,9 +31,16 @@ def search_for_regions(query_list):  # We look up in our REMAnnotation table, wh
 
 
 def region_search_view(request):
+
     query = request.POST.get('geneRegions')
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     csv_file = request.POST.get('csvFile')
+
+    activ_thresh = request.POST.get('activ_thresh')
+    if len(activ_thresh) > 0:
+        activ_thresh = float(activ_thresh)
+    else:
+        activ_thresh = 0
 
     if len(query) == 0:
         csv_list = csv_file.split(',')
@@ -47,9 +55,14 @@ def region_search_view(request):
         query = request.POST.get('chrField') + " " + str(request.POST.get('chrStart')) + "-" + str(request.POST.get('chrEnd')) + ",'"
     print(query)
 
+    if len(cell_types) > 0:
+        cell_types_list = cell_types.split(', ')
+    else:
+        cell_types_list = []
+
     query_list = clear_chr_string(query)
     query_list_string = query[:-2]
-
+    print(query_list)
     # get our export string. We shorten it if it has too many entries
     comma_pos = [pos for pos, char in enumerate(query_list_string) if char == ',']
     if len(comma_pos) > 2:
@@ -57,13 +70,15 @@ def region_search_view(request):
     else:
         export_string = query_list_string
 
-    request.session['query_string'] = query_list_string  # We store it here in a cookie, so we can access it in the next view
-    request.session['export_string'] = export_string
+    data = API_Region(query_list, cell_types_list, activ_thresh)
+    if len(data) == 0:
+        data = None  # if so, we don't display any table in the view
+
     context = {
-        'data': search_for_regions(query_list),
+        'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
-        'cell_types': cell_types
+        'cell_types_list': cell_types_list,
     }
     return render(request, 'regionQuery_search.html', context)
 

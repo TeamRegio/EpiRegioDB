@@ -38,10 +38,10 @@ class cellTypes(models.Model):
 
 # ==========================================================================
 class geneAnnotation(models.Model):
-    chr = models.CharField(max_length=10)
+    chr = models.CharField(max_length=10, blank=True)
     start = models.IntegerField(blank=True)
     end = models.IntegerField(blank=True)
-    geneID= models.CharField(max_length=40, primary_key=True)
+    geneID = models.CharField(max_length=40, primary_key=True)
     geneSymbol = models.CharField(max_length=30, blank=True)
     alternativeGeneID = models.CharField(max_length=30, blank=True)
     isTF = models.BooleanField(blank=True, null=True)
@@ -106,6 +106,7 @@ class geneExpression(models.Model):
     geneID = models.OneToOneField(geneAnnotation, to_field="geneID", db_column='geneID', primary_key=True, on_delete=models.DO_NOTHING)
     sampleID = models.ForeignKey(sampleInfo, to_field="sampleID", db_column='sampleID', on_delete=models.DO_NOTHING)
     expressionLog2TPM = models.FloatField(blank=True)
+    species = models.CharField(max_length=30)
 
     def __str__(self):
         return str(str(self.geneID) + ' ' + str(self.sampleID) + ' ' + str(self.expressionLog2TPM))
@@ -114,23 +115,25 @@ class geneExpression(models.Model):
 # ==========================================================================
 class REMActivity(models.Model):
 
+    class Meta:
+        managed = False
+        db_table = 'REMActivity'
+        # unique_together = (('REMID', 'sampleID'))
 
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column='REMID', primary_key=True, on_delete=models.DO_NOTHING)
     sampleID = models.ForeignKey(sampleInfo, to_field="sampleID", db_column='sampleID', on_delete=models.DO_NOTHING)
     dnase1Log2 = models.FloatField(blank=True)
     version = models.IntegerField(blank=True)
 
-    class Meta:
-        managed = False
-        db_table = 'REMActivity'
-        # unique_together = (('REMID', 'sampleID'))
-
     def __str__(self):
-        return str(str(self.REMID) + ' ' + str(sampleID) + ' ' + str(dnase1Log2) + ' ' + str(version))
+        return str(str(self.REMID))
 
 
 # ==========================================================================
 class CREMAnnotation(models.Model):
+    class Meta:
+        managed = False
+        db_table = 'CREMAnnotation'
 
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column="REMID", max_length=30, primary_key=True, on_delete=models.DO_NOTHING)
     CREMID = models.CharField(max_length=30)
@@ -139,10 +142,3 @@ class CREMAnnotation(models.Model):
     end = models.IntegerField(blank=True)
     REMsPerCREM = models.IntegerField(blank=True)
     version = models.IntegerField(blank=True)
-
-    class Meta:
-        managed = False
-        db_table = 'CREMAnnotation'
-
-    def __str__(self):
-        return str(str(self.REMID) + ' ' + str(CREMID) + ' ' + str(chr) + ':' + str(start) + "-" + str(end) + " " + str(REMsPerCREM) + " " + str(version))

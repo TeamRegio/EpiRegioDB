@@ -53,8 +53,19 @@ function clearFileInputField(tagId) {
 
         document.getElementById(tagId).innerHTML;
 
-    }
+}
 
+function display_threshold(){
+    container = document.getElementById("container_cellTypes").children;
+    current = container.length;
+    thresh_div = document.getElementById("threshold_div");
+    if (current === 0){
+        thresh_div.style.visibility = "hidden";
+    }
+    if (current !== 0){
+        thresh_div.style.visibility = "visible";
+    }
+}
 
 /*  BUTTON FUNCTIONS **************************************** **************************************** */
 function chooseButton(clicked_id, containerID, if_empty_value){
@@ -75,7 +86,11 @@ function chooseButton(clicked_id, containerID, if_empty_value){
         container.appendChild(button_add);
         button_add.onclick = function(){
             $(this).remove();
+            display_threshold();
         }
+    if (containerID === "container_cellTypes"){
+        display_threshold();
+    }
     };
 }
 

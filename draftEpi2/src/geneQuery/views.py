@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import *
-from API import API_SymbolToENSG, API_ENSGID, API_ENSGID_geneInfo
+from API import API_SymbolToENSG, API_ENSGID, API_ENSGID_geneInfo, API_CREM_overview
 
 
 # The first view only renders our HTML form where we can set our filters.
@@ -46,6 +46,12 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     gene_format = request.POST.get('gene_format')
     csv_file = request.POST.get('csvFile')
 
+    activ_thresh = request.POST.get('activ_thresh')
+    if len(activ_thresh) > 0:
+        activ_thresh = float(activ_thresh)
+    else:
+        activ_thresh = 0
+
     if gene_format == 'id_format':
         query = request.POST.get('geneID_numeric')  # if it's numeric, we just want to get the string in the field
 
@@ -71,12 +77,17 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         export_string = strip_csv_query(query)[2] + '...' + str(len(query_list)-3) + ' more'
     else:
         export_string = query_list_string
+
     if gene_format == 'symbol_format':  # in case of geneSymbol as query we first have to look up the respective
         # ensemble ID
         query_list = API_SymbolToENSG(query_list)  # our API function to convert geneSymbols to ENSG IDs
 
+    data = API_ENSGID(query_list, cell_types_list, activ_thresh)
+    if len(data) == 0:
+        data = None  # if so, we don't display any table in the view
+
     context = {
-        'data': API_ENSGID(query_list, cell_types_list),
+        'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
         'cell_types_list': cell_types_list,
@@ -129,10 +140,11 @@ def search_for_rems(query_list):  # For the placeholder data we look for REMs
     return hit_list  # our list of objects, fitting the query_list
 
 
-def crem_view(request, REMID):
+def crem_view(request, CREMID):
+
     context = {
-        'data': search_for_rems([REMID]),
-        'query': REMID,
+        'data': API_CREM_overview(CREMID),
+        'query': CREMID,
     }
     return render(request, 'linked_crem.html', context)
 
