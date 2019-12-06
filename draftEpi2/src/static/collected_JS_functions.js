@@ -354,7 +354,7 @@ function validateGeneQueryForm_numeric(){
           return true;
         }
         return false;
-    },"Please enter an ID, using the format ENSGXXX (10 digits) and separate multiple by comma");
+    },"Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma.");
 
     $('#geneQueryForm').validate(
     {
@@ -408,7 +408,7 @@ function validateREMQueryForm(){
           return true;
         }
         return false;
-    },"Please enter an ID, using the format REMXXX (7 digits). Separate multiple by comma");
+    },"Please enter an ID, written as 'REM' followed by seven digits. Separate multiple by comma.");
 
     $('#remQueryForm').validate(
       {

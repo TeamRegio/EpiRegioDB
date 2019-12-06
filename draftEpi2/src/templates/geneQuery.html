@@ -39,7 +39,7 @@
 <div style="display: inline-block;">
 <h1 style="display: inline;" class="inputLabel">Gene nomenclature:&nbsp;&nbsp;</h1>
     <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >
-    <option selected='selected' value="id_format">ensemble ID</option>
+    <option selected='selected' value="id_format">ensembl ID</option>
     <option value="symbol_format">gene Symbol</option>
 </select></div>
 <br>
@@ -51,7 +51,7 @@
     <table class="geneQueryTable">
         <tr>
             <td>
-            <h1 class="inputLabel" id="geneHeader"> Ensemble gene ID:</h1>{% csrf_token %}
+            <h1 class="inputLabel" id="geneHeader"> Ensembl gene ID:</h1>{% csrf_token %}
             <input width="90%" class='inputForm' id="geneID_numeric" name='geneID_numeric' type="text"  placeholder="E.g. ENSG00000139874, separate multiple IDs by comma" />
             <input class='inputForm' id="geneID_symbolic" name='geneID_symbolic' type="hidden"  placeholder="Type and select buttons on the right, deselect by clicking below" />
             <p  style="visibility:hidden;" class="selectionHeader" id="container_geneSymbolHeader"> Currently selected:</p>
