@@ -3,7 +3,7 @@
  * Table styles
  */
 table.dataTable {
-  width: 90%;
+  width: 1400px;
   margin: 0 auto;
   clear: both;
   border-collapse: separate;
@@ -21,7 +21,8 @@ table.dataTable {
   table.dataTable thead td {
     padding: 8px 20px;
     text-align: left;
-    font-size: 18px;}
+    font-size: 18px;
+    }
     table.dataTable thead th:active,
     table.dataTable thead td:active {
       outline: none; }  /* APPEARANCE ON CLICK FOR SORT */

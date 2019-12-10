@@ -23,12 +23,15 @@ def remQuery_view(request):
 
 def rem_search_view(request):
 
-    query = request.POST.get('REMIDs')
+    query = request.POST.get('REMIDs').upper()
     csv_file = request.POST.get('csvFile')
 
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
-        activ_thresh = float(activ_thresh)
+        try:
+            activ_thresh = float(activ_thresh)
+        except ValueError:
+            activ_thresh = 0
     else:
         activ_thresh = 0
 
@@ -53,10 +56,13 @@ def rem_search_view(request):
     if len(data) == 0:
         data = None  # if so, we don't display any table in the view
 
+    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+
     context = {
         'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
         'cell_types_list': cell_types_list,
+        'cell_types_list_upper': cell_types_list_upper
     }
     return render(request, 'remQuery_search.html', context)

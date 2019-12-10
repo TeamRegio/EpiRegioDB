@@ -25,7 +25,7 @@
 <form id='regionQueryForm' class='django_forms' method="POST" action="/regionQuery_search/" autocomplete="off">
 {% csrf_token %}
 
-<h1 class="queryDescription"><u>Look up Regulatory Elements (REMs) in gene regions:</u></h1>
+<h1 class="queryDescription"><u>Look up Regulatory Elements (REMs) in regions:</u></h1>
 <br>
 
 <!-- GET DB Version -------------------------------------------------------------------------------- -->
@@ -120,7 +120,7 @@
             <div id="threshold_div" style="visibility: hidden;">
             <p id="threshold_header"><b>Set an activity threshold (optional):</b></p>
             <div data-tip="Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed">
-            <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="2" /></div></div>
+            <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div></div>
 
             </td>
         </tr>

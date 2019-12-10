@@ -38,7 +38,10 @@ def region_search_view(request):
 
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
-        activ_thresh = float(activ_thresh)
+        try:
+            activ_thresh = float(activ_thresh)
+        except ValueError:
+            activ_thresh = 0
     else:
         activ_thresh = 0
 
@@ -53,7 +56,6 @@ def region_search_view(request):
             region_counter += 1
     if len(query) == 0:
         query = request.POST.get('chrField') + " " + str(request.POST.get('chrStart')) + "-" + str(request.POST.get('chrEnd')) + ",'"
-    print(query)
 
     if len(cell_types) > 0:
         cell_types_list = cell_types.split(', ')
@@ -62,7 +64,6 @@ def region_search_view(request):
 
     query_list = clear_chr_string(query)
     query_list_string = query[:-2]
-    print(query_list)
     # get our export string. We shorten it if it has too many entries
     comma_pos = [pos for pos, char in enumerate(query_list_string) if char == ',']
     if len(comma_pos) > 2:
@@ -74,11 +75,14 @@ def region_search_view(request):
     if len(data) == 0:
         data = None  # if so, we don't display any table in the view
 
+    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+
     context = {
         'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
         'cell_types_list': cell_types_list,
+        'cell_types_list_upper': cell_types_list_upper
     }
     return render(request, 'regionQuery_search.html', context)
 

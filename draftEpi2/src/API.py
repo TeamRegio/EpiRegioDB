@@ -1,7 +1,7 @@
 import os
 import sys
 from django.conf import settings
-#import pymysql
+# import pymysql
 #sys.path.insert(1, r'website/')#tell python the path of the project
 
 from draftEpi2 import setup #setup function defined in __init__.py of the project (here website)
@@ -13,55 +13,58 @@ from table_manager.models import *
 
 
 #test functions
-#TODO: write proper unitests
-def __main__():
-
-	print("API functions")
-	print("Is the database accessible?")
+# #TODO: write proper unitests
+# def __main__():
 #
-	#REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
-	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID')
-
-	print(REM)
+# # 	print("API functions")
+# # 	print("Is the database accessible?")
+# #
+# 	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
+# 	print(REM)
+# #
+# # 	print("all REMs of a gene")
+# # 	REMs = REMAnnotation.objects.filter(geneID = 'ENSG00000139874')
+# # 	for i in REMs:
+# # 		print(i)
+# #
+# # 	print("sampleInfo")
+# # 	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
+# # 	print(sample)
+# #
+# # This is not working because of the missing primary key, which is geneExpressionID in the database ->same for REMActivity TODO: rausfinden wie man combined primary key angibt in mysql
+# 	print("geneExpression")
+# 	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
+# 	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
+# 	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
+# 	print(geneExp)
+# # #
+# # 	print("genomeAnnotation")
+# # 	genome = genomeAnnotation.objects.all()
+# # 	print(genome)
+# #
+# # 	print("celltypes")
+# # 	cellType = cellTypes.objects.get(cellTypeID = 'CTID_0000001')
+# # 	print(cellType)
+# #
+# # 	print("geneAnnotation")
+# # 	geneAnno = geneAnnotation.objects.get(geneID = 'ENSG00000223972')
+# # 	print(geneAnno)
 #
-	print("all REMs of a gene")
-	REMs = REMAnnotation.objects.filter(geneID = 'ENSG00000139874')
-	for i in REMs:
-		print(i)
-
-	print("sampleInfo")
-	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
-	print(sample)
-
-	print("geneExpression")
-	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
-	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
-	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
-	print(geneExp)
-
-	print("genomeAnnotation")
-	genome = genomeAnnotation.objects.all()
-	print(genome)
-
-	print("celltypes")
-	cellType = cellTypes.objects.get(cellTypeID = 'CTID_0000001')
-	print(cellType)
-
-	print("geneAnnotation")
-	geneAnno = geneAnnotation.objects.get(geneID = 'ENSG00000223972')
-	print(geneAnno)
-
-	print("CREM")
-	crem = CREMAnnotation.objects.filter(REMID = 'REM0000001')
-	print(crem)
-
-	print("REMActivity")
-	REMActiv = REMActivity.objects.filter(REMID = 'REM0000001')[:3].values('sampleID__cellTypeID__cellTypeName')
-	print(REMActiv)
+	# print("CREM")
+	# crem = CREMAnnotation.objects.filter(REMID = 'REM0000001')
+	# print(crem)
+#
+	# print("REMActivity")
+	# REMActiv = REMActivity.objects.filter(REMID = 'REM0000001')[:3].values('sampleID__cellTypeID__cellTypeName')
+	# print(REMActiv)
+#
+#
 
 
-if __name__ == "__main__":
-	__main__()
+
+
+# if __name__ == "__main__":
+# 	__main__()
 
 
 """
@@ -76,7 +79,7 @@ added to the dictionaries.
 # called, when there are cellTypes given. Another option is to provide a threshold, which excludes all the REMs that
 # have an activity below it. For more than one cellType a REM's activity has to exceed in ALL of them.
 # If no threshold was set, the view returns a 0 as threshold.
-def API_CellTypesActivity(REM, cellTypes_list, activ_thresh):
+def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 
 	REMID = REM['REMID']
 	for cellType in cellTypes_list:
@@ -115,7 +118,7 @@ def API_CREM_overview(CREMID):
 
 
 # The REMID query. Every REM is handled separately.
-def API_REMID(REMID_list, cellTypes_list, activ_thresh):
+def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 
 	hit_list = []
 	for i in REMID_list:
@@ -123,13 +126,13 @@ def API_REMID(REMID_list, cellTypes_list, activ_thresh):
 		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
 		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
 
+		# get the additional columns for the CREMS
+		this_rem = API_CREM(this_rem)
+
 		# if there are cellTypes that should be filtered for, we do it here for every single REM, to directly add it
 		# to the REMs dictionary
 		if len(cellTypes_list) > 0:
 				this_rem = API_CellTypesActivity(this_rem, cellTypes_list, activ_thresh)
-
-		# get the additional columns for the CREMS
-		this_rem = API_CREM(this_rem)
 
 		hit_list.append(this_rem)
 		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
@@ -154,7 +157,7 @@ def API_SymbolToENSG(symbol_list):
 
 # For the GeneID query: given a set of genes, we look up all the REMs for each of them and add
 # the additional information
-def API_ENSGID(gene_list, cellTypes_list, activ_thresh):
+def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0):
 
 	hit_list = []
 
@@ -169,8 +172,6 @@ def API_ENSGID(gene_list, cellTypes_list, activ_thresh):
 		hit_list = hit_list + dataset
 		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 		# we returned None into the list, now we get rid of it
-
-	# print(hit_list)
 
 	return hit_list
 
@@ -187,7 +188,7 @@ def API_ENSGID_geneInfo(gene_list):
 
 
 # For the GeneRegion query: find all the REMs located in the given regions
-def API_Region(region_list, cellTypes_list, activ_tresh):
+def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
 	hit_list = []
 

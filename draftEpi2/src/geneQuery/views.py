@@ -48,7 +48,10 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
 
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
-        activ_thresh = float(activ_thresh)
+        try:
+            activ_thresh = float(activ_thresh)
+        except ValueError:
+            activ_thresh = 0
     else:
         activ_thresh = 0
 
@@ -86,11 +89,14 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     if len(data) == 0:
         data = None  # if so, we don't display any table in the view
 
+    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+
     context = {
         'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
         'cell_types_list': cell_types_list,
+        'cell_types_list_upper': cell_types_list_upper
     }
     return render(request, 'geneQuery_search.html', context)
 
@@ -119,7 +125,6 @@ def search_cellTypes(request):
         for i in matching_samples:  # get rid of double entries
             if i not in cellType_search:
                 cellType_search.append(i)
-        print(cellType_search)
     else:
         cellType_search = ''
 
@@ -129,15 +134,15 @@ def search_cellTypes(request):
 
 # CREM VIEWS ####################################################################
 
-def search_for_rems(query_list):  # For the placeholder data we look for REMs
-    hit_list = []
-    data_set = REMAnnotation.objects.filter(REMID=query_list)
-    print(data_set)
-    for single_obj in data_set:
-        single_obj.pValue = round(10**(float(single_obj.pValue)), 6)  # provisional way to round
-        single_obj.regressionCoefficient = round(float(single_obj.regressionCoefficient), 6)
-        hit_list.append(single_obj)
-    return hit_list  # our list of objects, fitting the query_list
+# def search_for_rems(query_list):  # For the placeholder data we look for REMs
+#     hit_list = []
+#     data_set = REMAnnotation.objects.filter(REMID=query_list)
+#     print(data_set)
+#     for single_obj in data_set:
+#         single_obj.pValue = round(10**(float(single_obj.pValue)), 6)  # provisional way to round
+#         single_obj.regressionCoefficient = round(float(single_obj.regressionCoefficient), 6)
+#         hit_list.append(single_obj)
+#     return hit_list  # our list of objects, fitting the query_list
 
 
 def crem_view(request, CREMID):
@@ -151,12 +156,22 @@ def crem_view(request, CREMID):
 
 # GENE DETAILS VIEW ####################################################################
 
-def gene_details_view(request):
-    queried_genes = request.POST.get('query_string')
+def gene_details_view(request, query_string):
+    # queried_genes = request.POST.get('query_string')
     print("genedetailsview")
-    print(queried_genes)
+    print(strip_csv_query(query_string)[0])
+
+    query_list = strip_csv_query(query_string)[0]
+
+    if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
+        export_string = strip_csv_query(query_string)[2] + '...' + str(len(query_list)-3) + ' more'
+    else:
+        export_string = query_string
+    print(API_ENSGID_geneInfo(query_list))
     context = {
-        'gene_info': API_ENSGID_geneInfo(queried_genes),
+        'data': API_ENSGID_geneInfo(query_list),
+        'query_string': query_string,
+        'export_string': export_string,
     }
     return render(request, 'gene_details.html', context)
 

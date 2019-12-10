@@ -349,12 +349,13 @@ function validateGeneQueryForm_numeric(){
 
     jQuery.validator.addMethod("checkENSG",function(value,element,param)
     {
-      if(/ENSG+[0-9]{10}.*$/.test(value) || document.getElementById("csv_upload").value.length > 0)
+       csv_val = document.getElementById('csv_upload').value;
+      if(/ENSG+[0-9]{10}.*$/.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
         {
           return true;
         }
         return false;
-    },"Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma.");
+    },"Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv-file.");
 
     $('#geneQueryForm').validate(
     {
@@ -362,7 +363,7 @@ function validateGeneQueryForm_numeric(){
             {
               geneID_numeric:{checkENSG:true }
             },
-            messages: {geneID_numeric: { required:  "Please enter an ID"}},
+            messages: {geneID_numeric: { required:  "Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv-file."}},
             errorElement : 'div',
             errorClass: "formError",
             highlight: function(element, errorClass) {
@@ -376,12 +377,13 @@ function validateGeneQueryForm_symbolic(){
 
         jQuery.validator.addMethod("checkSymbol", function(value,element,param)
     {
-      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 2 || document.getElementById("csv_upload").value.length > 0)
+        csv_val = document.getElementById('csv_upload').value;
+      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 2 || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
         {
           return true;
         }
         return false;
-    },"Please select a gene symbol");
+    },"Please select a gene symbol or upload a valid csv-file.");
 
     $('#geneQueryForm').validate(
       {
@@ -389,7 +391,7 @@ function validateGeneQueryForm_symbolic(){
         {
           geneID_symbolic:{ checkSymbol:true }
         },
-        messages: {geneID_symbolic: { required:  "Please select a gene symbol"}},
+        messages: {geneID_symbolic: { required:  "Please select a gene symbol or upload a valid csv-file."}},
         errorElement : 'div',
         errorClass: "formError",
         highlight: function(element, errorClass) {
@@ -403,12 +405,13 @@ function validateGeneQueryForm_symbolic(){
 function validateREMQueryForm(){
     jQuery.validator.addMethod("checkREM",function(value,element,param)
     {
-      if(/REM+[0-9]{7}.*$/.test(value) || document.getElementById("csv_upload").value.length > 0)
+   csv_val = document.getElementById('csv_upload').value;
+      if(/REM+[0-9]{7}.*$/i.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
         {
           return true;
         }
         return false;
-    },"Please enter an ID, written as 'REM' followed by seven digits. Separate multiple by comma.");
+    },"Please enter an ID, written as 'REM' followed by seven digits. Separate multiple by comma. Or upload a valid csv-file.");
 
     $('#remQueryForm').validate(
       {
@@ -435,7 +438,8 @@ function testingFunction(){
 function validateRegionQueryForm(){
     jQuery.validator.addMethod("checkSubmission",function(value,element,param)
     {
-      if(document.getElementById("csv_upload").value.length > 0 || document.getElementById("container_geneRegions").children.length > 0)
+    csv_val = document.getElementById('csv_upload').value;
+      if(csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv' || document.getElementById("container_geneRegions").children.length > 0)
         {
           return true;
         }
@@ -444,7 +448,7 @@ function validateRegionQueryForm(){
         return true;
         }
         return false;
-    },"Please select a region or upload a csv-file");
+    },"Please select a region or upload a valid csv-file");
 
     $('#regionQueryForm').validate(
       {

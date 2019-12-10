@@ -19,9 +19,8 @@
 </head>
 <br>
 <br>
-
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your Query for the genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
+    <caption>More Details about your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
 
     <thead>
         <script>
@@ -40,9 +39,9 @@
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat(" GeneID Query ", export_string)},
-                            { extend: 'csv', filename: today.concat(" GeneID Query ", export_string)},
-                            { extend: 'pdf', filename: today.concat(" GeneID Query ", export_string), pageSize: "LEGAL", orientation: 'landscape'}
+                            { extend: 'excel', filename: today.concat(" GeneDetails Query ", export_string)},
+                            { extend: 'csv', filename: today.concat(" GeneDetails Query ", export_string)},
+                            { extend: 'pdf', filename: today.concat(" GeneDetails Query ", export_string), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
                  } );
@@ -51,35 +50,22 @@
         </script>
         <tr>
             <th>Gene ID</th>
-            <th>REM ID</th>
+            <th>Gene symbol</th>
             <th>Chromosome</th>
             <th>Gene Start</th>
             <th>Gene End</th>
-            <th>Regression Coefficient</th>
-            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
-                The <i>p</i> value represents all cell types for the respective REM.</span></th>
-            <th>Cluster of REMs ID</th>
-            {% for cellType in cell_types_list %}
-                <th>{{cellType}} activity</th>
-                <th>{{cellType}} # samples</th>
-            {% endfor %}
+            <th>Strand</th>
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID_id }}</td>
-            <td>{{ item.REMID }}</td>
-            <td>{{ item.chr }}</td>
-            <td>{{ item.start }}</td>
-            <td>{{ item.end }}</td>
-            <td>{{ item.regressionCoefficient }}</td>
-            <td>{{item.pValue}}</td>
-            <td> <a href="/geneQuery_search/{{ item.REMID }}/"> {{item.REMID}}, {{item.REMID}} </a></td>
-            {% for cellType in cell_types_list %}
-                <td>{% get_cellType_attr item cellType "activity" %}</td>
-                <td>{% get_cellType_attr item cellType "samplecount" %}</td>
-            {% endfor %}
+            <td>{{ item.0.geneID }}</td>
+            <td>{{ item.0.geneSymbol }}</td>
+            <td>{{ item.0.chr }}</td>
+            <td>{{ item.0.start }}</td>
+            <td>{{ item.0.end }}</td>
+            <td>{{ item.0.strand }}</td>
         </tr>
     {% endfor %}
     </tbody>

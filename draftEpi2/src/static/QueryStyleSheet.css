@@ -6,7 +6,7 @@ form.django_forms{
 }
 
 h1.queryDescription{
-    font-size:30px;
+    font-size:26px;
     margin-bottom: 0px;
 }
 h1.inputLabel{
@@ -304,7 +304,7 @@ button.clearFiles:active {
   border-radius: 4px;
   position: absolute;
   z-index: 99;
-  bottom: 110%;
+  top: 110%;
   font-family: adhari;
   margin-left: -200px;
 }
@@ -335,7 +335,7 @@ button.clearFiles:active {
   border-radius: 4px;
   position: absolute;
   z-index: 99;
-  bottom: 65%;
+  top: 0em;
   font-family: adhari;
   margin-left: -200px;
 }
@@ -356,8 +356,6 @@ button.clearFiles:active {
 }
 
 
-
-
 [data-tip] {
 	position:relative;
 
@@ -369,33 +367,32 @@ button.clearFiles:active {
 	content:'';
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-bottom: 5px solid #1a1a1a;
+	border-bottom: 5px solid #073946;
 	position:absolute;
-	top:30px;
+	top:35px;
 	left:35px;
 	z-index:8;
 	font-size:0;
 	line-height:0;
-	width:0;
+	width:0px;
 	height:0;
 }
 [data-tip]:after {
 	display:none;
 	content:attr(data-tip);
 	position:absolute;
-	top:35px;
-	left:0px;
 	padding:5px 8px;
-	background:#1a1a1a;
+	background: #073946;
 	color:#fff;
 	z-index:9;
-	font-size: 0.75em;
-	height:18px;
-	line-height:18px;
+	font-size: 16 px;
+    font-family: adhari;
+    width: relative;
+    line-height:18px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	white-space:nowrap;
+	white-space:wrap;
 	word-wrap:normal;
 }
 [data-tip]:hover:before,

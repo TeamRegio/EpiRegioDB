@@ -21,10 +21,8 @@
 <br>
 <br>
 
-<input type="hidden" id="query_string" name="query_string" value="{{query_string}}"/>
-<!--<a id="gene_detail_link" href="/geneQuery_search/gene_details/"><button type="submit">See details for queried genes</button></a>-->
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your Query for the genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
+    <caption>Results based on your Query for the genes: <a id="gene_detail_link" class="link" href="/geneQuery_search/{{query_string}}/"><strong id="queried_genes"> {{query_string}} </strong></a></caption>
 
     <thead>
         <script>
@@ -60,10 +58,10 @@
             <th>REM start</th>
             <th>REM end</th>
             <th>Regression coefficient</th>
-            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top" style="position: auto;">
+            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
                 The <i>p</i> value represents all cell types for the respective REM.</span></th>
-            <th>associated REM cluster</th>
-            {% for cellType in cell_types_list %}
+            <th>Associated REM cluster</th>
+            {% for cellType in cell_types_list_upper %}
                 <th>{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})</th>
             {% endfor %}
         </tr>
