@@ -1,7 +1,7 @@
 import os
 import sys
 from django.conf import settings
-# import pymysql
+import pymysql
 #sys.path.insert(1, r'website/')#tell python the path of the project
 
 from draftEpi2 import setup #setup function defined in __init__.py of the project (here website)
@@ -96,6 +96,22 @@ def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 	return REM
 
 
+# Given a list of cellTypes, this function checks whether there are samples in the database that match these cellTypes\
+# It uses contains as filter, as the original use is to give suggestions for characters the user enters
+def API_cellTypesValidation(cellTypes_list=[]):
+
+	cellType_valid = []
+	for cellType in cellTypes_list:
+		matching_samples = sampleInfo.objects.filter(cellTypeID__cellTypeName__contains=cellType.lower()).values_list(
+			'cellTypeID', 'cellTypeID__cellTypeName', flat=False)
+
+		for i in matching_samples:  # get rid of double entries
+			if i not in cellType_valid:
+				cellType_valid.append(i)
+
+	return cellType_valid
+
+
 # Giving back the additional information about the CREM that the REMs are belonging to
 def API_CREM(REM):
 
@@ -182,6 +198,7 @@ def API_ENSGID_geneInfo(gene_list):
 	hit_list = []
 	for gene in gene_list:
 		dataset = geneAnnotation.objects.filter(geneID=gene).values()
+
 		hit_list.append(dataset)
 
 	return hit_list

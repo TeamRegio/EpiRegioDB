@@ -34,7 +34,7 @@ urlpatterns = [
     path('geneQuery_search/', gene_search_view),
     path('celltype_search', search_cellTypes),
     path('genesymbol_search', search_geneSymbol),
-    path('geneQuery_search/gene_details/', gene_details_view),
+    path('geneQuery_search/<query_string>/', gene_details_view),
     path('cluster/<CREMID>/', crem_view, name='crems'),
 
 
