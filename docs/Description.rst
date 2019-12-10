@@ -15,4 +15,4 @@ Cite Us
 If you use this webserver, please cite the following:
 
 1. Baumgarten et. al., EpiRegioDB 
-2. Schmidt et. al., STITCHIT <http://dx.doi.org/10.1101/585125
+2. Schmidt et. al., STITCHIT <http://dx.doi.org/10.1101/585125>_
