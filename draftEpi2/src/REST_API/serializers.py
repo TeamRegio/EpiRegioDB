@@ -2,19 +2,45 @@ from rest_framework import serializers
 from table_manager.models import geneAnnotation, REMAnnotation
 
 
-class GeneInfoSerializer(serializers.ModelSerializer):
+class GeneInfoAllSerializer(serializers.ModelSerializer):
 
+	""" information displayed with url /REST_API/GeneInfo/ """
 	class Meta:
 		model = geneAnnotation
-		fields = ('chr', 'start', 'end', 'geneID', 'geneSymbol', 'alternativeGeneID', 'strand', 'annotationVersion_id')
-		#fields = '__all__'
+		fields = ['geneID']
 
-class REMInfoSerializer(serializers.ModelSerializer):
 
+class GeneInfoSerializer(serializers.ModelSerializer):
+
+	""" information displayed with url /REST_API/GeneInfo/<GeneID>/ """
 	class Meta:
-		model = REMAnnotation #it is only possible to return the fileds of the table REMAnnotation, the API also return the CREMID whichis not possible to display here. Thats because I based the serializer on the models. It is also possible to do it in a models indepent way. Do we prefer this?
+		model = geneAnnotation
+		fields = ('geneID', 'chr', 'start', 'end', 'geneSymbol', 'alternativeGeneID', 'strand', 'annotationVersion_id')
 		#fields = '__all__'
-		fields = ('chr', 'start', 'end', 'geneID_id', 'REMID', 'regressionCoefficient', 'pValue')
 
 
+class REMInfoAllSerializer(serializers.ModelSerializer):
+
+	""" information displayed with url /REST_API/REMInfo/<REMID>/ """
+	class Meta:
+		model = REMAnnotation
+		#fields = '__all__'
+		fields = ('REMID')
+
+
+class REMInfoSerializer(serializers.Serializer):
+	
+	""" information displayed with url /REST_API/REMInfo/<REMID>/ """
+
+	REMID = serializers.CharField(max_length=30)
+	chr = serializers.CharField(max_length=10)
+	start = serializers.IntegerField()
+	end = serializers.IntegerField()
+	geneID = serializers.CharField(source='geneID_id') #rename field name (source is the name of the filed in the dict
+	regressionCoefficient = serializers.FloatField()
+	pValue = serializers.FloatField()
+#	version = serializers.IntegerField()
+	REMsPerCREM = serializers.IntegerField()
+	CREMID = serializers.CharField()
+	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
 

@@ -1,7 +1,7 @@
 import os
 import sys
 from django.conf import settings
-import pymysql
+#import pymysql
 #sys.path.insert(1, r'website/')#tell python the path of the project
 
 from draftEpi2 import setup #setup function defined in __init__.py of the project (here website)
@@ -132,6 +132,48 @@ def API_CREM_overview(CREMID):
 
 	return dataset
 
+def  API_celltypeID_celltype(sample_id):
+
+	cellType_id = sampleInfo.objects.filter(sampleID=sample_id).values()[0] 
+	cellName = cellTypes.objects.filter(cellTypeID = cellType_id['cellTypeID_id']).values()[0]
+	return(cellName['cellTypeName'])
+
+
+
+# The REMID query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
+def API_REMID_celltype_activity(REMID_list, cellTypes_list=[], activ_thresh=0.0):
+
+	hit_list = []
+	for i in REMID_list:
+
+		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
+		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
+		print(this_rem)
+
+		# get the additional columns for the CREMS
+		this_rem = API_CREM(this_rem)
+		print(this_rem)
+
+		# get the celltype activity
+		matching_samples = REMActivity.objects.filter(REMID=this_rem['REMID']).values()
+		activity = {}
+		for elem in matching_samples:
+			print("elem: " + str(elem))
+
+			cellType_name = API_celltypeID_celltype(elem['sampleID_id'])
+			print(cellType_name)
+			if cellType_name in activity.keys():
+				activity[cellType_name] = (float(activity[cellType_name]) + float(elem['dnase1Log2']))/2
+				
+			else:
+				activity[cellType_name] = elem['dnase1Log2']
+
+		this_rem['cellTypeActivity'] = activity
+
+		hit_list.append(this_rem)
+		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+		# we returned None into the list, now we get rid of it
+	return hit_list  # our list of objects, fitting the query_list
 
 # The REMID query. Every REM is handled separately.
 def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
