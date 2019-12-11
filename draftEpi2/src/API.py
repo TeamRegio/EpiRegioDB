@@ -141,28 +141,24 @@ def  API_celltypeID_celltype(sample_id):
 
 
 # The REMID query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
-def API_REMID_celltype_activity(REMID_list, cellTypes_list=[], activ_thresh=0.0):
+def API_REMID_celltype_activity(REMID_list):
 
 	hit_list = []
 	for i in REMID_list:
 
 		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
 		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
-		print(this_rem)
 
 		# get the additional columns for the CREMS
 		this_rem = API_CREM(this_rem)
-		print(this_rem)
 
 		# get the celltype activity
 		matching_samples = REMActivity.objects.filter(REMID=this_rem['REMID']).values()
 		activity = {}
 		for elem in matching_samples:
-			print("elem: " + str(elem))
 
-			cellType_name = API_celltypeID_celltype(elem['sampleID_id'])
-			print(cellType_name)
-			if cellType_name in activity.keys():
+			cellType_name = API_celltypeID_celltype(elem['sampleID_id']) #determines the cellType name from the sampleID 
+			if cellType_name in activity.keys(): #take care of tisue or celltypes that occur more than once
 				activity[cellType_name] = (float(activity[cellType_name]) + float(elem['dnase1Log2']))/2
 				
 			else:
