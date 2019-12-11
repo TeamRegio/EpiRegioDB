@@ -39,8 +39,27 @@ class REMInfoSerializer(serializers.Serializer):
 	geneID = serializers.CharField(source='geneID_id') #rename field name (source is the name of the filed in the dict
 	regressionCoefficient = serializers.FloatField()
 	pValue = serializers.FloatField()
-#	version = serializers.IntegerField()
+	version = serializers.IntegerField()
 	REMsPerCREM = serializers.IntegerField()
 	CREMID = serializers.CharField()
 	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+
+
+class CREMInfoSerializer(serializers.Serializer):
+
+	""" information displayed with url /REST_API/CREMInfo/<CREM_id> """
+	
+	CREMID = serializers.CharField(max_length=30)
+	chr = serializers.CharField(max_length=10)
+	start = serializers.IntegerField()
+	end = serializers.IntegerField()
+	REMsPerCREM = serializers.IntegerField()
+	REMID = serializers.CharField()
+	linkedGene = serializers.CharField(source='geneID_id')
+	REMStart = serializers.IntegerField(source = 'start')
+	REMEnd = serializers.IntegerField(source = 'end')
+	REMRegressionCoefficient = serializers.FloatField(source = 'regressionCoefficient')
+	REMPvalue = serializers.FloatField(source = 'pValue')
+	version = serializers.IntegerField()
+	
 

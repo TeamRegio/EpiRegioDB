@@ -129,6 +129,7 @@ def API_CREM_overview(CREMID):
 	dataset = list(CREMAnnotation.objects.filter(CREMID=CREMID).values(
 		'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
 		'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
+	print(dataset)
 
 	return dataset
 
@@ -141,6 +142,7 @@ def  API_celltypeID_celltype(sample_id):
 
 
 # The REMID query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
+# output fields: chr, start, end, geneID_id, REMID, regressionCoefficient, pValue, version, REMsPerCREM, CREMID, cellTypeActivity -> dictionary of all cell types
 def API_REMID_celltype_activity(REMID_list):
 
 	hit_list = []
@@ -231,12 +233,12 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0):
 
 
 # Is supposed to be used to display the information we have about a gene
+#output fields: chr, start, end, geneID, geneSymbol, alternativeGeneID, isTF, strand, annotationVersion_id
 def API_ENSGID_geneInfo(gene_list):
 
 	hit_list = []
 	for gene in gene_list:
-		dataset = geneAnnotation.objects.filter(geneID=gene).values()
-
+		dataset = geneAnnotation.objects.filter(geneID=gene).values()[0] ###Here was a [0] missing 
 		hit_list.append(dataset)
 
 	return hit_list
