@@ -81,7 +81,16 @@ added to the dictionaries.
 # If no threshold was set, the view returns a 0 as threshold.
 def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 
-	REMID = REM['REMID']
+	try:
+		REMID = REM['REMID']
+	except KeyError:
+		return
+
+	try:
+		activ_thresh = float(activ_thresh)
+	except ValueError:
+		activ_thresh = 0
+
 	for cellType in cellTypes_list:
 		matching_samples = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).filter(dnase1Log2__gte=activ_thresh).values()
 		activity = 0
@@ -102,7 +111,7 @@ def API_cellTypesValidation(cellTypes_list=[]):
 
 	cellType_valid = []
 	for cellType in cellTypes_list:
-		matching_samples = sampleInfo.objects.filter(cellTypeID__cellTypeName__contains=cellType.lower()).values_list(
+		matching_samples = sampleInfo.objects.filter(cellTypeID__cellTypeName__contains=str(cellType).lower()).values_list(
 			'cellTypeID', 'cellTypeID__cellTypeName', flat=False)
 
 		for i in matching_samples:  # get rid of double entries
@@ -115,8 +124,12 @@ def API_cellTypesValidation(cellTypes_list=[]):
 # Giving back the additional information about the CREM that the REMs are belonging to
 def API_CREM(REM):
 
+	try:
+		REMID = REM['REMID']
+	except KeyError:
+		return
 	# get the additional columns for the CREMS
-	CREMInfo = CREMAnnotation.objects.filter(REMID=REM['REMID']).values()
+	CREMInfo = CREMAnnotation.objects.filter(REMID=REMID).values()
 	REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
 	REM['CREMID'] = CREMInfo[0]['CREMID']
 
@@ -124,21 +137,23 @@ def API_CREM(REM):
 
 
 # This is only for the detail view when clicking on a CREM-link
-def API_CREM_overview(CREMID):
+def API_CREM_overview(CREMID_list):
 
-	dataset = list(CREMAnnotation.objects.filter(CREMID=CREMID).values(
-		'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
-		'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
-	print(dataset)
+	hit_list = []
+	for crem in CREMID_list:
+		dataset = list(CREMAnnotation.objects.filter(CREMID=crem).values(
+			'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
+			'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
+		hit_list = hit_list + dataset
 
-	return dataset
+	return hit_list
+
 
 def  API_celltypeID_celltype(sample_id):
 
 	cellType_id = sampleInfo.objects.filter(sampleID=sample_id).values()[0] 
 	cellName = cellTypes.objects.filter(cellTypeID = cellType_id['cellTypeID_id']).values()[0]
 	return(cellName['cellTypeName'])
-
 
 
 # The REMID query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
@@ -172,6 +187,7 @@ def API_REMID_celltype_activity(REMID_list):
 		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 		# we returned None into the list, now we get rid of it
 	return hit_list  # our list of objects, fitting the query_list
+
 
 # The REMID query. Every REM is handled separately.
 def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
