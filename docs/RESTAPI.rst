@@ -27,7 +27,7 @@ This query return for an input gene (or multiple genes) given as ensembl id(s) t
 In detail the geneID, geneSymbol, REMID, chr, start, end, regressionCoefficient, p-value, version of the Epiregio database, number of REMs per CREM, CREM ID, and a list of  the log2(dnase1 signal) of the cell type used in STITCHIT are displayed.
 
 Example:
-Please have a look at the General Information section for an example.
+Please have a look at the *General* Information section for an example.
 
 RegionQuery
 -----------
@@ -35,7 +35,7 @@ Given a genomic region, this query returns all overlapping REMs.
 The genomic region must be given as chr:start-end, where start is smaller or equal than end (e.g. chr16:75423948-75424405). 
 The output has the same format as for the GeneQuery.
 
-Example ::
+Example::
         www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/
 
         www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/
@@ -46,7 +46,9 @@ This query answers the question, which gene is linked to a given REM.
 Therefore, the input must be a valid REM ID (e.g REM0000006).
 As for the GeneQuery and the RegionQuery, multiple inputs are possible, and the output has the same format.
 
-**Example** ::
+**Example** 
+
+::
         www.epiregio.de/REST_API/REMQuery/REM0000002/
 
         www.epiregio.de/REST_API/REMQuery/REM0000002_REM0000007/
