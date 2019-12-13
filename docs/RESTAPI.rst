@@ -14,7 +14,7 @@ All queries follow the same syntax rule::
         www.epiregio.de/REST_API/<query>/<input>/,
 where *input* represents the input of the current query.
 For instance, if you are interested in, which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url::
-        www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/.
+        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/<www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
 In addition, it is possible to request information for multiple inputs within one run. 
 Therefore, the inputs need to be separated by an underscore. Sticking with the previously example,:: 
         www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973_ENSG00000223974/
