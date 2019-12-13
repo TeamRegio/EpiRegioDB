@@ -39,7 +39,7 @@ The output has the same format as for the GeneQuery.
 Example
 ~~~~~~~
         `https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/>`_ 
-        `https://.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/>`_
+        `https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/>`_
 
 REMQuery:
 ---------
@@ -59,8 +59,8 @@ The output format is the same as for the GeneQuery.
 
 Example:
 ~~~~~~~~
-        `www.epiregio.de/REST_API/CREMQuery/CREM0000002/ <www.epiregio.de/REST_API/CREMQuery/CREM0000002/>`_
-        `www.epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/ <www.epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/>`_
+        `https://epiregio.de/REST_API/CREMQuery/CREM0000002/ <https://epiregio.de/REST_API/CREMQuery/CREM0000002/>`_
+        `https://epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/ <https://epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/>`_
 
 GeneInfo
 ---------
@@ -68,8 +68,8 @@ Returns for a given ensembl ID or multiple ensembl ids general gene information 
 
 Example:
 ~~~~~~~
-        `www.epiregio.de/REST_API/GeneInfo/ENSG00000223972/ <www.epiregio.de/REST_API/GeneInfo/ENSG00000223972/>`_
-        `www.epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/ <www.epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/>`_
+        `https://epiregio.de/REST_API/GeneInfo/ENSG00000223972/ <https://epiregio.de/REST_API/GeneInfo/ENSG00000223972/>`_
+        `https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/ <https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/>`_
 
 
 Possible error
