@@ -14,7 +14,7 @@ All queries follow the same syntax rule::
         www.epiregio.de/REST_API/<query>/<input>/,
 where *input* represents the input of the current query.
 For instance, if you are interested in, which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url::
-        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/<www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
+        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/ <www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
 In addition, it is possible to request information for multiple inputs within one run. 
 Therefore, the inputs need to be separated by an underscore. Sticking with the previously example,:: 
         www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973_ENSG00000223974/
@@ -28,16 +28,17 @@ In detail the geneID, geneSymbol, REMID, chr, start, end, regressionCoefficient,
 
 Example:
 ~~~~~~~~~
-Please have a look at the General Information section.
+Please have a look at the General Information section for an example.
 
 RegionQuery
 -----------
 Given a genomic region, this query returns all overlapping REMs. 
 The genomic region must be given as chr:start-end, where start is smaller or equal than end (e.g. chr16:75423948-75424405). 
-The output is in the same format as for the GeneQuery.
+The output has the same format as for the GeneQuery.
 
 Example:
 ~~~~~~~~~
+
 ::
         www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/
 
