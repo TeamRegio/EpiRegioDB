@@ -14,10 +14,10 @@ All queries follow the same syntax rule::
         www.epiregio.de/REST_API/<query>/<input>/,
 where *input* represents the input of the current query.
 For instance, if you are interested in, which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url
-        www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/.
+        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/ <www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
 In addition, it is possible to request information for multiple inputs within one run. 
 Therefore, the inputs need to be separated by an underscore. Sticking with the previously example,
-        www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973_ENSG00000223974/
+        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973_ENSG00000223974/ <www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973_ENSG00000223974/>`_
 returns all REMs associated to the genes ENSG00000223972 ENSG00000223973 and ENSG00000223974. 
 The following provides more information as well as an example for each kind of query.
 
@@ -52,7 +52,7 @@ Example
         www.epiregio.de/REST_API/REMQuery/REM0000002/
         www.epiregio.de/REST_API/REMQuery/REM0000002_REM0000007/
 
-CREAMQuery
+CREMQuery
 ----------
 Given a CREM ID (e.g CREM0000007) or multiple CREM IDs (e.g CREM0000002_CREM0000008), this query lists all REMs of the CREM(s). 
 The output format is the same as for the GeneQuery. 
