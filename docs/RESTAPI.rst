@@ -11,13 +11,13 @@ General Information
 The REST API allows 3 different kinds of queries (GeneQuery, RegionQuery and REMQuery), which have similar functionalities as the corresponding queries of the web interface (Gene ID, Gene region and Regulatory element).
 Furthermore, there is a query that reports all REMs that belong to a CREM (CREMQuery) and a query that provides general information of a gene (GeneInfo). 
 All queries follow the same syntax rule::
-        www.epiregio.de/REST_API/<query>/<input>/,
+        https://epiregio.de/REST_API/<query>/<input>/,
 where *input* represents the input of the current query.
 For instance, if you are interested in, which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url
-        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/ <www.epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
+        `https://epiregio.de/REST_API/GeneQuery/ENSG00000223972/ <https://epiregio.de/REST_API/GeneQuery/ENSG00000223972/>`_.
 In addition, it is possible to request information for multiple inputs within one run. 
 Therefore, the inputs need to be separated by an underscore. Sticking with the previously example,
-        `www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973/ <www.epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973>`_
+        `https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973/ <https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223973>`_
 returns all REMs associated to the genes ENSG00000223972 ENSG00000223973 and ENSG00000223974. 
 The following provides more information as well as an example for each kind of query.
 
@@ -38,8 +38,8 @@ The output has the same format as for the GeneQuery.
 
 Example
 ~~~~~~~
-        `www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/ <www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/>`_ 
-        `www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/ <www.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/>`_
+        `https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/>`_ 
+        `https://.epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/>`_
 
 REMQuery:
 ---------
@@ -49,8 +49,8 @@ As for the GeneQuery and the RegionQuery, multiple inputs are possible, and the 
 
 Example
 ~~~~~~~ 
-        `www.epiregio.de/REST_API/REMQuery/REM0000002/ <www.epiregio.de/REST_API/REMQuery/REM0000002/>`_
-        `www.epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/ <www.epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/>`_
+        `https://epiregio.de/REST_API/REMQuery/REM0000002/ <https://epiregio.de/REST_API/REMQuery/REM0000002/>`_
+        `https://epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/ <https://epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/>`_
 
 CREMQuery
 ----------
