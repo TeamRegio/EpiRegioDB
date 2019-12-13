@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys, math
 from django.conf import settings
 #import pymysql
 #sys.path.insert(1, r'website/')#tell python the path of the project
@@ -95,7 +94,7 @@ def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 	try:
 		REMID = REM['REMID']
 	except KeyError:
-		return
+		return None
 
 	try:
 		activ_thresh = float(activ_thresh)
@@ -138,14 +137,14 @@ def API_CREM(REM):
 	try:
 		REMID = REM['REMID']
 	except KeyError:
-		return
+		return None
 	# get the additional columns for the CREMS
 	CREMInfo = CREMAnnotation.objects.filter(REMID=REMID).values()
 	try:
 		REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
 		REM['CREMID'] = CREMInfo[0]['CREMID']
 	except IndexError:
-		return
+		return None
 
 	return REM
 
@@ -154,10 +153,15 @@ def API_CREM(REM):
 def API_CREM_overview(CREMID_list):
 
 	hit_list = []
+	dataset = []
 	for crem in CREMID_list:
-		dataset = list(CREMAnnotation.objects.filter(CREMID=crem).values(
-			'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
-			'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
+		try:
+			dataset = list(CREMAnnotation.objects.filter(CREMID=crem).values(
+				'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
+				'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
+		except KeyError:
+			continue
+		
 		hit_list = hit_list + dataset
 
 	return hit_list
@@ -168,7 +172,7 @@ def  API_celltypeID_celltype(sample_id):
 	try:
 		cellType_id = sampleInfo.objects.filter(sampleID=sample_id).values()[0]
 	except IndexError:
-		return
+		return None
 
 	cellName = cellTypes.objects.filter(cellTypeID=cellType_id['cellTypeID_id']).values()[0]
 
@@ -180,7 +184,10 @@ def  API_celltypeID_celltype(sample_id):
 def API_cellType_activity_per_REM(rem_id):
 
 	# get the celltype activity
-	matching_samples = REMActivity.objects.filter(REMID=rem_id['REMID']).values()
+	try:
+		matching_samples = REMActivity.objects.filter(REMID=rem_id['REMID']).values()
+	except KeyError:
+		return None
 	activity = {}
 	for elem in matching_samples:
 
@@ -198,7 +205,7 @@ def API_cellType_activity_per_REM(rem_id):
 # output fields: chr, start, end, geneID_id, REMID, regressionCoefficient, pValue, version, REMsPerCREM, CREMID, cellTypeActivity -> dictionary of all cell types
 def API_REMID_celltype_activity(REMID_list):
 
-	helper = API_REMID(REMID_list)
+	helper = API_REMID(REMID_list) #worst case this an empty list
 	hit_list = []
 	for i in helper:
 		hit_list.append(API_cellType_activity_per_REM(i))
@@ -269,7 +276,10 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0):
 	hit_list = []
 
 	for i in gene_list:
-		dataset = list(REMAnnotation.objects.filter(geneID=i).values())  # we convert the queryset into a list so we can
+		try:
+			dataset = list(REMAnnotation.objects.filter(geneID=i).values())  # we convert the queryset into a list so we can
+		except KeyError:
+			continue
 		# add values to it
 		for n in range(len(dataset)):
 			dataset[n] = API_CREM(dataset[n])
@@ -315,14 +325,17 @@ def API_Region_celltype_activity(region_list):
 def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
 	hit_list = []
-
+	dataset = []
 	for i in region_list:
-		dataset = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
-
-		for n in range(len(dataset)):
-			dataset[n] = API_CREM(dataset[n])
-			if len(cellTypes_list) > 0:
-				dataset[n] = API_cellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
+		try:
+			dataset = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
+			for n in range(len(dataset)):
+				dataset[n] = API_CREM(dataset[n])
+				if len(cellTypes_list) > 0:
+					dataset[n] = API_cellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
+		
+		except KeyError:
+			continue
 
 		hit_list = hit_list + dataset
 
