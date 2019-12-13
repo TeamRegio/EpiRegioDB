@@ -5,8 +5,7 @@ EpiRegioDB provides an user-friendly REST framework based web interface to retri
 
 The REST API allows 3 different kinds of queries (GeneQuery, RegionQuery and REMQuery), which have similar functionalities as the corresponding queries of the web interface (Gene ID, Gene region and Regulatory element).
 Furthermore, there is a query that reports all REMs that belong to a CREM (CREMQuery) and a query that provides general information of a gene (GeneInfo). 
-All queries follow the same syntax rule:
-.. code-block::
+All queries follow the same syntax rule::
    www.epiregio.de/REST_API/<query>/<input>/
 
 
