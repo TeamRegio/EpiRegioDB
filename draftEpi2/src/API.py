@@ -73,7 +73,18 @@ for cellTypes (if any cellTypes given) and for adding the CREM information are c
 added to the dictionaries.
 """
 
+# Function to add the modelScore to the dictionary, taking a list of dictionaries
+def API_modelScore(hit_list):
 
+	for hit in range(len(hit_list)):
+		try:
+			hit_list[hit]['modelScore'] = -math.log2(hit_list[hit]['pValue'])
+		except KeyError:
+			hit_list[hit] = None
+
+	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+
+	return hit_list
 
 # For every query, we give the possibility to give back the activity of the REMs. This function is only
 # called, when there are cellTypes given. Another option is to provide a threshold, which excludes all the REMs that
@@ -127,11 +138,14 @@ def API_CREM(REM):
 	try:
 		REMID = REM['REMID']
 	except KeyError:
-		return 
+		return
 	# get the additional columns for the CREMS
 	CREMInfo = CREMAnnotation.objects.filter(REMID=REMID).values()
-	REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
-	REM['CREMID'] = CREMInfo[0]['CREMID']
+	try:
+		REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
+		REM['CREMID'] = CREMInfo[0]['CREMID']
+	except IndexError:
+		return
 
 	return REM
 
@@ -151,8 +165,13 @@ def API_CREM_overview(CREMID_list):
 # given a sample_id the function return the correpsonding cell_name
 def  API_celltypeID_celltype(sample_id):
 
-	cellType_id = sampleInfo.objects.filter(sampleID=sample_id).values()[0] 
-	cellName = cellTypes.objects.filter(cellTypeID = cellType_id['cellTypeID_id']).values()[0]
+	try:
+		cellType_id = sampleInfo.objects.filter(sampleID=sample_id).values()[0]
+	except IndexError:
+		return
+
+	cellName = cellTypes.objects.filter(cellTypeID=cellType_id['cellTypeID_id']).values()[0]
+
 	return(cellName['cellTypeName'])
 
 
@@ -193,7 +212,10 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 	for i in REMID_list:
 
 		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
-		this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
+		try:
+			this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
+		except IndexError:
+			continue
 
 		# get the additional columns for the CREMS
 		this_rem = API_CREM(this_rem)
@@ -201,11 +223,14 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 		# if there are cellTypes that should be filtered for, we do it here for every single REM, to directly add it
 		# to the REMs dictionary
 		if len(cellTypes_list) > 0:
-				this_rem = API_CellTypesActivity(this_rem, cellTypes_list, activ_thresh)
+				this_rem = API_cellTypesActivity(this_rem, cellTypes_list, activ_thresh)
 
 		hit_list.append(this_rem)
-		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
-		# we returned None into the list, now we get rid of it
+
+	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+	# we returned None into the list, now we get rid of it
+
+	hit_list = API_modelScore(hit_list)
 
 	return hit_list  # our list of objects, fitting the query_list
 
@@ -215,9 +240,11 @@ def API_SymbolToENSG(symbol_list):
 
 	hit_list = []
 	for symbol in symbol_list:
-
-		dataset = geneAnnotation.objects.get(geneSymbol=symbol)
-		this_ID = dataset.geneID
+		try:
+			dataset = geneAnnotation.objects.filter(geneSymbol=symbol).values()[0]
+			this_ID = dataset['geneID']
+		except IndexError:
+			continue
 
 		hit_list.append(this_ID)
 
@@ -234,6 +261,7 @@ def API_GeneID_celltype_activity(REMID_list):
 		hit_list.append(API_cellType_activity_per_REM(i)) # determine activity
 	return hit_list
 
+
 # For the GeneID query: given a set of genes, we look up all the REMs for each of them and add
 # the additional information
 def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0):
@@ -249,7 +277,8 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0):
 				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_thresh)
 
 		hit_list = hit_list + dataset
-		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+
+	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 		# we returned None into the list, now we get rid of it
 
 	return hit_list
@@ -261,10 +290,15 @@ def API_ENSGID_geneInfo(gene_list):
 
 	hit_list = []
 	for gene in gene_list:
-		dataset = geneAnnotation.objects.filter(geneID=gene).values()[0] ###Here was a [0] missing 
+		try:
+			dataset = geneAnnotation.objects.filter(geneID=gene).values()[0]
+		except IndexError:
+			continue
+
 		hit_list.append(dataset)
 
 	return hit_list
+
 
 # The Region query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
 # region_list format: [[chr, start, end], [chr, start, end]]
@@ -284,13 +318,17 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
 	for i in region_list:
 		dataset = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
+
 		for n in range(len(dataset)):
 			dataset[n] = API_CREM(dataset[n])
 			if len(cellTypes_list) > 0:
-				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
+				dataset[n] = API_cellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
 
 		hit_list = hit_list + dataset
-		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
-		# we returned None into the list, now we get rid of it
+
+	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+	# we returned None into the list, now we get rid of it
+
+	hit_list = API_modelScore(hit_list)
 
 	return hit_list  # our list of dictionaries, fitting the query_list
