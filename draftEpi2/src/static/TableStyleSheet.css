@@ -238,13 +238,13 @@ table.dataTable td {
     clear: both;
     float: left;
     padding-top: 0.755em;
-    margin-left: 4em;
+    margin-left: 5%;
     font-size: 16px;}
   .dataTables_wrapper .dataTables_paginate {
     float: right;
     text-align: right;
     padding-top: 0.25em;
-    margin-right: 4em;
+    margin-right: 5%;
     font-size: 16px;}
     .dataTables_wrapper .dataTables_paginate .paginate_button {
       box-sizing: border-box;

@@ -16,3 +16,11 @@ def contact_view(request):
 
 def navbars_view(request):
     return render(request, 'navbars.html', {})
+
+
+def REST_API_view(request):
+    return render(request, 'REST_API_home.html', {})
+
+
+def REST_API_error_view(request):
+    return render(request, 'REST_API_error.html', {})

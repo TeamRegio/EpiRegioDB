@@ -118,9 +118,9 @@
             <div class ='selectedButtons' id="container_cellTypes"> </div>
 
             <div id="threshold_div" style="visibility: hidden;">
-            <p id="threshold_header"><b>Set an activity threshold (optional):</b></p>
-            <div data-tip="Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed">
-            <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div></div>
+                <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional):</b><span class="tooltiptext_right" style="width:300px;">
+                    Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed</span></p><br>
+                <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div>
 
             </td>
         </tr>
@@ -147,3 +147,4 @@
 </body>
 
 <!--<button type="button" class='ajax_search_list' id="testingFunction" onclick="testingFunction()">TEST TEST</button>-->
+{% include 'footer.html' %}

@@ -19,6 +19,14 @@
 </head>
 <br>
 <br>
+<h1 class="queryDescription" style="font-size:24px; margin-left: 5%;">For further information look into the Ensembl webpage:</h1>
+<ul style="margin-left: 5%;">
+{% for gene in query_list_list %}
+    <li><a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene }}">{{gene}}</a></li>
+{% endfor %}
+</ul>
+<br>
+<br>
 <table id="QueryResults" class="cell-border hover order-column">
     <caption>More Details about your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
 
@@ -55,20 +63,23 @@
             <th>Gene Start</th>
             <th>Gene End</th>
             <th>Strand</th>
+            <th>Genome annotation version</th>
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.0.geneID }}</td>
-            <td>{{ item.0.geneSymbol }}</td>
-            <td>{{ item.0.chr }}</td>
-            <td>{{ item.0.start }}</td>
-            <td>{{ item.0.end }}</td>
-            <td>{{ item.0.strand }}</td>
+            <td>{{ item.geneID }}</td>
+            <td>{{ item.geneSymbol }}</td>
+            <td>{{ item.chr }}</td>
+            <td>{{ item.start }}</td>
+            <td>{{ item.end }}</td>
+            <td>{{ item.strand }}</td>
+            <td>hg38</td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
+{% include 'footer.html' %}
 

@@ -1,0 +1,47 @@
+<style>
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  min-height: 100%;
+  height: 100%;
+}
+
+#wrapper {
+  background-color: #e3f2fd;
+  min-height: 100%;
+  height: auto !important;
+  margin-bottom: -50px; /* the bottom margin is the negative value of the footer's total height */
+}
+
+#wrapper:after {
+  content: "";
+  display: block;
+  height: 50px; /* the footer's total height */
+}
+
+#content {
+  height: 100%;
+}
+
+#footer {
+  height: 50px; /* the footer's total height */
+}
+
+#footer-content {
+  background-color: #f3e5f5;
+  border: 1px solid #ab47bc;
+  height: 32px; /* height + top/bottom paddding + top/bottom border must add up to footer height */
+  padding: 8px;
+}
+
+</style>
+
+<!--<div class="footer">-->
+<!--    See the <a style="color: white;" href="http://www.uni-frankfurt.de/70876599/Datenschutzerkl%C3%A4rung?">data policy</a> of our university-->
+<!--</div>-->
+
+<!--<div id="wrapper">-->
+
+<!--</div>-->
+<!--<footer id="footer"><div id="footer-content">Footer</div></footer>-->

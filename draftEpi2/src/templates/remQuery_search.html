@@ -48,18 +48,19 @@
 
         </script>
         <tr>
-{% if data != None %}
             <th>REM ID</th>
             <th>Gene ID</th>
+            <th>Gene symbol</th>
             <th>Chromosome</th>
             <th>REM start</th>
             <th>REM end</th>
-            <th>Regression coefficient</th>
-            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
-                The <i>p</i> value represents all cell types for the respective REM.</span></th>
+            <th>Predicted function</th>
+            <th class="tooltip_table" style="display: align;">Model score<span class="tooltiptext_top">
+                Represents the importance of the REM for its associated gene over all cell types.</span></th>
             <th>Associated REM cluster</th>
             {% for cellType in cell_types_list_upper %}
-                <th>{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})</th>
+                <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
+                    <span class="tooltiptext_top">Mean over the number of samples n</span></th>
             {% endfor %}
         </tr>
     </thead>
@@ -68,11 +69,16 @@
         <tr>
             <td>{{ item.REMID }}</td>
             <td>{{ item.geneID_id }}</td>
+            <td>{{ item.geneSymbol }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
-            <td>{{ item.regressionCoefficient|floatformat:5 }}</td>
-            <td>{{ item.pValue|floatformat:5 }}</td>
+            {% if item.regressionCoefficient > 0 %}
+                <td>activating</td>
+            {% else %}
+                <td>repressing</td>
+            {% endif %}
+            <td>{{ item.modelScore|floatformat:5 }}</td>
             <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</a></td>
             {% for cellType in cell_types_list %}
                 <td>{% get_cellType_attr item cellType "activity" %}</td>
@@ -80,7 +86,7 @@
         </tr>
         {% endfor %}
     </tbody>
-{% endif %}
 </table>
 
 
+{% include 'footer.html' %}

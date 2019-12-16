@@ -121,7 +121,7 @@ function chooseRegion(example_chr, example_start, example_end, is_example){
     if (existent === false) {
         var button_add = document.createElement("input");
         button_add.type = "button";
-        button_add.value = chr + " " + start + "-" + end;
+        button_add.value = chr + ": " + start + "-" + end;
         button_add.id = id_str;
         button_add.className = "chosenButtons";
         container.appendChild(button_add);
@@ -283,7 +283,7 @@ function exemplaryGeneIDQuery(){
     if (current === 'symbol_format') {
         chooseButton("SSTR1", 'container_geneSymbol', "SSTR1");
         chooseButton("DBR1", 'container_geneSymbol', "DBR1");
-        chooseButton("FOXP3", 'container_geneSymbol', "FOXP3");
+        chooseButton("RP11-77K12.9", 'container_geneSymbol', "RP11-77K12.9");
         chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
         chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
         chooseButton("CTID_0000052", "container_cellTypes", "heart");
@@ -293,7 +293,7 @@ function exemplaryGeneIDQuery(){
 }
 
 function exemplaryREMQuery(){
-    document.getElementById("REMIDs").value = "REM0000001, REM0000002, REM0000042";
+    document.getElementById("REMIDs").value = "REM0595948, REM0236120, REM0236139 ";
     chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
     chooseButton("CTID_0000052", "container_cellTypes", "heart");

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import *
-from API import API_SymbolToENSG, API_ENSGID, API_ENSGID_geneInfo, API_CREM_overview
+from API import *
 
 
 # The first view only renders our HTML form where we can set our filters.
@@ -28,20 +28,10 @@ def strip_csv_query(query):
     return query, query_cleaned_string[1:], export_string[1:]  # from 1, because 0 is a comma
 
 
-# def search_for_geneID(query_list):  # We look up in our REMAnnotation table, which objects fit the entered GeneIDs and
-#     # return them in a list
-#     hit_list = []
-#     for i in query_list:
-#         data_set = REMAnnotation.objects.filter(geneID=i)
-#         for single_obj in data_set:
-#             single_obj.pValue = round(10**(float(single_obj.pValue)), 6)  # provisional way to round
-#             single_obj.regressionCoefficient = round(float(single_obj.regressionCoefficient), 6)
-#             hit_list.append(single_obj)
-#     return hit_list  # our list of objects, fitting the query_list
-
-
 def gene_search_view(request):  # We grab all the submitted inputs, store them in the context and pass it on to our
     # geneQuery_search html
+
+    error_msg = ''
 
     gene_format = request.POST.get('gene_format')
     csv_file = request.POST.get('csvFile')
@@ -51,9 +41,9 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         try:
             activ_thresh = float(activ_thresh)
         except ValueError:
-            activ_thresh = 0
+            activ_thresh = 0.0
     else:
-        activ_thresh = 0
+        activ_thresh = 0.0
 
     if gene_format == 'id_format':
         query = request.POST.get('geneID_numeric')  # if it's numeric, we just want to get the string in the field
@@ -72,6 +62,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         cell_types_list = cell_types.split(', ')
     else:
         cell_types_list = []
+    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
 
     query_list = strip_csv_query(query)[0]
     query_list_string = strip_csv_query(query)[1]
@@ -84,21 +75,39 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     if gene_format == 'symbol_format':  # in case of geneSymbol as query we first have to look up the respective
         # ensemble ID
         query_list = API_SymbolToENSG(query_list)  # our API function to convert geneSymbols to ENSG IDs
+        if query_list[:5] == 'Error':  # if there was a non-matching geneSymbol we get the error msg back
+            error_msg = query_list
 
-    data = API_ENSGID(query_list, cell_types_list, activ_thresh)
-    if len(data) == 0:
-        data = None  # if so, we don't display any table in the view
+    data, no_data = API_ENSGID(query_list, cell_types_list, activ_thresh, gene_format)  # data are the hits, meaning the
+    # dictionaries, no_data are the genes for which there was no REM in the db
 
-    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+    no_data_string = ''
+    for i in no_data:
+        no_data_string += i + ', '
+
+    template = 'geneQuery_search.html'
+    if len(data) == 0 or data[:5] == 'Error':
+        template = 'empty_data.html'  # we switch the template if there is no data
+        if error_msg == '' and activ_thresh != 0.0 and no_data_string != '':  # if we already have the geneSymbol error we want to keep it
+            error_msg = 'No data was found that match your query settings. You might want to try modifying ' \
+                        'the activity threshold.'
+        if error_msg == '' and activ_thresh == 0.0:
+            error_msg = 'The model did not find putative REMs that are associated with your queried genes.'
+        if data[:5] == 'Error':  # for the case there is an invalid ensemble geneID
+            error_msg = data
 
     context = {
         'data': data,
+        'no_data_string': no_data_string[:-2],
         'query_string': query_list_string,
         'export_string': export_string,
+        'cell_types_string': cell_types,
         'cell_types_list': cell_types_list,
-        'cell_types_list_upper': cell_types_list_upper
+        'cell_types_list_upper': cell_types_list_upper,
+        'activ_thresh': activ_thresh,
+        'error_msg': error_msg,
     }
-    return render(request, 'geneQuery_search.html', context)
+    return render(request, template, context)
 
 
 def search_geneSymbol(request):  # the function is called by ajax via the url set in the ajax file
@@ -120,11 +129,7 @@ def search_cellTypes(request):
     else:
         search_text = ''
     if 1 <= len(search_text):
-        matching_samples = sampleInfo.objects.filter(cellTypeID__cellTypeName__contains=search_text.lower()).values_list('cellTypeID', 'cellTypeID__cellTypeName', flat=False)
-        cellType_search = []
-        for i in matching_samples:  # get rid of double entries
-            if i not in cellType_search:
-                cellType_search.append(i)
+        cellType_search = API_cellTypesValidation([search_text])
     else:
         cellType_search = ''
 
@@ -132,23 +137,10 @@ def search_cellTypes(request):
                               {'cellType_search': cellType_search[:15], 'search_text_len': len(search_text), 'len_hits': len(cellType_search)})
 
 
-# CREM VIEWS ####################################################################
-
-# def search_for_rems(query_list):  # For the placeholder data we look for REMs
-#     hit_list = []
-#     data_set = REMAnnotation.objects.filter(REMID=query_list)
-#     print(data_set)
-#     for single_obj in data_set:
-#         single_obj.pValue = round(10**(float(single_obj.pValue)), 6)  # provisional way to round
-#         single_obj.regressionCoefficient = round(float(single_obj.regressionCoefficient), 6)
-#         hit_list.append(single_obj)
-#     return hit_list  # our list of objects, fitting the query_list
-
-
 def crem_view(request, CREMID):
 
     context = {
-        'data': API_CREM_overview(CREMID),
+        'data': API_CREM_overview([CREMID]),
         'query': CREMID,
     }
     return render(request, 'linked_crem.html', context)
@@ -157,19 +149,22 @@ def crem_view(request, CREMID):
 # GENE DETAILS VIEW ####################################################################
 
 def gene_details_view(request, query_string):
-    # queried_genes = request.POST.get('query_string')
-    print("genedetailsview")
-    print(strip_csv_query(query_string)[0])
 
     query_list = strip_csv_query(query_string)[0]
+    query_list_list = query_list
+
+    if query_list[0][:4] != 'ENSG':
+        query_list = API_SymbolToENSG(query_list)
 
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
         export_string = strip_csv_query(query_string)[2] + '...' + str(len(query_list)-3) + ' more'
     else:
         export_string = query_string
-    print(API_ENSGID_geneInfo(query_list))
+
     context = {
         'data': API_ENSGID_geneInfo(query_list),
+        'query_list': query_list,
+        'query_list_list': query_list_list,
         'query_string': query_string,
         'export_string': export_string,
     }

@@ -19,7 +19,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
 <br>
+
+{% if no_data_string|length > 0 %}
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">The model did not find putative REMs that are associated with the following genes:</h1>
+<p>{{no_data_string}}</p></div>
 <br>
+<br>
+{% endif %}
 
 <table id="QueryResults" class="cell-border hover order-column">
     <caption>Results based on your Query for the genes: <a id="gene_detail_link" class="link" href="/geneQuery_search/{{query_string}}/"><strong id="queried_genes"> {{query_string}} </strong></a></caption>
@@ -51,18 +57,19 @@
 
         </script>
         <tr>
-{% if data != None %}
             <th>Gene ID</th>
+            <th>Gene symbol</th>
             <th>REM ID</th>
             <th>Chromosome</th>
             <th>REM start</th>
             <th>REM end</th>
-            <th>Regression coefficient</th>
-            <th class="tooltip_table" style="display: align;"> <i>p</i> Value<span class="tooltiptext_top">
-                The <i>p</i> value represents all cell types for the respective REM.</span></th>
+            <th>Predicted function</th>
+            <th class="tooltip_table" >Model score<span class="tooltiptext_top">
+                Represents the importance of the REM for its associated gene over all cell types.</span></th>
             <th>Associated REM cluster</th>
             {% for cellType in cell_types_list_upper %}
-                <th>{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})</th>
+                <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
+                    <span class="tooltiptext_top">Mean over the number of samples n</span></th>
             {% endfor %}
         </tr>
     </thead>
@@ -70,22 +77,25 @@
     {% for item in data %}
         <tr>
             <td>{{ item.geneID_id }}</td>
+            <td>{{ item.geneSymbol }}</td>
             <td>{{ item.REMID }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
-            <td>{{ item.regressionCoefficient|floatformat:5 }}</td>
-            <td>{{ item.pValue|floatformat:5 }}</td>
+            {% if item.regressionCoefficient > 0 %}
+                <td>activating</td>
+            {% else %}
+                <td>repressing</td>
+            {% endif %}
+            <td>{{ item.modelScore|floatformat:5 }}</td>
             <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</a></td>
             {% for cellType in cell_types_list %}
                 <td>{% get_cellType_attr item cellType "activity" %}</td>
             {% endfor %}
         </tr>
     {% endfor %}
-{% endif %}
     </tbody>
 </table>
 
-
-
+{% include 'footer.html' %}
 

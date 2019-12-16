@@ -50,7 +50,22 @@ a.link{
 color: #00537d;
 }
 
+a.link:hover{
+ background: #ededed;
+}
+div.no_data_div{
+    border: 1px black solid;
+    position: center;
+    margin-left: 100px;
+    width: 800px;
+}
 
+table.error_table{
+    margin-left: 50px;
+    font-size: 20px;
+    border: 1px solid #a6a6a6;
+    padding: 10px;
+}
 /* SELECT **************************************** **************************************** */
 select{
     font-size: 18px;
@@ -253,14 +268,15 @@ button.clearFiles:active {
 }
 
 /* TOOLTIPS **************************************** **************************************** */
-
 .tooltip {
   position: relative;
   display: inline-block;
 }
 .tooltip_table{
     display: align;
+    position: relative;
 }
+
 
 .tooltip .tooltiptext_right {
   visibility: hidden;
@@ -335,9 +351,9 @@ button.clearFiles:active {
   border-radius: 4px;
   position: absolute;
   z-index: 99;
-  top: 0em;
   font-family: adhari;
   margin-left: -200px;
+  bottom: 105%;
 }
 
 .tooltip_table:hover .tooltiptext_top{
@@ -355,50 +371,6 @@ button.clearFiles:active {
   border-color: #073946 transparent transparent transparent;
 }
 
-
-[data-tip] {
-	position:relative;
-
-}
-[data-tip]:before {
-	content:'';
-	/* hides the tooltip when not hovered */
-	display:none;
-	content:'';
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-bottom: 5px solid #073946;
-	position:absolute;
-	top:35px;
-	left:35px;
-	z-index:8;
-	font-size:0;
-	line-height:0;
-	width:0px;
-	height:0;
-}
-[data-tip]:after {
-	display:none;
-	content:attr(data-tip);
-	position:absolute;
-	padding:5px 8px;
-	background: #073946;
-	color:#fff;
-	z-index:9;
-	font-size: 16 px;
-    font-family: adhari;
-    width: relative;
-    line-height:18px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	white-space:wrap;
-	word-wrap:normal;
-}
-[data-tip]:hover:before,
-[data-tip]:hover:after {
-	display:block;
-}
 /* ERROR MESSAGES **************************************** **************************************** */
 
 div.formError {

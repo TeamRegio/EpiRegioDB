@@ -30,13 +30,21 @@ blockquote {
 
 
 </style>
-
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+</head>
 
 <div class="introBlock">
 
 <blockquote>
 <h2>Help</h2>
-<p class='contactText'> If you have further questions, please contact us via the following email address:
+
+<p class='contactText'>
+For a detailed documentation including a step-by-step guide and exemplary user cases please visit
+our <strong><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/"> Read the docs page</a></strong>.
+    <br>
+    <br>
+    If you have further questions, please contact us via the following email address:
 
 <br>
 <br>
@@ -49,5 +57,6 @@ blockquote {
 </div>
 
 
+{% include 'footer.html' %}
 
 

@@ -41,6 +41,8 @@ def rem_search_view(request):
     else:
         cell_types_list = []
 
+    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+
     # If a file is there, we take it and forget the rest
     if len(csv_file) > 0:
         query = csv_file
@@ -53,16 +55,23 @@ def rem_search_view(request):
         export_string = query_list_string
 
     data = API_REMID(query_list, cell_types_list, activ_thresh)
-    if len(data) == 0:
-        data = None  # if so, we don't display any table in the view
-
-    cell_types_list_upper = [x.capitalize() for x in cell_types_list]
+    template = 'remQuery_search.html'
+    error_msg = ''
+    if len(data) == 0 or data[:5] == 'Error':
+        template = 'empty_data.html'  # we switch the template if there is no data
+        error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
+                    'activity threshold.'
+        if data[:5] == 'Error':
+            error_msg = data
 
     context = {
         'data': data,
         'query_string': query_list_string,
         'export_string': export_string,
+        'cell_types_string': cell_types,
         'cell_types_list': cell_types_list,
-        'cell_types_list_upper': cell_types_list_upper
+        'cell_types_list_upper': cell_types_list_upper,
+        'activ_thresh': activ_thresh,
+        'error_msg': error_msg,
     }
-    return render(request, 'remQuery_search.html', context)
+    return render(request, template, context)

@@ -1,0 +1,62 @@
+{% include 'navbar.html' %}
+{% load static %}
+<style>
+figure.homefig{
+    float: left;
+}
+div.introBlock{
+    float: left;
+    display: inline;
+}
+figure.rest_fig{
+    float: left;
+    margin-top: 4em;
+}
+p {
+    font-family: adhabi;
+    font-size: 22px;
+    text-align: justify;
+    padding: 25px;
+}
+p.contactText{
+    border-bottom: 1px solid #cccccc;
+}
+blockquote {
+    display: block;
+    width: 700px;
+    text-align: left;
+    float: left;
+}
+
+
+</style>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+</head>
+
+<div class="introBlock">
+
+<blockquote>
+<h2>REST API</h2>
+
+<p class='contactText'>
+If you want to individualize your queries, you can make use of our REST API, a REST framework based web interface. It allows for a specific
+    access to our database via the URL-line and provides the information as a JSON file. For a detailed guide on how to use the REST API please read our
+ <strong><a class="link" href="https://epiregio.readthedocs.io/en/latest/RESTAPI.html"> documentation</a></strong>.
+<br>
+<br>
+You can try out <a href="https://epiregio.de/REST_API/GeneQuery/ENSG00000139874/" class="link">this example</a>.
+
+</p>
+</blockquote>
+</div>
+
+<figure class="rest_fig">
+<a href="https://www.django-rest-framework.org/"><img class='STITCHITImg' src="{% static '/REST_logo.png' %}" width="400px" alt = 'RESP_API_logo'/>
+</a>
+</figure>
+
+
+{% include 'footer.html' %}
+
+

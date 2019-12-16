@@ -14,14 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from home.views import *
 from geneQuery.views import *
 from geneQuery.views import *
 from regionQuery.views import *
 from remQuery.views import *
-from REST_API.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +28,13 @@ urlpatterns = [
     path("", home_view, name="home-page"),
     path('help/', help_view),
     path('contact/', contact_view),
+
+    path('REST_API/', REST_API_view),
+    path('REST_API/GeneInfo/', REST_API_error_view),
+    path('REST_API/GeneQuery/', REST_API_error_view),
+    path('REST_API/RegionQuery/', REST_API_error_view),
+    path('REST_API/REMQuery/', REST_API_error_view),
+    path('REST_API/CREMQuery/', REST_API_error_view),
 
     path('geneQuery/', geneQuery_view, name='geneQuery-page'),
     path('geneQuery_search/', gene_search_view),
@@ -43,9 +49,6 @@ urlpatterns = [
 
     path('REMQuery/', remQuery_view),
     path('REMQuery_search/', rem_search_view),
-
-    path('REST_API/', include('REST_API.urls')),
-
 
 
     path('navbars/', navbars_view),
