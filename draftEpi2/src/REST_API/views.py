@@ -32,33 +32,25 @@ def parseRequest(request, sep, start, end, keyword, region = 0):
 	return output_list
 
 
-
 #url /geneID/
 #model.serializers
 class GeneInfo(APIView):
-	"""display all Info we store for a gene """
-	#TODO: catch errors, I gues this should happen in the API file	
+	""" displays per input Gene ID (e.g. ENSG00000223972) general gene information """
 	def get(self,request, gene_id):
 		gene_id_list = parseRequest(gene_id, '_', 0, 4, 'ENSG')
 		if gene_id_list == 0: #check if input is valid
 			return Response(status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
-	#	try:
-		#test example [0] is necessary to get first element from querySet (set of dictionary or something similar)
-		#gene = geneAnnotation.objects.filter(geneID = gene_id).values()[0]
-
-		#using API function. Since this is a list of query-sets, we need[0] to get the query-set and the second one to geth the first dictionary
-		#gene = API_ENSGID_geneInfo([gene_id])[0][0]
 		gene = API_ENSGID_geneInfo(gene_id_list)
+		if gene == None: 
+			return Response(status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
 		serializers = GeneInfoSerializer(gene, many = True) #wenn man mehrer objects zuruekgeben mag
 		return Response(serializers.data)
-		#except GeneId.DoesNotExist:
-		#	return Response(status=status.HTTP_404_NOT_FOUND)
 		
 #serialisers
 @api_view(['GET'])
 def REMQuery(request, REM_id):
-	""" displays info about REMs, how many REMs we stored per CREM and the corresponding CREMId"""
+	""" displays information about the input regulatory elements (e.g. REM0192593) """
 	if request.method == 'GET':
 		#parse input
 		REM_id_list = parseRequest(REM_id, '_', 0, 3, 'REM')
@@ -74,7 +66,7 @@ def REMQuery(request, REM_id):
 #serialisers
 @api_view(['GET'])
 def CREMQuery(request, CREM_id):
-	""" displays info about REMs, how many REMs we stored per CREM and the corresponding CREMId"""
+	""" lists per input CREM ID (e.g. CREM0192593) all associated REMs seperatly """
 	if request.method == 'GET':
 		#parse input
 		CREM_id_list = parseRequest(CREM_id, '_', 0, 4, 'CREM')
@@ -90,10 +82,9 @@ def CREMQuery(request, CREM_id):
 		return Response(serializers.data)
 
 #serialisers
-# TODO: add GeneName
 @api_view(['GET'])
 def GeneQuery(request, gene_id):
-	""" displays info about REMs, how many REMs we stored per CREM and the corresponding CREMId"""
+	""" displays for each Gene ID (e.g. ENSG00000223972) the associated REMs seperatly"""
 	if request.method == 'GET':
 		#parse input
 		gene_id_list = parseRequest(gene_id, '_', 0, 4, 'ENSG')
@@ -108,7 +99,7 @@ def GeneQuery(request, gene_id):
 
 @api_view(['GET'])
 def RegionQuery(request, region):
-	""" displays info about REMs, how many REMs we stored per CREM and the corresponding CREMId"""
+	""" displays for each input region (e.g. chr16:75423948-75424405 with start<=end) all overlappin REMs """
 	if request.method == 'GET':
 		#parse input
 		# Dennis api function test if start is smaller or equal than end
