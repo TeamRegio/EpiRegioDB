@@ -131,6 +131,22 @@ def API_cellTypesValidation(cellTypes_list=[]):
 	return cellType_valid
 
 
+# To look up for the gene Symbol, whether we have REMs available for them. If not, we won't display that as an option
+# in the gene symbol input field
+def API_geneSymbolValidation(geneSymbol_list=[]):
+
+	geneSymbol_valid = []
+	for symbol in geneSymbol_list:
+		matching_samples = REMAnnotation.objects.filter(geneID_id__geneSymbol__contains=symbol.upper()).values_list(
+			'geneID_id__geneSymbol', flat=False)
+
+		for i in matching_samples:  # get rid of double entries
+			if i not in geneSymbol_valid:
+				geneSymbol_valid.append(i)
+
+	return geneSymbol_valid
+
+
 # Giving back the additional information about the CREM that the REMs are belonging to
 def API_CREM(REM):
 

@@ -1,10 +1,10 @@
 
 {% if search_text_len > 2 %}
 
-    {% if geneSymbol_search.count > 0 %}
+    {% if geneSymbol_search|length > 0 %}
 
         {% for gene in geneSymbol_search %}
-            <button type='button' id={{gene.geneSymbol}} name="{{gene.geneSymbol}}" onclick="chooseButton(this.id, 'container_geneSymbol')" class="ajax_search_list">{{gene.geneSymbol}}</button>
+            <button type='button' id={{gene.geneSymbol}} name="{{gene.geneSymbol}}" onclick="chooseButton(this.id, 'container_geneSymbol')" class="ajax_search_list">{{gene.0}}</button>
         {% endfor %}
 
     {% else %}
