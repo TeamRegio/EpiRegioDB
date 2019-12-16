@@ -105,7 +105,7 @@
             <td colspan="2">
                 <br>
             <h1 class='inputLabel' id="fieldname">Filter for cell types/tissues:</h1>
-                {% csrf_token %}
+
             <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types/tissues" />
             </td>
             <td colspan="3" class="searchButtons" height="100px" width="800px">
@@ -129,7 +129,6 @@
 <br>
 
 
-
 <!-- SUBMIT FORM ---------------------------------------------------------------------------------- -->
 
 <input type="hidden" id="geneRegions" name="geneRegions"/>
@@ -140,8 +139,6 @@
 <button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryRegionQuery()">Exemplary Query</button>
 
 <input class="query_database" onclick='ButtonsToInput("container_geneRegions", "geneRegions"); ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="queryRegionsButton" id="queryRegionsButton" value="Query Database"  />
-
-
 
 </form>
 </body>

@@ -40,7 +40,7 @@
 <h1 style="display: inline;" class="inputLabel">Gene nomenclature:&nbsp;&nbsp;</h1>
     <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >
     <option selected='selected' value="id_format">ensembl ID</option>
-    <option value="symbol_format">gene Symbol</option>
+    <option value="symbol_format">gene symbol</option>
 </select></div>
 <br>
 <br>
@@ -51,7 +51,7 @@
     <table class="geneQueryTable">
         <tr>
             <td>
-            <h1 class="inputLabel" id="geneHeader"> Ensembl gene ID:</h1>{% csrf_token %}
+            <h1 class="inputLabel" id="geneHeader"> Ensembl gene ID:</h1>
             <input width="90%" class='inputForm' id="geneID_numeric" name='geneID_numeric' type="text"  placeholder="E.g. ENSG00000139874, separate multiple IDs by comma" />
             <input class='inputForm' id="geneID_symbolic" name='geneID_symbolic' type="hidden"  placeholder="Type and select buttons on the right, deselect by clicking below" />
             <p  style="visibility:hidden;" class="selectionHeader" id="container_geneSymbolHeader"> Currently selected:</p>
@@ -76,7 +76,7 @@
                 <br>
                 <div class="toggle">
                 <h1 class='inputLabel' id="fieldname">Filter for cell types/tissues:</h1></div>
-                {% csrf_token %}
+
 
                 <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types/tissues" />
                 <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>

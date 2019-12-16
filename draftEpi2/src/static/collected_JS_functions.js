@@ -19,7 +19,7 @@ function switchGeneIDField(){
     if (current === 'symbol_format') {
         document.getElementById("geneID_symbolic").type = "text";
         document.getElementById("geneID_numeric").type = "hidden";
-        document.getElementById("geneHeader").textContent = "Gene Symbol:";
+        document.getElementById("geneHeader").textContent = "Gene symbol:";
         document.getElementById("container_geneSymbolHeader").style.visibility = "visible";
 
 // This here hides the error message when switching to the geneSymbol select. Otherwise
