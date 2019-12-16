@@ -11,11 +11,12 @@ from table_manager.models import geneAnnotation, REMAnnotation
 
 
 class GeneInfoSerializer(serializers.ModelSerializer):
+	annotationVersion = serializers.CharField(source='annotationVersion_id')
 
 	""" information displayed with url /REST_API/GeneInfo/<GeneID>/ """
 	class Meta:
 		model = geneAnnotation
-		fields = ('geneID', 'chr', 'start', 'end', 'geneSymbol', 'alternativeGeneID', 'strand', 'annotationVersion_id')
+		fields = ('geneID', 'chr', 'start', 'end', 'geneSymbol', 'alternativeGeneID', 'strand', 'annotationVersion')
 		#fields = '__all__'
 
 
