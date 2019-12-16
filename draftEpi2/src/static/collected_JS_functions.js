@@ -121,7 +121,7 @@ function chooseRegion(example_chr, example_start, example_end, is_example){
     if (existent === false) {
         var button_add = document.createElement("input");
         button_add.type = "button";
-        button_add.value = chr + ": " + start + "-" + end;
+        button_add.value = chr + ":" + start + "-" + end;
         button_add.id = id_str;
         button_add.className = "chosenButtons";
         container.appendChild(button_add);
