@@ -19,7 +19,7 @@ function switchGeneIDField(){
     if (current === 'symbol_format') {
         document.getElementById("geneID_symbolic").type = "text";
         document.getElementById("geneID_numeric").type = "hidden";
-        document.getElementById("geneHeader").textContent = "Gene Symbol:";
+        document.getElementById("geneHeader").textContent = "Gene symbol:";
         document.getElementById("container_geneSymbolHeader").style.visibility = "visible";
 
 // This here hides the error message when switching to the geneSymbol select. Otherwise
@@ -121,7 +121,7 @@ function chooseRegion(example_chr, example_start, example_end, is_example){
     if (existent === false) {
         var button_add = document.createElement("input");
         button_add.type = "button";
-        button_add.value = chr + ": " + start + "-" + end;
+        button_add.value = chr + ":" + start + "-" + end;
         button_add.id = id_str;
         button_add.className = "chosenButtons";
         container.appendChild(button_add);

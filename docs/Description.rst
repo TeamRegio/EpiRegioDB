@@ -1,9 +1,16 @@
 About
 -----
 
-The field of research on gene regulation has considerably grown during the last years and the acknowledgement of its importance in orchestrating the genetic landscape has expanded. Enhancers are one of the key players in gene regulation and are defined as DNA sequences that influence gene expression. They are able to either support or repress the expression of their associated gene. Due to the ambiguous use of the term enhancers, we introduce the term Regulatory Element (REM). Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence. Different approaches are being used, combining various genomics data to annotate REMs. An even more challenging task is to link the putative REMs to their related gene.
+The field of research on gene regulation has considerably grown during the last years
+and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
+One of the key players are non-coding DNA regions that are able to regulate the expression of genes
+by remodelling the accessibility of chromatin. They are able to support or repress the expression of their associated gene.
+These Regulatory EleMents (REM) can be located far away from their associated genes.
+Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence.
+Different approaches are being used, combining various kinds of genomics data to annotate REMs. An even
+more challenging task is to link the putative REMs to their associated gene.
 
-Here in this database we provide access to the results of STITCHIT, a peak-calling free algorithm that uses chromatin accessibility signal to identify gene-specific REMs. Including data of many different samples provides the possibility to detect segments that show signal variation among the samples which in turn allows a linkage to the current target gene.
+Here we present the EpiRegio webserver, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
 
 STITCHIT
 ========
