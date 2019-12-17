@@ -35,7 +35,7 @@ You can export the table as xls-, csv- or pdf-file. For more details on the gene
 
 
 
-Region based search
+Region Query
 ===================
 
 Do you wish to search for Regulatory Elements (REMs) being located in a specific genomic region? 
@@ -69,7 +69,7 @@ You can export the table as xls-, csv- or pdf-file. For more details on the gene
 
 
 
-REM based search
+REM Query
 =================
 
 Do you wish to search for Regulatory Elements (REMs) by their ID? 
