@@ -39,6 +39,7 @@ The output has the same format as the *GeneQuery* output.
 Example
 ~~~~~~~
         `https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/>`_ 
+        
         `https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/ <https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/>`_
 
 REMQuery:
@@ -50,6 +51,7 @@ As it was for the *GeneQuery* and the *RegionQuery* before, multiple inputs are 
 Example
 ~~~~~~~ 
         `https://epiregio.de/REST_API/REMQuery/REM0000002/ <https://epiregio.de/REST_API/REMQuery/REM0000002/>`_
+        
         `https://epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/ <https://epiregio.de/REST_API/REMQuery/REM0000002_REM0000007_REM0000009/>`_
 
 CREMQuery
@@ -60,6 +62,7 @@ The output format is the same as for the *GeneQuery*.
 Example:
 ~~~~~~~~
         `https://epiregio.de/REST_API/CREMQuery/CREM0000002/ <https://epiregio.de/REST_API/CREMQuery/CREM0000002/>`_
+        
         `https://epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/ <https://epiregio.de/REST_API/CREMQuery/CREM0000002_CREM0000008_CREM0000009/>`_
 
 GeneInfo
@@ -69,6 +72,7 @@ For a given ensembl ID (or multiple ones), the query returns general gene inform
 Example:
 ~~~~~~~
         `https://epiregio.de/REST_API/GeneInfo/ENSG00000223972/ <https://epiregio.de/REST_API/GeneInfo/ENSG00000223972/>`_
+        
         `https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/ <https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/>`_
 
 
