@@ -93,7 +93,8 @@ class RegionQuerySerializer(serializers.Serializer):
 	CREMID = serializers.CharField()
 	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
 
-
+class ErrorSerializer(serializers.Serializer):
+	info = serializers.CharField()
 
 
 

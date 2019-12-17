@@ -229,7 +229,10 @@ def API_cellType_activity_per_REM(rem_id):
 # output fields: chr, start, end, geneID_id, REMID, regressionCoefficient, pValue, version, REMsPerCREM, CREMID, cellTypeActivity -> dictionary of all cell types
 def API_REMID_celltype_activity(REMID_list):
 
-	helper = API_REMID(REMID_list) #worst case this an empty list
+	helper = API_REMID(REMID_list) #determine REMs for the given GeneIDs
+	print(helper)
+	if type(helper) is not list:
+		return helper
 	hit_list = []
 	for i in helper:
 		hit_list.append(API_cellType_activity_per_REM(i))
@@ -286,7 +289,9 @@ def API_SymbolToENSG(symbol_list):
 # output fields: chr, start, end, geneID_id, REMID, regressionCoefficient, pValue, version, REMsPerCREM, CREMID, cellTypeActivity -> dictionary of all cell types
 def API_GeneID_celltype_activity(REMID_list):
 
-	helper = API_ENSGID(REMID_list) #determine REMs for the given GeneIDs
+	helper = API_ENSGID(REMID_list)[0] #determine REMs for the given GeneIDs
+	if type(helper) is not list:
+		return helper
 	hit_list = []
 	for i in helper:
 		hit_list.append(API_cellType_activity_per_REM(i)) # determine activity
