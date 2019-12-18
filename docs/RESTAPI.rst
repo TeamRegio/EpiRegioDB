@@ -13,11 +13,15 @@ Furthermore, there is a query that reports all REMs that belong to a cluster of 
 All queries follow the same syntax rule::
         https://epiregio.de/REST_API/<query>/<input>/
 where *input* represents the input of the current query.
-For instance, if you are interested in which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url::
+For instance, if you are interested in which REMs are linked to the gene ENSG00000223972, then *query* is *GeneQuery* and *input* is *ENSG00000223972*, which results in the following url:
+
         https://epiregio.de/REST_API/GeneQuery/ENSG00000223972/
+
 In addition, it is possible to request information for multiple inputs within one run. 
-Therefore, the inputs need to be separated by an underscore '_'. This can be done as follows ::
+Therefore, the inputs need to be separated by an underscore '_'. This can be done as follows 
+
         https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223974_ENSG00000223984/
+
 returns all REMs associated to the genes ENSG00000223972 ENSG00000223974 and ENSG00000223984. 
 The following provides more information as well as an example for each of the query types.
 
@@ -36,7 +40,7 @@ Given a genomic region, this query returns all REMs that lie completely within t
 The genomic region must be given as chr:start-end, where start is smaller or equal than end (e.g. chr16:75423948-75424405). 
 The output has the same format as the *GeneQuery* output.
 
-Example::
+Example:
 ~~~~~~~
         https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/
         
@@ -48,7 +52,7 @@ This query answers the question, which gene is linked to a given REM.
 Therefore, the input must be a valid REM ID (e.g REM0000006).
 As it was for the *GeneQuery* and the *RegionQuery* before, multiple inputs are possible, and the output has the same format.
 
-Example::
+Example:
 ~~~~~~~ 
         https://epiregio.de/REST_API/REMQuery/REM0000002/
         
