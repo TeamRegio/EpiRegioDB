@@ -19,6 +19,7 @@
 
 
 <body onbeforeunload="setDefault()" onload="createDropdown(); validateRegionQueryForm()">  <!-- resets our chrField when going back in the browser -->
+<div id="wrapper">
 
 <!-- INITIATE INPUT FORM ---------------------------------------------------------------------------------- -->
 
@@ -141,6 +142,7 @@
 <input class="query_database" onclick='ButtonsToInput("container_geneRegions", "geneRegions"); ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="queryRegionsButton" id="queryRegionsButton" value="Query Database"  />
 
 </form>
+</div>
 </body>
 
 <!--<button type="button" class='ajax_search_list' id="testingFunction" onclick="testingFunction()">TEST TEST</button>-->

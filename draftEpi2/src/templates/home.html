@@ -1,33 +1,34 @@
 {% include 'navbar.html' %}
 {% load static %}
 <style>
-figure.homefig{
-    float: left;
+figure.overview{
+    margin-left: 650px;
+    margin-top: 30px;
+    position: absolute;
 }
 div.introduction{
     border-bottom: 1px solid #cccccc;
-    border-left: 1px solid #cccccc;
-    font-family: adhabi;
-    font-size: 20px;
-    text-align: justify;
-    padding: 25px;
 }
 div.introBlock{
     float: left;
     display: inline;
-    width: 700px;
+    width: 600px;
     text-align: left;
     float: left;
-    margin-left: 70px;
+    margin-left: 50px;
 }
-ul{
-
 </style>
 
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+</head>
+
+<body>
+<div id="wrapper" style="min-height:140%;">
 <div class="introBlock">
 
 <h2>Welcome to EpiRegioDB!</h2>
-<div class='introduction'> The field of research on gene regulation has considerably grown during the last years
+<div class='introduction'><p class="textBox"> The field of research on gene regulation has considerably grown during the last years
 and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
 One of the key players are non-coding DNA regions that are able to regulate the expression of genes
 by remodelling the accessibility of chromatin. They are able to support or repress the expression of their associated gene.
@@ -42,11 +43,14 @@ Here we present the EpiRegio webserver, a resource of REMs, providing informatio
     regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about
     the REMs.
     <br>
-    EpiRegio's data is based on the results of STITCHIT, a peak-calling free algorithm that uses chromatin
-accessibility signal to identify gene-specific REMs. For more details, please have a look at the <a href="http://dx.doi.org/10.1101/585125"> preprint</a>.</div>
+EpiRegio's data is based on the results of STITCHIT, a peak-calling free algorithm that uses chromatin
+accessibility signal to identify gene-specific REMs. For more details, please have a look at the <a class="link" href="http://dx.doi.org/10.1101/585125"> preprint</a>.</p></div>
     <br>
+
+
 <h2 class="introduction">Get started </h2>
-<div class='introduction'> You have different options to get the data you want:
+<div class='introduction' style="font-size: 20px; font-family: Times New Roman; padding: 25px;">
+    You have different options to get the data you want:
     <ul>
     <li>query REMs by looking up specific genes</li>
     <li>look into genomic regions</li>
@@ -57,11 +61,13 @@ accessibility signal to identify gene-specific REMs. For more details, please ha
     If you have questions or comments please let us know, we'd be glad to hear them.
 </div>
 </div>
-<figure class="homefig">
-<img class='STITCHITImg' src="{% static '/STITCHIT_Placholder.png' %}" width="800px" alt = 'logo'/>
-<figcaption>Insert descriptive text here </figcaption>
-</figure>
 
+
+<figure class="overview">
+<img class='homefig' src="{% static '/overview.png' %}" style="position:absolute; width: 1000;" alt = 'overview figure'/>
+</figure>
+</div>
+</body>
 
 {% include 'footer.html' %}
 

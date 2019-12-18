@@ -4,42 +4,42 @@
 figure.homefig{
     float: left;
 }
+
 div.introBlock{
     float: left;
     display: inline;
 }
 figure.questionfig{
-    float: right;
+    margin-left: 700px;
+    position: absolute;
     margin-top: 2em;
 }
-p {
-    font-family: adhabi;
-    font-size: 22px;
-    text-align: justify;
-    padding: 25px;
-}
+
 p.contactText{
     border-bottom: 1px solid #cccccc;
 }
+
 blockquote {
     display: block;
-    width: 500px;
+    width: 600px;
     text-align: left;
     float: left;
 }
-
 
 </style>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
 </head>
 
+<body>
+<div id="wrapper">
+
 <div class="introBlock">
 
 <blockquote>
 <h2>Help</h2>
 
-<p class='contactText'>
+<p class='contactText textBox'>
 For a detailed documentation including a step-by-step guide and exemplary user cases please visit
 our <strong><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/"> Read the docs page</a></strong>.
     <br>
@@ -48,14 +48,15 @@ our <strong><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/">
 
 <br>
 <br>
-<b>whichmail@doweprovide?.de</b>
+<b>epiregio@uni-frankfurt.de</b>
 </p></blockquote>
 
 <figure class="questionfig">
 <img class='questionfig' src="{% static '/Questionmark.png' %}" width="100px" alt = 'contact'/>
 </figure>
 </div>
-
+</div>
+</body>
 
 {% include 'footer.html' %}
 

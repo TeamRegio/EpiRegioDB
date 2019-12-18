@@ -9,9 +9,11 @@
     <script src="{% static 'papaparse.min.js' %}"></script>
     <script src="{% static 'jquery-validation-1.19.1/dist/jquery.validate.js' %}"></script>
 </head>
-<br>
-<br>
 <body>
+<div id="wrapper">
+<br>
+<br>
+
 <div class="no_data_div" >
     <h1 class="inputLabel" style="margin-left: 50px; margin-right:50px;">{{error_msg}}</h1>
 
@@ -27,7 +29,7 @@
 <br>
 
 </div>
-
+</div>
 </body>
-
+{% include 'footer.html' %}
 

@@ -21,6 +21,8 @@ img.CREM_img{
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
+<body>
+<div id="wrapper">
 
 
 <p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema.png' %}" width="800px" alt = 'cluster schema'/>
@@ -85,6 +87,7 @@ img.CREM_img{
     {% endfor %}
     </tbody>
 </table>
-
+</div>
+</body>
 
 {% include 'footer.html' %}

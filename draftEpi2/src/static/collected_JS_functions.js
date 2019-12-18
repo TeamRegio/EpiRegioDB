@@ -161,7 +161,7 @@ var chr_start_end = {chr1: [8000, 248944655],
                     chr10: [14061, 133778699],
                     chr11: [75780, 135075899],
                     chr12: [10000, 133238549],
-                    ch13: [18171247, 114351402],
+                    chr13: [18171247, 114351402],
                     chr14: [16057472, 106879812],
                     chr15: [19878555, 101981208],
                     chr16: [8000, 90226646],
@@ -302,7 +302,7 @@ function exemplaryREMQuery(){
 }
 
 function exemplaryRegionQuery(){
-    chooseRegion("chr4", "55042", "420123", 1);
+    chooseRegion("chr4", "100650", "420123", 1);
     chooseRegion("chr2", "1369428", "3456742", 1);
     chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");

@@ -18,6 +18,12 @@ table.regionQueryTable{
     table-layout: fixed;
 }
 
+p.textBox{
+    font-family: Times New Roman;
+    font-size: 20px;
+    padding: 25px;
+}
+
 input.inputForm{
     width: 90%;
     font-size: 18px;

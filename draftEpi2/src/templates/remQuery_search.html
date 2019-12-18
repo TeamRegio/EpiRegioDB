@@ -17,6 +17,9 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
+<body>
+<div id="wrapper">
+
 <table id="QueryResults" class="cell-border hover order-column">
     <caption>Results based on your query for the REMs: <strong id="queried_REMs"> {{query_string}} </strong></caption>
         <br>
@@ -57,7 +60,7 @@
             <th>Predicted function</th>
             <th class="tooltip_table" style="display: align;">Model score<span class="tooltiptext_top">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
-            <th>Associated REM cluster</th>
+            <th class="tooltip_table">Associated REM cluster<span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
             {% for cellType in cell_types_list_upper %}
                 <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
                     <span class="tooltiptext_top">Mean over the number of samples n</span></th>
@@ -87,6 +90,7 @@
         {% endfor %}
     </tbody>
 </table>
-
+</div>
+</body>
 
 {% include 'footer.html' %}

@@ -67,6 +67,13 @@ def region_search_view(request):
     cell_types_list_upper = [x.capitalize() for x in cell_types_list]
 
     query_list = clear_chr_string(query)
+
+    try:
+        query_list = list(set(query_list))  # with use of set, we update our query
+    # list, so we only have unique values in it
+    except TypeError:  # continue if set throws an error
+        pass
+
     query_list_string = query[:-2]
     # get our export string. We shorten it if it has too many entries
     comma_pos = [pos for pos, char in enumerate(query_list_string) if char == ',']

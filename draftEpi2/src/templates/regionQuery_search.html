@@ -57,7 +57,7 @@
             <th>Prediction function</th>
             <th class="tooltip_table" style="display: align;">Model score<span class="tooltiptext_top">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
-            <th>Associated REM cluster</th>
+            <th class="tooltip_table">Associated REM cluster<span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
             {% for cellType in cell_types_list_upper %}
                 <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
                     <span class="tooltiptext_top">Mean over the number of samples n</span></th>            {% endfor %}

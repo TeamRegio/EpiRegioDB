@@ -17,18 +17,17 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
+<body>
+<div id="wrapper">
 <br>
 <br>
-<h1 class="queryDescription" style="font-size:24px; margin-left: 5%;">For further information look into the Ensembl webpage:</h1>
-<ul style="margin-left: 5%;">
-{% for gene in query_list_list %}
-    <li><a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ gene }}">{{gene}}</a></li>
-{% endfor %}
-</ul>
+<div class="no_data_div" style="border: 1px solid #bfbfbf; width: 800px; "><p class="inputLabel" style="margin-left: 10px; margin-right:10px;">For further details on the genes,
+    click on the IDs in the table below which will redirect you to the Ensembl webpage.</p></div>
+
 <br>
 <br>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>More Details about your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
+    <caption>More details about your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
 
     <thead>
         <script>
@@ -69,7 +68,7 @@
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID }}</td>
+            <td><a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.geneID }}">{{item.geneID}}</a></td>
             <td>{{ item.geneSymbol }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.start }}</td>
@@ -80,6 +79,8 @@
     {% endfor %}
     </tbody>
 </table>
+</div>
+</body>
 
 {% include 'footer.html' %}
 

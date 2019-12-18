@@ -168,6 +168,12 @@ def API_CREM(REM):
 # This is only for the detail view when clicking on a CREM-link
 def API_CREM_overview(CREMID_list):
 
+	try:
+		CREMID_list = list(set(CREMID_list))   # with use of set, we update our query
+		# list, so we only have unique values in it
+	except TypeError:  # continue if set throws an error
+		pass
+
 	hit_list = []
 	for crem in CREMID_list:
 		try:
@@ -242,6 +248,12 @@ def API_REMID_celltype_activity(REMID_list):
 # The REMID query. Every REM is handled separately.
 def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 
+	try:
+		REMID_list = list(set(REMID_list))  # with use of set, we update our query
+		# list, so we only have unique values in it
+	except TypeError:  # continue if set throws an error
+		pass
+
 	hit_list = []
 	for i in REMID_list:
 
@@ -302,6 +314,12 @@ def API_GeneID_celltype_activity(REMID_list):
 # the additional information
 def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='id_format'):
 
+	try:
+		gene_list = list(set(gene_list))   # with use of set, we update our query
+		# list, so we only have unique values in it
+	except TypeError:  # continue if set throws an error
+		pass
+
 	hit_list = []
 	no_hit = []
 	for i in gene_list:
@@ -340,6 +358,12 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='id_f
 # output fields: chr, start, end, geneID, geneSymbol, alternativeGeneID, isTF, strand, annotationVersion_id
 def API_ENSGID_geneInfo(gene_list):
 
+	try:
+		gene_list = list(set(gene_list))   # with use of set, we update our query
+		# list, so we only have unique values in it
+	except TypeError:  # continue if set throws an error
+		pass
+
 	hit_list = []
 	for gene in gene_list:
 		try:
@@ -366,6 +390,12 @@ def API_Region_celltype_activity(region_list):
 # For the GeneRegion query: find all the REMs located in the given regions
 def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
+	try:
+		region_list = [list(x) for x in set(tuple(row) for row in region_list)]  # with use of set, we update our query
+		# list, so we only have unique values in it
+	except TypeError:  # if the format wasn't right we continue.
+		pass
+
 	hit_list = []
 	for i in region_list:
 		try:
@@ -379,7 +409,7 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 				if len(cellTypes_list) > 0:
 					dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
 
-		except KeyError:
+		except KeyError or IndexError:
 			continue
 
 		hit_list = hit_list + dataset

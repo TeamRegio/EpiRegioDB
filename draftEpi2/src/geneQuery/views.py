@@ -115,11 +115,10 @@ def search_geneSymbol(request):  # the function is called by ajax via the url se
         search_text_gene = request.POST['search_text_gene']  # grab the string in the input field
     else:
         search_text_gene = ''
-    if 3 <= len(search_text_gene):  # only start looking when there's three chars entered
+    if 2 <= len(search_text_gene):  # only start looking when there's three chars entered
         geneSymbol_search = API_geneSymbolValidation([search_text_gene])
     else:
         geneSymbol_search = ''
-    print(geneSymbol_search[:30])
     return render_to_response('ajax_search_genesymbol.html',
                               {'geneSymbol_search': geneSymbol_search[:30], 'search_text_len': len(search_text_gene)})
 
