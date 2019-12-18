@@ -5,7 +5,7 @@ The field of research on gene regulation has considerably grown during the last 
 and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
 One of the key players are non-coding DNA regions that are able to regulate the expression of genes
 by remodelling the accessibility of chromatin. They are able to support or repress the expression of their associated gene.
-These Regulatory EleMents (REM) can be located far away from their associated genes.
+These Regulatory EleMents (REMs) can be located far away from their associated genes.
 Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence.
 Different approaches are being used, combining various kinds of genomics data to annotate REMs. An even
 more challenging task is to link the putative REMs to their associated gene.
