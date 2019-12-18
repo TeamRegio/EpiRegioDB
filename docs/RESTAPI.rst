@@ -32,7 +32,7 @@ Please have a look at the *General Information* section above for an example.
 
 RegionQuery
 -----------
-Given a genomic region, this query returns all overlapping REMs. 
+Given a genomic region, this query returns all REMs that lie completely within this region. 
 The genomic region must be given as chr:start-end, where start is smaller or equal than end (e.g. chr16:75423948-75424405). 
 The output has the same format as the *GeneQuery* output.
 
@@ -75,11 +75,6 @@ Example:
         
         `https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/ <https://epiregio.de/REST_API/GeneInfo/ENSG00000223972_ENSG00000223978/>`_
 
-
-Possible error
---------------
-
-blabla 
 
 
 
