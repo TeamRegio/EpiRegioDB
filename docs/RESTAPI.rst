@@ -20,9 +20,9 @@ For instance, if you are interested in which REMs are linked to the gene ENSG000
 In addition, it is possible to request information for multiple inputs within one run. 
 Therefore, the inputs need to be separated by an underscore '_'. This can be done as follows 
 
-        https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223974_ENSG00000223984/
+        https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223974/
 
-returns all REMs associated to the genes ENSG00000223972 ENSG00000223974 and ENSG00000223984. 
+returns all REMs associated to the genes ENSG00000223972, and ENSG00000223974. 
 The following provides more information as well as an example for each of the query types.
 
 GeneQuery
