@@ -22,5 +22,5 @@ Cite Us
 =======
 If you use this webserver, please cite the following:
 
-1. Baumgarten et. al., EpiRegioDB 
+1. Baumgarten et. al., Analysis and retrieval of regulatory elements linked to genes with EpiRegio
 2. Schmidt et. al., STITCHIT <http://dx.doi.org/10.1101/585125>_
