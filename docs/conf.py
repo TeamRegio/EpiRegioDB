@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'EpiRegioDB'
-copyright = '2019, Marcel H. Schulz'
+copyright = '2019, Team EpiRegio'
 author = 'Nina Baumgarten, Dennis Hecker, Sivarajan Karunanithi, and Marcel Schulz'
 
 # The version info for the project you're documenting, acts as replacement for
