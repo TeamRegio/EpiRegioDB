@@ -7,6 +7,10 @@ Gene Query
 
 Do you wish to search for Regulatory Elements (REMs) related to a specific gene? 
 
+.. image:: ./images/mini_overview_gene.png
+  :width: 600
+  :alt: Gene Query mini overview
+
 1. Go to the *Gene Query* tab. 
 
 2. You can choose to search either with Ensembl IDs or gene symbols. The version number of Ensembl IDs is not required. When entering gene symbols, you can add suggestions on the right by clicking on the appearing buttons. Selected buttons will be listed underneath 'Currently selected:'. Deselect your choices by reclicking on those buttons. We use the human genome hg38.
@@ -39,6 +43,10 @@ Region Query
 ===================
 
 Do you wish to search for Regulatory Elements (REMs) being located in a specific genomic region? 
+
+.. image:: ./images/mini_overview_region.png
+  :width: 600
+  :alt: Region Query mini overview
 
 1. Go to the *Region Query* tab. 
 
@@ -73,6 +81,10 @@ REM Query
 =================
 
 Do you wish to search for Regulatory Elements (REMs) by their ID? 
+
+.. image:: ./images/mini_overview_REM.png
+  :width: 600
+  :alt: Gene Query mini overview
 
 1. Go to the *REM Query* tab. 
 
