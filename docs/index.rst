@@ -4,3 +4,4 @@
    Description.rst
    UseCases.rst
    RESTAPI.rst
+   KnownIssues.rst
