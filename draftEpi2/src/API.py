@@ -178,22 +178,24 @@ def API_CREM_overview(CREMID_list):
 	for crem in CREMID_list:
 		try:
 			dataset = list(CREMAnnotation.objects.filter(CREMID=crem).values(
-				'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__start',
+				'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID',
+				'REMID_id__start',
 				'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
 		except KeyError:
 			continue
 
-		# We don't use the other function, as the dictionary entry has  a different name for the CREMs
+	# We don't use the other function, as the dictionary entry has  a different name for the CREMs
 		for n in range(len(dataset)):
 			try:
 				dataset[n]['modelScore'] = -math.log2(dataset[n]['REMID_id__pValue'])
 			except KeyError:
 				dataset[n] = None
-			hit_list = hit_list + dataset
 
-		hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+		hit_list = hit_list + dataset
 
-		return hit_list
+	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+
+	return hit_list
 
 
 # given a sample_id the function return the correpsonding cell_name
