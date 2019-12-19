@@ -12,9 +12,10 @@ more challenging task is to link the putative REMs to their associated gene.
 
 Here we present the EpiRegio webserver, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
 
-STITCHIT
+Learning of regulatory elements
 ========
-You can learn more about STITCHIT, a peak calling free algorithm behind this webserver in our `bioRxiv <http://dx.doi.org/10.1101/585125>`_ preprint.
+EpiRegio is based on STITCHIT, a method which was previously developed in our group. It is a peak-calling free approach to identify gene-specific REMs by analyzing epigenetic signal of diverse human cell-types with regard to gene-expression of a distinct gene. In order to identify REMs, a large genomic area around a gene of interest is partition in distinct regions, which show variation in its epigenetic profile correlating with changes in gene expression.
+STITCHIT is applied to large collection of paired, uniformly processed DNase1-seq and RNA-seq samples from Roadmap, ENCODE and Blueprint. We were able to show that STITCHIT outperforms peak based approaches regarding accuracy and resolution. Furthermore, we validate the result from STITCHIT with external data such as ChIA-PET and Promoter-Capture Hi-C data. To show the functional advantage of STITCHIT various analysis were performed like rediscover known enhancers and partitioning larger regulatory elements in smaller regions. Additionally, CRISPR-Cas9 experiment was performed to illustrate the reliability of STITCHIT. For more information, a detailed explanation of the computational method and the evaluation of the results, please have a look at our `bioRxiv <http://dx.doi.org/10.1101/585125>`_ preprint.
 
 
 Cite Us
