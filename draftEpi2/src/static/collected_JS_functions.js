@@ -2,17 +2,24 @@
 /*  DEFAULT, NOMENCLATURE SWITCH, CLEANUPS **************************************** **************************************** */
 
 
-function setDefault() {
-    document.getElementById("chrField").selectedIndex = -1;
-}
-
 function setDefaultGeneID() {
     document.getElementById("geneID_symbolic").type = "hidden";
     document.getElementById("geneID_numeric").type = "text";
     document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
     document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
+    document.getElementById('csv_upload').value = '';
+    document.getElementById('container_geneSymbol').innerHTML = '';
+    document.getElementById('container_cellTypes').innerHTML = '';
 }
 
+function setDefaultDropdown() {
+    document.getElementById("chrField").selectedIndex = -1;
+    document.getElementById('csv_upload').value = '';
+}
+
+function setDefaultREM() {
+    document.getElementById('csv_upload').value = '';
+}
 
 function switchGeneIDField(){
    var current = document.getElementById("gene_format").value;
@@ -302,8 +309,8 @@ function exemplaryREMQuery(){
 }
 
 function exemplaryRegionQuery(){
-    chooseRegion("chr4", "100650", "420123", 1);
-    chooseRegion("chr2", "1369428", "3456742", 1);
+    chooseRegion("chr4", "100650", "120123", 1);
+    chooseRegion("chr2", "1369428", "2056742", 1);
     chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
     chooseButton("CTID_0000052", "container_cellTypes", "heart");
@@ -378,7 +385,7 @@ function validateGeneQueryForm_symbolic(){
         jQuery.validator.addMethod("checkSymbol", function(value,element,param)
     {
         csv_val = document.getElementById('csv_upload').value;
-      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 2 || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
+      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 1 || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
         {
           return true;
         }
@@ -398,8 +405,6 @@ function validateGeneQueryForm_symbolic(){
          $(element).removeClass(errorClass);}
       });
 }
-
-
 
 
 function validateREMQueryForm(){
@@ -466,7 +471,6 @@ function validateRegionQueryForm(){
              $(element).removeClass(errorClass);}
       });
 }
-
 
 
 function validateRegion(){

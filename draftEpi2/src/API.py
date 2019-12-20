@@ -8,6 +8,7 @@ setup()
 
 from django.db import models
 from table_manager.models import *
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -287,14 +288,15 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 # If a user provides the geneSymbols, we convert them into ENSG format and use the other functions
 def API_SymbolToENSG(symbol_list):
 
+	# no need to update the list to unique values, it is done in the main query
 	hit_list = []
 	for symbol in symbol_list:
 		try:
-			this_ID = geneAnnotation.objects.filter(geneSymbol=symbol).values('geneID')[0]
-		except IndexError:
-			return 'Error - Invalid gene symbol: '+symbol  # display the error when there is no matching geneSymbol
-		
-		hit_list.append(this_ID['geneID'])
+			this_ID = geneAnnotation.objects.get(geneSymbol=symbol).geneID
+		except ObjectDoesNotExist:
+			return 'Error - Invalid gene symbol: '+str(symbol)  # display the error when there is no matching geneSymbol
+
+		hit_list.append(this_ID)
 
 	return hit_list  # our list of objects, fitting the query_list
 

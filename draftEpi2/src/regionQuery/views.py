@@ -25,7 +25,7 @@ def region_search_view(request):
     query = request.POST.get('geneRegions')
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     csv_file = request.POST.get('csvFile')
-    print(csv_file)
+
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
         try:
@@ -38,7 +38,7 @@ def region_search_view(request):
     if len(query) == 0:
         csv_list = [x.strip() for x in csv_file.split(',') if x != '' and x != ' ']
         csv_list = [x for x in csv_list if x != '']  # because of possible empty lines
-        print(csv_list)
+
         region_counter = 0
         for i in range(int(len(csv_list)/3)):
             if 'chr' not in csv_list[region_counter*3].lower():
@@ -48,7 +48,6 @@ def region_search_view(request):
             region_counter += 1
     if len(query) == 0:
         query = request.POST.get('chrField') + ":" + str(request.POST.get('chrStart')) + "-" + str(request.POST.get('chrEnd')) + ",'"
-    print(query)
 
     if len(cell_types) > 0:
         cell_types_list = cell_types.split(', ')
