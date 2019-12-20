@@ -411,7 +411,7 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 				if len(cellTypes_list) > 0:
 					dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
 
-		except KeyError or IndexError:
+		except (ValueError, IndexError, KeyError):
 			continue
 
 		hit_list = hit_list + dataset

@@ -65,6 +65,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     cell_types_list_upper = [x.capitalize() for x in cell_types_list]
 
     query_list = strip_csv_query(query)[0]
+    print(query_list)
     query_list_string = strip_csv_query(query)[1]
 
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
@@ -78,8 +79,12 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         if query_list[:5] == 'Error':  # if there was a non-matching geneSymbol we get the error msg back
             error_msg = query_list
 
-    data, no_data = API_ENSGID(query_list, cell_types_list, activ_thresh, gene_format)  # data are the hits, meaning the
-    # dictionaries, no_data are the genes for which there was no REM in the db
+    if error_msg == '':
+        data, no_data = API_ENSGID(query_list, cell_types_list, activ_thresh, gene_format)  # data are the hits, meaning the
+        # dictionaries, no_data are the genes for which there was no REM in the db
+    else:
+        data = []
+        no_data = []
 
     no_data_string = ''
     for i in no_data:

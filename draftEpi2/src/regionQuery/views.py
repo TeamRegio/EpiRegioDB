@@ -13,21 +13,9 @@ def clear_chr_string(query):
     region_list = query.split(',')[:-1]  # the last entry ist just the empty string after the comma
     for i in range(len(region_list)):
         region_list[i] = region_list[i].split(':')
-        region_list[i] = [region_list[i][0], region_list[i][1].split('-')[0], region_list[i][1].split('-')[1]]
+        region_list[i] = [region_list[i][0].strip(), region_list[i][1].split('-')[0].strip(), region_list[i][1].split('-')[1].strip()]
         # now we have a list where every entry has three values, the chromosome, the start and the end
     return region_list
-
-
-def search_for_regions(query_list):  # We look up in our REMAnnotation table, which objects fit the entered GeneIDs and
-    # return them in a list
-    hit_list = []
-    for i in query_list:
-        data_set = REMAnnotation.objects.filter(chr=i[0], start__gte=i[1], end__lte=i[2])
-        for single_obj in data_set:
-            single_obj.pValue = round(10**(float(single_obj.pValue)), 6)  # provisional way to round
-            single_obj.regressionCoefficient = round(float(single_obj.regressionCoefficient), 6)
-            hit_list.append(single_obj)
-    return hit_list  # our list of objects, fitting the query_list
 
 
 def region_search_view(request):
@@ -37,7 +25,7 @@ def region_search_view(request):
     query = request.POST.get('geneRegions')
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     csv_file = request.POST.get('csvFile')
-
+    print(csv_file)
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
         try:
@@ -48,16 +36,19 @@ def region_search_view(request):
         activ_thresh = 0.0
 
     if len(query) == 0:
-        csv_list = csv_file.split(',')
+        csv_list = [x.strip() for x in csv_file.split(',') if x != '' and x != ' ']
+        csv_list = [x for x in csv_list if x != '']  # because of possible empty lines
+        print(csv_list)
         region_counter = 0
         for i in range(int(len(csv_list)/3)):
-            if 'chr' not in csv_list[region_counter*3]:
+            if 'chr' not in csv_list[region_counter*3].lower():
                 csv_list[region_counter*3] = 'chr' + str(csv_list[region_counter*3])
-            this_region = str(csv_list[region_counter*3]) + ":" + str(csv_list[region_counter*3+1]) + '-' + str(csv_list[region_counter*3+2]) + ", "
+            this_region = str(csv_list[region_counter*3]).lower() + ":" + str(csv_list[region_counter*3+1]) + '-' + str(csv_list[region_counter*3+2]) + ", "
             query = query + this_region
             region_counter += 1
     if len(query) == 0:
         query = request.POST.get('chrField') + ":" + str(request.POST.get('chrStart')) + "-" + str(request.POST.get('chrEnd')) + ",'"
+    print(query)
 
     if len(cell_types) > 0:
         cell_types_list = cell_types.split(', ')

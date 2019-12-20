@@ -17,6 +17,9 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'TableStyleSheet.css' %}">
 </head>
+<body>
+<div id="wrapper">
+
 <table id="QueryResults" class="cell-border hover order-column">
     <caption>Results based on your query for the regions: <strong id="queried_regions"> {{query_string}} </strong></caption>
         <br>
@@ -86,6 +89,7 @@
         {% endfor %}
     </tbody>
 </table>
-
+</div>
+</body>
 
 {% include 'footer.html' %}
