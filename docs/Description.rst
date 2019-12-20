@@ -11,12 +11,11 @@ more challenging task is to link the putative REMs to their associated gene.
 
 Here we present the EpiRegio webserver, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
 
-Overview of possible queries
-=============================
+Overview of possible queries 
+===============================================
 .. image:: ./images/overview_doc.png
   :width: 600
   :alt: Overview of possible queries 
-
 
 Learning of regulatory elements
 ===============================
