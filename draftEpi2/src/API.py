@@ -290,11 +290,11 @@ def API_SymbolToENSG(symbol_list):
 	hit_list = []
 	for symbol in symbol_list:
 		try:
-			this_ID = geneAnnotation.objects.get(geneSymbol=symbol).geneID
+			this_ID = geneAnnotation.objects.filter(geneSymbol=symbol).values('geneID')[0]
 		except IndexError:
 			return 'Error - Invalid gene symbol: '+symbol  # display the error when there is no matching geneSymbol
-
-		hit_list.append(this_ID)
+		
+		hit_list.append(this_ID['geneID'])
 
 	return hit_list  # our list of objects, fitting the query_list
 
