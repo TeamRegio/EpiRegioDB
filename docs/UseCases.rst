@@ -13,25 +13,22 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 1. Go to the *Gene Query* tab. 
 
-2. You can choose to search either with Ensembl IDs or gene symbols. The version number of Ensembl IDs is not required. When entering gene symbols, you can add suggestions on the right by clicking on the appearing buttons. Selected buttons will be listed underneath 'Currently selected:'. Deselect your choices by reclicking on those buttons. We use the human genome hg38.
+2. You can choose to search either with *ensembl ID* or *gene symbol*. The version number of Ensembl IDs is not required. When entering gene symbols, you can add suggestions on the right by clicking on the appearing buttons. Selected buttons will be listed underneath 'Currently selected:'. Deselect your choices by reclicking on those buttons. We use the human genome hg38.
 
 .. image:: ./images/geneQuery_form.png
   :width: 500
   :alt: Gene Query form
 
-3. When you have multiple IDs or symbols to search, separate them by comma in the input field or make a csv-file and upload it. A combination of both, the input field and uploaded file, is not implemented.
+3. When you have multiple IDs or symbols to search, separate them by comma in the input field or create a csv-file and upload it. A combination of both, the input field and the uploaded file, is not implemented.
 
-4. Choosing cell types/tissues:
-Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected.
-Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
+4. Choosing cell types/tissues: Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected. Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
 
 .. image:: ./images/geneQuery_cellTypes.png
   :width: 800
   :alt: Cell type/tissue selection
 
 
-5. The result page shows the information based on your query settings. All the REMs that are associated to your queried genes are listed with their location, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database.
-You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
+5. The result page shows the information based on your query settings. All the REMs that are associated to your queried genes are listed with their location, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database. You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
 
 .. image:: ./images/geneQuery_table.png
   :alt: Gene Query output
@@ -59,16 +56,14 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
 3. You can also upload a csv-file with your regions of interest in which the first value has to be the chromosome, followed by the start and the end position. A combination of both, input field and uploaded file, is not implemented.
 
 4. Choosing cell types/tissues:
-Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected.
-Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
+Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected. Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
 
 .. image:: ./images/geneQuery_cellTypes.png
   :width: 800
   :alt: Cell type/tissue selection
   
   
-5. The result page shows the information based on your query settings. All the REMs located inside of your selected regions are listed with their associated gene, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database.
-You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
+5. The result page shows the information based on your query settings. All the REMs located inside of your selected regions are listed with their associated gene, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database. You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
 
 .. image:: ./images/regionQuery_table.png
   :alt: Region Query output
@@ -96,16 +91,14 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 
 
 3. Choosing cell types/tissues:
-Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected.
-Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
+Start typing in the cell type/tissue of your interest, and the server suggests the available cell types matching your query. You can only choose from them. To select a cell type/tissue click on the button on the right. To deselect click again on the button below 'Currently selected:'. The DNase activity of the REMs associated with your chosen genes will be added as columns to the output table for all the cell types/tissues you selected. Once you selected a cell type/tissue, a new input field will appear, which gives the option to choose an activity threshold. This threshold refers to the DNase activity of the REMs in the cell types/tissues. Only REMs that exceed the threshold in ALL of the cell types/tissues you selected will be shown in the output table. Leave the field empty to get back all REMs independent of their activity. 
 
 
 .. image:: ./images/geneQuery_cellTypes.png
   :width: 800
   :alt: Cell type/tissue selection
 
-4. The result page shows the information based on your query settings. All the your queried REMs are listed with their associated gene, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database.
-You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
+4. The result page shows the information based on your query settings. All the your queried REMs are listed with their associated gene, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types/tissues you selected. The *model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on CREM ID to get more information. If you selected cell types/tissues in your query, the DNase *activity* of the REMs in these cell types/tissues will be shown as mean over all the samples n in our database. You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table.
 
 .. image:: ./images/REMQuery_table.png
   :alt: REM Query output  
