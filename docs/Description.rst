@@ -26,8 +26,11 @@ For more information, a detailed explanation of the computational method and the
 
 Cluster of regulatory elements
 ===============================
-
-
+.. image:: ./images/crem_schema.png
+  :width: 600
+  :alt: CREM schema
+  
+We define a cluster of regulatory elements as genomic region that contains single REMs overlapping buy at least 1 bp. A cluster can also consist out of only one REM, if it does not overlap with any other REM. These clusters give the opportunity to look into the regulatory potential of neighbouring elements and their associated genes. In contrast to super-enhancers, the regulatory sub-regions are known, as well as their potential target genes.
 
 
 Cite Us
