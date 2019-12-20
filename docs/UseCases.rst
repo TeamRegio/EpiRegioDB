@@ -101,3 +101,4 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 .. image:: ./images/REMQuery_table.png
   :alt: REM Query output  
   :width: 800
+
