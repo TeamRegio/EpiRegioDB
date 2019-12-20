@@ -44,7 +44,7 @@ Example:
 ~~~~~~~
         https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405/
         
-        https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-3456742/
+        https://epiregio.de/REST_API/RegionQuery/chr16:75423948-75424405_chr2:1369428-1369900/
 
 REMQuery:
 ---------
