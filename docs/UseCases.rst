@@ -53,13 +53,14 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   :width: 500
   :alt: Region Query form
 
-3. You can also upload a csv-file with your regions of interest in which the first value has to be the chromosome, followed by the start and the end position. A combination of both, input field and uploaded file, is not implemented. You can see the format of exemplary upload files below. All of the commonly used separators are being recognized, as long as the order of chromosome, start position and end position is correct. The possibility to upload BED-files will be included in the next release.
+3. You can also upload a csv-file with your regions of interest in which the first value has to be the chromosome, followed by the start and the end position. A combination of both, input field and uploaded file, is not implemented. You can see the format of exemplary upload files below (comma-separated and tab-separated. All of the commonly used separators are being recognized, as long as the order of chromosome, start position and end position is correct. The possibility to upload BED-files will be included in the next release.
 
 .. image:: ./images/ExampleCSVRegionCS.png
   :width: 350
   :alt: Exemplary region query upload file comma separated
   
-  Or as tab-separated file:
+
+  
 .. image:: ./images/ExampleCSVRegionTS.png
   :width: 350
   :alt: Exemplary region query upload file tab separated
