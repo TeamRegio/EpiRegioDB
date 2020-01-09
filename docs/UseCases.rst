@@ -59,7 +59,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   :width: 350
   :alt: Exemplary region query upload file comma separated
   
-  
+  Or as tab-separated file:
 .. image:: ./images/ExampleCSVRegionTS.png
   :width: 350
   :alt: Exemplary region query upload file tab separated
