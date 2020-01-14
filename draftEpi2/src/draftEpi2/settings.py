@@ -109,7 +109,6 @@ DATABASES = {
        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'EpiRegioDB',
         'USER': 'root',
-        'PASSWORD': 'DjangoUnchained42',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
