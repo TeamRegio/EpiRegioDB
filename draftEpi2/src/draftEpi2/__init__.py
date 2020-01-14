@@ -1,7 +1,7 @@
 import os  
 #import pymysql
 
-pymysql.install_as_MySQLdb()
+#pymysql.install_as_MySQLdb()
 
 def setup():
 	module = os.path.split(os.path.dirname(__file__))[-1]
