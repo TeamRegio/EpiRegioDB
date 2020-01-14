@@ -4,8 +4,7 @@ python:
  - "3.7"
 
 install:
- - pip install Django==2.2.8
- - pip install djangorestframework
+ - pip3 install -r requirements.txt
 
 script: 
  - python draftEpi2/src/manage.py runserver &
