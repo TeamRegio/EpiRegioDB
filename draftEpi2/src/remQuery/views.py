@@ -24,7 +24,7 @@ def remQuery_view(request):
 def rem_search_view(request):
 
     query = request.POST.get('REMIDs').upper()
-    csv_file = request.POST.get('csvFile')
+    csv_file = request.POST.get('csvFile').upper()
 
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:
@@ -50,19 +50,21 @@ def rem_search_view(request):
     query_list = strip_csv_query(query)[0]
     query_list_string = strip_csv_query(query)[1]
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
-        export_string = strip_csv_query(query)[2] + '...' + str(len(query_list)-3) + ' more'
+        export_string = strip_csv_query(query)[2].replace(" ", '') + '...' + str(len(query_list)-3) + 'more'
     else:
-        export_string = query_list_string
+        export_string = query_list_string.replace(" ", '')
 
-    data = API_REMID(query_list, cell_types_list, activ_thresh)
+    data, invalid_list = API_REMID(query_list, cell_types_list, activ_thresh)
     template = 'remQuery_search.html'
     error_msg = ''
-    if len(data) == 0 or data[:5] == 'Error':
+
+    if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
-        error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
+        if activ_thresh == 0:
+            error_msg = 'No REMs were found that match your query settings.'
+        if activ_thresh != 0:
+            error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
                     'activity threshold.'
-        if data[:5] == 'Error':
-            error_msg = data
 
     context = {
         'data': data,
@@ -73,5 +75,6 @@ def rem_search_view(request):
         'cell_types_list_upper': cell_types_list_upper,
         'activ_thresh': activ_thresh,
         'error_msg': error_msg,
+        'invalid_list': invalid_list,
     }
     return render(request, template, context)

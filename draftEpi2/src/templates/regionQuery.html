@@ -44,7 +44,8 @@
     <table class="regionQueryTable" id="regionQueryTable">
         <tr>
             <td><h1 class="inputLabel">Chromosome:</h1>
-            <td><h1 class="inputLabel"> Start:</h1></td>
+            <td><h1 class="inputLabel tooltip"> Start:<span class="tooltiptext_right" style="width: 300px;">
+            The selectable start and end positions are based on the regions we have data for in our database, either genes or REMs, respective to the selected chromosome.</span></h1></td>
             <td><h1 class="inputLabel"> End:</h1></td>
         </tr>
 
@@ -89,15 +90,16 @@
 
         <tr>
             <td style="padding-top:10px;" colspan="2">
-            <p class="selectionHeader" id="container_geneRegionsHeader"> Currently selected:</p>
+            <p class="selectionHeader tooltip" id="container_geneRegionsHeader"> Currently selected:<span class="tooltiptext_right" style="width: 300px;">Deselect via button click below. Only REMs overlapping entirely with your queried regions will be displayed.</span></p>
             <div class ="selectedButtons" id="container_geneRegions" style="padding-bottom: 2em;"></div></td>
             <td colspan="2">
                 <div style="visibility: hidden;" class="formError" id="regionErrors"></div>
             </td>
         </tr>
         <tr>
-            <td colspan="2"><div class="uploadCSVForm"><p class="selectionHeader" style="color:black;"><u>Or</u> upload a list of regions as csv:</p>
-                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv" > </div>
+            <td colspan="2"><div class="uploadCSVForm"><p class="selectionHeader tooltip" style="color:black;"><u>Or</u> upload a list of regions as csv- or bed-file:<span class="tooltiptext_right" style="width:350px;">
+                For BED-files only the first three columns are considered [chromosome, start, end]. Every row has to contain the exact same amount of columns without empty entries.</span></p>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv,.bed" > </div>
                 <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
             </td>
             <td colspan="2"><div class="errorMessage"></div></td>
@@ -135,6 +137,7 @@
 <input type="hidden" id="geneRegions" name="geneRegions"/>
 <input type="hidden" id="csvFile" name="csvFile"/>
 <input type="hidden" id="cellTypes" name="cellTypes" />
+<input type="hidden" id="csvFileRows" name="csvFileRows"/>
 
 
 <button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryRegionQuery()">Exemplary Query</button>

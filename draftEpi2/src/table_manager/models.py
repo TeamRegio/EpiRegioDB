@@ -10,12 +10,12 @@ from django.db import models
 
 # ==========================================================================
 class genomeAnnotation(models.Model):
-    genomeVersion = models.CharField(max_length=20, blank=True)
-    annotationVersion = models.CharField(max_length=20, primary_key=True)
-    databaseName = models.CharField(max_length=30, blank=True)
+    genomeVersion = models.CharField(max_length=4, blank=True)
+    annotationVersion = models.CharField(max_length=3, primary_key=True)
+    databaseName = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        managed = False
+        managed = True  # has to be set to True, as unittesting requires creating a test object
         db_table = 'genomeAnnotation'
 
     def __str__(self):
@@ -24,12 +24,12 @@ class genomeAnnotation(models.Model):
 
 # ==========================================================================
 class cellTypes(models.Model):
-    cellTypeID = models.CharField(max_length=30, primary_key=True)
-    cellTypeName = models.CharField(max_length=30, blank=True)
-    cellOntologyTerm = models.CharField(max_length=30, blank=True)
+    cellTypeID = models.CharField(max_length=255, primary_key=True)
+    cellTypeName = models.CharField(max_length=255, blank=True)
+    cellOntologyTerm = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'cellTypes'
 
     def __str__(self):
@@ -41,15 +41,15 @@ class geneAnnotation(models.Model):
     chr = models.CharField(max_length=10, blank=True)
     start = models.IntegerField(blank=True)
     end = models.IntegerField(blank=True)
-    geneID = models.CharField(max_length=40, primary_key=True)
-    geneSymbol = models.CharField(max_length=30, blank=True)
-    alternativeGeneID = models.CharField(max_length=30, blank=True)
-    isTF = models.BooleanField(blank=True, null=True)
-    strand = models.CharField(max_length=10, blank=True)
+    geneID = models.CharField(max_length=255, primary_key=True)
+    geneSymbol = models.CharField(max_length=255, blank=True)
+    alternativeGeneID = models.CharField(max_length=255, blank=True)
+    isTF = models.CharField(max_length=255, blank=True, null=True)
+    strand = models.CharField(max_length=1, blank=True)
     annotationVersion = models.ForeignKey(genomeAnnotation, to_field="annotationVersion",db_column='annotationVersion', on_delete=models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'geneAnnotation'
 
     def __str__(self):
@@ -62,13 +62,13 @@ class REMAnnotation(models.Model):
     start = models.IntegerField(blank=True)
     end = models.IntegerField(blank=True)
     geneID = models.ForeignKey(geneAnnotation, to_field="geneID", db_column='geneID', on_delete=models.DO_NOTHING)
-    REMID = models.CharField(max_length=30, primary_key=True)
+    REMID = models.CharField(max_length=255, primary_key=True)
     regressionCoefficient = models.FloatField(blank=True)
     pValue = models.FloatField(blank=True)
-    version = models.IntegerField(blank=True)
+    version = models.CharField(max_length=1, blank=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'REMAnnotation'
 
     def __str__(self):
@@ -77,14 +77,14 @@ class REMAnnotation(models.Model):
 
 # ==========================================================================
 class sampleInfo(models.Model):
-    sampleID = models.CharField(max_length=30, primary_key=True)
-    originalSampleID = models.CharField(max_length=30, blank=True)
+    sampleID = models.CharField(max_length=255, primary_key=True)
+    originalSampleID = models.CharField(max_length=255, blank=True)
     cellTypeID = models.ForeignKey(cellTypes, to_field="cellTypeID", db_column='cellTypeID', on_delete=models.DO_NOTHING)
-    origin = models.CharField(max_length=30, blank=True)
-    dataType = models.CharField(max_length=20, blank=True)
+    origin = models.CharField(max_length=255, blank=True)
+    dataType = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'sampleInfo'
 
     def __str__(self):
@@ -94,7 +94,7 @@ class sampleInfo(models.Model):
 # ==========================================================================
 class geneExpression(models.Model):
     class Meta:
-        managed = False
+        managed = True
         db_table = 'geneExpression'
         # unique_together = (('geneID', 'sampleID'),)
 
@@ -106,7 +106,7 @@ class geneExpression(models.Model):
     geneID = models.OneToOneField(geneAnnotation, to_field="geneID", db_column='geneID', primary_key=True, on_delete=models.DO_NOTHING)
     sampleID = models.ForeignKey(sampleInfo, to_field="sampleID", db_column='sampleID', on_delete=models.DO_NOTHING)
     expressionLog2TPM = models.FloatField(blank=True)
-    species = models.CharField(max_length=30)
+    species = models.CharField(max_length=255)
 
     def __str__(self):
         return str(str(self.geneID) + ' ' + str(self.sampleID) + ' ' + str(self.expressionLog2TPM))
@@ -116,7 +116,7 @@ class geneExpression(models.Model):
 class REMActivity(models.Model):
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'REMActivity'
         # unique_together = (('REMID', 'sampleID'))
 
@@ -132,11 +132,11 @@ class REMActivity(models.Model):
 # ==========================================================================
 class CREMAnnotation(models.Model):
     class Meta:
-        managed = False
+        managed = True
         db_table = 'CREMAnnotation'
 
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column="REMID", max_length=30, primary_key=True, on_delete=models.DO_NOTHING)
-    CREMID = models.CharField(max_length=30)
+    CREMID = models.CharField(max_length=255)
     chr = models.CharField(max_length=10, blank=True)
     start = models.IntegerField(blank=True)
     end = models.IntegerField(blank=True)

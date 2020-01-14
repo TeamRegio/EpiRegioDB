@@ -22,9 +22,24 @@
 <div id="wrapper">
 <br>
 
-{% if no_data_string|length > 0 %}
+{% if no_data|length > 0 %}
 <div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">The model did not find putative REMs that are associated with the following genes:</h1>
-<p>{{no_data_string}}</p></div>
+{% for empty in no_data %}
+    {{empty}} <br>
+{% endfor %}
+<br>
+</div>
+<br>
+<br>
+{% endif %}
+
+{% if invalid_list|length > 0 %}
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">Invalid gene IDs that are not contained in the hg38 genome:</h1>
+{% for invalid in invalid_list %}
+    {{invalid}} <br>
+{% endfor %}
+<br>
+</div>
 <br>
 <br>
 {% endif %}
@@ -49,9 +64,9 @@
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat(" GeneID Query ", export_string)},
-                            { extend: 'csv', filename: today.concat(" GeneID Query ", export_string)},
-                            { extend: 'pdf', filename: today.concat(" GeneID Query ", export_string), pageSize: "LEGAL", orientation: 'landscape'}
+                            { extend: 'excel', filename: today.concat("_GeneID_Query__", export_string)},
+                            { extend: 'csv', filename: today.concat("_GeneID_Query__", export_string)},
+                            { extend: 'pdf', filename: today.concat("_GeneID_Query__", export_string), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
                  } );
@@ -69,10 +84,12 @@
             <th class="tooltip_table" >Model score<span class="tooltiptext_top">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
             <th class="tooltip_table">Associated REM cluster<span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
+            {% if data|length > 0 %}
             {% for cellType in cell_types_list_upper %}
                 <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
                     <span class="tooltiptext_top">Mean over the number of samples n</span></th>
             {% endfor %}
+            {% endif %}
         </tr>
     </thead>
     <tbody>

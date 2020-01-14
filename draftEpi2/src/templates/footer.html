@@ -29,18 +29,6 @@ html, body {
   position: fixed;
 }
 
-ul.footer{
-  list-style-type: none;
-}
-
-li.footer {
-  float: right;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-
-}
-
 #footer-content {
   background-color: #073946;
   height: 24px; /* height + top/bottom paddding + top/bottom border must add up to footer height */
@@ -81,6 +69,13 @@ a.link_foot:hover{
 </style>
 
 <footer id="footer"><div id="footer-content">
+<div id="tested_browsers">
+  <a style="float: left; position: relative; color: white;">Tested for:</a>
+</div>
+<img class='homefig' src="{% static '/Browser_icons/Chrome-256.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Chrome_icon'/>
+<img class='homefig' src="{% static '/Browser_icons/Firefox_256.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Firefox_icon'/>
+<img class='homefig' src="{% static '/Browser_icons/MS_Edge200.png' %}" style="position:static; width: 20px; float: left; padding-left: 10px;" alt = 'Edge_icon'/>
+
 
 <a style="color:white;" class="link_foot" href="/help">Help</a>&emsp;&emsp;&emsp;
 <a style="color:white;" class="link_foot" href="/contact">Contact</a>&emsp;&emsp;&emsp;

@@ -330,12 +330,11 @@ function uploadCSV(){
         reader.readAsText(file);
         reader.onload = function(event) {
             var csvData = event.target.result;
-             var data = Papa.parse(csvData);
+             var results = Papa.parse(csvData);
 
-             var meta = data.meta.fields
-
-            console.log(data);
-            $("#csvFile").val(data.data);
+            console.log(results);
+            $("#csvFile").val(results.data);
+            $("#csvFileRows").val(results.data.length);
         };
 
         reader.onerror = function() {
@@ -444,7 +443,7 @@ function validateRegionQueryForm(){
     jQuery.validator.addMethod("checkSubmission",function(value,element,param)
     {
     csv_val = document.getElementById('csv_upload').value;
-      if(csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv' || document.getElementById("container_geneRegions").children.length > 0)
+      if(csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='bed' || document.getElementById("container_geneRegions").children.length > 0)
         {
           return true;
         }

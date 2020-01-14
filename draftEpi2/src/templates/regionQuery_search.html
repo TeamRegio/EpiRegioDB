@@ -19,6 +19,27 @@
 </head>
 <body>
 <div id="wrapper">
+<br>
+{% if no_data|length > 0 %}
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">There were no putative REMs found in the regions:</h1>
+{% for empty in no_data %}
+    {{empty}} <br>
+{% endfor %}
+<br>
+</div>
+<br>
+
+{% endif %}
+
+{% if invalid_list|length > 0 %}
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">These regions are not a valid input:</h1>
+{% for invalid in invalid_list %}
+    {{invalid}} <br>
+{% endfor %}
+<br>
+</div>
+<br>
+{% endif %}
 
 <table id="QueryResults" class="cell-border hover order-column">
     <caption>Results based on your query for the regions: <strong id="queried_regions"> {{query_string}} </strong></caption>
@@ -41,9 +62,9 @@
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat(" GeneRegion Query ", queried_regions)},
-                            { extend: 'csv', filename: today.concat(" GeneRegion Query ", queried_regions)},
-                            { extend: 'pdf', filename: today.concat(" GeneRegion Query ", queried_regions), pageSize: "LEGAL", orientation: 'landscape'}
+                            { extend: 'excel', filename: today.concat("_GeneRegion_Query__", queried_regions)},
+                            { extend: 'csv', filename: today.concat("_GeneRegion_Query__", queried_regions)},
+                            { extend: 'pdf', filename: today.concat("_GeneRegion_Query__", queried_regions), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
                  } );
@@ -57,13 +78,16 @@
             <th>Chromosome</th>
             <th>REM start</th>
             <th>REM end</th>
-            <th>Prediction function</th>
+            <th>Predicted function</th>
             <th class="tooltip_table" style="display: align;">Model score<span class="tooltiptext_top">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
             <th class="tooltip_table">Associated REM cluster<span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
+            {% if data|length > 0 %}
             {% for cellType in cell_types_list_upper %}
                 <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
-                    <span class="tooltiptext_top">Mean over the number of samples n</span></th>            {% endfor %}
+                    <span class="tooltiptext_top">Mean over the number of samples n</span></th>
+            {% endfor %}
+            {% endif %}
         </tr>
     </thead>
     <tbody>

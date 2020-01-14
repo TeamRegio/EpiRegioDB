@@ -31,7 +31,7 @@ class GeneInfoSerializer(serializers.ModelSerializer):
 
 class REMQuerySerializer(serializers.Serializer):
 	
-	""" information displayed with url /REST_API/REMInfo/<REMID>/ """
+	""" information displayed with url /REST_API/REMQuery/<REMID>/ """
 
 	REMID = serializers.CharField(max_length=30)
 	chr = serializers.CharField(max_length=10)
@@ -49,7 +49,7 @@ class REMQuerySerializer(serializers.Serializer):
 
 class CREMQuerySerializer(serializers.Serializer):
 
-	""" information displayed with url /REST_API/CREMInfo/<CREM_id> """
+	""" information displayed with url /REST_API/CREMQuery/<CREM_id> """
 	
 	CREMID = serializers.CharField()
 	chr = serializers.CharField()
