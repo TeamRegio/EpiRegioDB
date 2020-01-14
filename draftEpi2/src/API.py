@@ -238,8 +238,8 @@ def API_cellType_activity_per_REM(rem_id):
 # output fields: chr, start, end, geneID_id, REMID, regressionCoefficient, pValue, version, REMsPerCREM, CREMID, cellTypeActivity -> dictionary of all cell types
 def API_REMID_celltype_activity(REMID_list):
 
-	helper = API_REMID(REMID_list) #determine REMs for the given GeneIDs
-	print(helper)
+	helper = API_REMID(REMID_list)[0] #determine REMs for the given GeneIDs
+
 	if type(helper) is not list:
 		return helper
 	hit_list = []
@@ -248,6 +248,9 @@ def API_REMID_celltype_activity(REMID_list):
 	return hit_list
 
 
+###############################################################
+# NINA HIER! EIN OUTPUT MEHR
+###############################################################
 # The REMID query. Every REM is handled separately.
 def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 
@@ -258,13 +261,17 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 		pass
 
 	hit_list = []
+	invalid_list = []  # collecting the REM IDs that do not exist in our database
+
 	for i in REMID_list:
 
 		dataset = REMAnnotation.objects.filter(REMID=i).values()  # .values hands back a queryset containing dictionaries
+
 		try:
 			this_rem = dataset[0]  # we get back a queryset, with [0] we get it into a dictionary
 		except IndexError:
-			return 'Error - Invalid REMID: '+i  # if there is a REMID that is not in the DB we display it as an error
+			invalid_list.append(i)
+			continue
 
 		# get the additional columns for the CREMS
 		this_rem = API_CREM(this_rem)
@@ -282,23 +289,29 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 
 	hit_list = API_modelScore(hit_list)
 
-	return hit_list  # our list of objects, fitting the query_list
+	return hit_list, invalid_list  # our list of objects, fitting the query_list
 
 
+
+###############################################################
+# NINA HIER AUCH! EIN OUTPUT MEHR
+###############################################################
 # If a user provides the geneSymbols, we convert them into ENSG format and use the other functions
 def API_SymbolToENSG(symbol_list):
 
 	# no need to update the list to unique values, it is done in the main query
 	hit_list = []
+	invalid_list = []  # collecting the list of symbols that do not exist in the hg38 annotation version
 	for symbol in symbol_list:
 		try:
 			this_ID = geneAnnotation.objects.get(geneSymbol=symbol).geneID
+			hit_list.append(this_ID)
+
 		except ObjectDoesNotExist:
-			return 'Error - Invalid gene symbol: '+str(symbol)  # display the error when there is no matching geneSymbol
+			invalid_list.append(symbol)  # collect all the invalid gene Symbols
 
-		hit_list.append(this_ID)
+	return hit_list, invalid_list  # our list of objects, fitting the query_list
 
-	return hit_list  # our list of objects, fitting the query_list
 
 
 # The GeneID query for the REST_API, also outputs the activity of all celltypes per REM. Every REM is handled separately.
@@ -314,6 +327,9 @@ def API_GeneID_celltype_activity(REMID_list):
 	return hit_list
 
 
+###############################################################
+# NINA HIER! ZWEI OUTPUTS MEHR
+###############################################################
 # For the GeneID query: given a set of genes, we look up all the REMs for each of them and add
 # the additional information
 def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='id_format'):
@@ -325,12 +341,13 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='id_f
 		pass
 
 	hit_list = []
-	no_hit = []
+	no_hit = []  # report the list of genes that there are no REMs predicted for
+	invalid_list = []  # all the wrong formatted inputs that are not existing in the hg38 genome
 	for i in gene_list:
 		dataset = list(REMAnnotation.objects.filter(geneID=i).values())  # we convert the queryset into a list so we can
 		if not dataset:  # if it's empty we have no fitting geneID
 			if not list(geneAnnotation.objects.filter(geneID=i).values()):  # if this id is not existent at all
-				return 'Error - Invalid gene ID. This is not an ID that is contained in the hg38 genome: '+i, no_hit
+				invalid_list.append(i)
 			else:
 				no_hit.append(i)
 
@@ -355,7 +372,7 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='id_f
 		for i in range(len(no_hit)):
 			no_hit[i] = geneAnnotation.objects.get(geneID=no_hit[i]).geneSymbol
 
-	return hit_list, no_hit
+	return hit_list, no_hit, invalid_list
 
 
 # Is supposed to be used to display the information we have about a gene
@@ -384,13 +401,17 @@ def API_ENSGID_geneInfo(gene_list):
 # region_list format: [[chr, start, end], [chr, start, end]]
 def API_Region_celltype_activity(region_list):
 
-	helper = API_Region(region_list)
+	helper = API_Region(region_list)[0]
 	hit_list = []
 	for i in helper:
 		hit_list.append(API_cellType_activity_per_REM(i))
 	return hit_list
 
 
+# For the GeneRegion query: find all the REMs located in the given regions
+###############################################################
+# NINA HIER! ZWEI OUTPUTS MEHR
+###############################################################
 # For the GeneRegion query: find all the REMs located in the given regions
 def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
@@ -401,10 +422,36 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 		pass
 
 	hit_list = []
+	no_hit = []  # collecting the regions that are valid as input but do not contain any REMs
+	invalid_list = []  # collect the wrongly formatted inputs
+
 	for i in region_list:
+
 		try:
 			dataset = list(
 				REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
+
+			# check for valid input without a dataset, everything else is considered invalid, meaning start greater
+			# than end or not a valid chr, only necessary if there is no data found, otherwise there would be a result
+			if len(dataset) == 0:  # if it is empty it could also be that the input is valid but there is no REM
+				if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
+					try:
+						if int(i[1]) < int(i[2]):
+							no_hit.append(i)
+						else:
+							invalid_list.append(i)
+					except ValueError:  # meaning that start and ends are no ints
+						invalid_list.append(i)
+				else:
+					try:
+						if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
+							# in range and whether start and end are valid ints
+							no_hit.append(i)
+						else:
+							invalid_list.append(i)
+
+					except ValueError:
+						invalid_list.append(i)
 
 			for n in range(len(dataset)):
 				dataset[n] = API_CREM(dataset[n])
@@ -413,7 +460,9 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 				if len(cellTypes_list) > 0:
 					dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
 
-		except (ValueError, IndexError, KeyError):
+		except (ValueError, IndexError, KeyError):  # everything throwing an error now, should be caused by an invalid
+			# input
+			invalid_list.append(i)
 			continue
 
 		hit_list = hit_list + dataset
@@ -423,5 +472,6 @@ def API_Region(region_list, cellTypes_list=[], activ_tresh=0.0):
 
 	hit_list = API_modelScore(hit_list)
 
-	return hit_list  # our list of dictionaries, fitting the query_list
+	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list
+
 
