@@ -7,7 +7,7 @@ install:
  - pip3 install -r requirements.txt
  
 before_script:
- - mysql -e 'create database EpiRegioDB'
+ - mysql -e 'create database EpiRegioDB;'
  - python draftEpi2/src/manage.py makemigrations
  - python draftEpi2/src/manage.py migrate
 
