@@ -104,26 +104,26 @@ WSGI_APPLICATION = 'draftEpi2.wsgi.application'
 # }
 
 #mysql database
-#DATABASES = {
-#    'default': {
-#       'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'EpiRegioDB',
-#        'USER': 'root',
-#        'PASSWORD': 'DjangoUnchained42',
-#        'HOST': '127.0.0.1',
-#        'PORT': '3306',
-#    }
-#}
-
-#mysql database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/my.cnf',
-        },
+       'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'EpiRegioDB',
+        'USER': 'root',
+        'PASSWORD': 'DjangoUnchained42',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
+
+#mysql database
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'OPTIONS': {
+#            'read_default_file': '/etc/my.cnf',
+#        },
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
