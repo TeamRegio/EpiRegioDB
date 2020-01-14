@@ -123,7 +123,7 @@ class REMActivity(models.Model):
     REMID = models.OneToOneField(REMAnnotation, to_field="REMID", db_column='REMID', primary_key=True, on_delete=models.DO_NOTHING)
     sampleID = models.ForeignKey(sampleInfo, to_field="sampleID", db_column='sampleID', on_delete=models.DO_NOTHING)
     dnase1Log2 = models.FloatField(blank=True)
-    version = models.IntegerField(blank=True)
+    version = models.CharField(max_length=1, blank=True)
 
     def __str__(self):
         return str(str(self.REMID))

@@ -114,7 +114,7 @@ class REMAnnotationModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version=1)
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
 
     def test_REMAnnotation_label(self):
         test_obj = REMAnnotation.objects.get(REMID='2TSBakingPowder')
@@ -221,8 +221,8 @@ class REMActivityModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version=1)
-        REMActivity.objects.create(REMID_id='2TSBakingPowder', sampleID_id='300gDarkChocolate', dnase1Log2=1.0, version=1)
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
+        REMActivity.objects.create(REMID_id='2TSBakingPowder', sampleID_id='300gDarkChocolate', dnase1Log2=1.0, version='1')
 
     def test_REMActivity_label(self):
         test_obj = REMActivity.objects.get(sampleID='300gDarkChocolate')
@@ -248,7 +248,7 @@ class CREMAnnotationModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version=1)
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
         CREMAnnotation.objects.create(REMID_id='2TSBakingPowder', CREMID='MixWithChocolateAndNuts', chr='FormHeaps', start=1, end=2, REMsPerCREM=42, version=1)
 
     def test_CREMAnnotation_label(self):

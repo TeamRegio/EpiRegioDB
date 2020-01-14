@@ -96,8 +96,8 @@ class geneQuerySearchTest(TestCase):
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000225880', geneSymbol='LINC00115', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
         # one geneAnnotation without a REM, to test for valid genes we have no data for
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000XXXXXX', geneSymbol='LINCXXXXX', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
-        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, version=1)
-        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, version=1)
+        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, version='1')
+        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, version='1')
         geneExpression.objects.create(geneID_id='ENSG00000225880', sampleID_id='R_ENCBS011TVS', expressionLog2TPM=0.265575, species='HUMAN')
         CREMAnnotation.objects.create(REMID_id='REM0000742', CREMID='CREM0000464', chr='chr1', start=826308, end=827500, REMsPerCREM=27, version=1)
         print('View Test - Gene Query Search')
@@ -131,7 +131,7 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1
@@ -171,7 +171,7 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -211,7 +211,7 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1
@@ -251,7 +251,7 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -382,7 +382,7 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -421,7 +421,7 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -487,7 +487,7 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -522,7 +522,7 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': 1,
+            'version': '1',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
