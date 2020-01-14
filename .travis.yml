@@ -8,4 +8,4 @@ install:
  - pip install djangorestframework
 
 script: 
- - python src/manage.py runserver &
+ - python draftEpi2/src/manage.py runserver &
