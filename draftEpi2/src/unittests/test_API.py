@@ -47,7 +47,7 @@ class CREMAnnotationModelTest(APITestCase):
         print('API - REM Query')
         response = self.client.get('/REST_API/REMQuery/REM0000742/')
         response.render()
-        print(response.content)
+        # print(response.content)
         self.assertEqual(response.content, b'[{"REMID":"REM0000742","chr":"chr1","start":827246,"end":827445,"geneID":"ENSG00000225880","geneSymbol":"LINC00115","regressionCoefficient":-0.0749712,"pValue":0.75073,"version":1,"REMsPerCREM":27,"CREMID":"CREM0000464","cellTypeActivity":{"muscle of leg":13.1186}}]')
         self.assertEqual(response.status_code, 200)
 
