@@ -38,10 +38,13 @@
 <!-- GET GENE FORMAT ---------------------------------------------------------------------------------- -->
 <div style="display: inline-block;">
 <h1 style="display: inline;" class="inputLabel">Gene nomenclature:&nbsp;&nbsp;</h1>
-    <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >
-    <option selected='selected' value="id_format">ensembl ID</option>
-    <option value="symbol_format">gene symbol</option>
-</select></div>
+    <button type="button" class="format_active" id="id_format" name="id_format" onclick="id_formatClick()" value="active">ensembl ID</button>
+    <button type="button" class="format_inactive" id="symbol_format" name="symbol_format" onclick="symbol_formatClick()">gene symbol</button>
+<!--    <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >-->
+<!--    <option selected='selected' value="id_format">ensembl ID</option>-->
+<!--    <option value="symbol_format">gene symbol</option>-->
+<!--</select>-->
+</div>
 <br>
 <br>
 
@@ -79,11 +82,11 @@
 
 
                 <input class='inputForm' type="text" id="search" name="search" placeholder="Leave empty to look up for all cell types/tissues" />
-                <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>
+                <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right">Deselect via button click below</span></p>
                 <div class ='selectedButtons' id="container_cellTypes"> </div>
 
                 <div id="threshold_div" style="visibility: hidden;">
-                <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional):</b><span class="tooltiptext_right" style="width:300px;">
+                <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:300px;">
                     Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed</span></p><br>
                 <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div>
 
@@ -98,9 +101,11 @@
 
 
 <!-- SUBMIT FORM ---------------------------------------------------------------------------------- -->
+<input type="hidden" id="gene_format" name="gene_format" value="id_format"/>
 <input type="hidden" id="geneSymbol" name="geneSymbol"/>
 <input type="hidden" id="cellTypes" name="cellTypes"/>
 <input type="hidden" id="csvFile" name="csvFile"/>
+
 
 <br>
 <button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryGeneIDQuery()">Exemplary Query</button>

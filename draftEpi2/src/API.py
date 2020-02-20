@@ -13,54 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 #test functions
-# #TODO: write proper unitests
 # def __main__():
-#
-# # 	print("API functions")
-# # 	print("Is the database accessible?")
-# #
-# 	REM = REMAnnotation.objects.filter(REMID = "REM0000001").values('REMID__CREMID')
-# 	print(REM)
-# #
-# # 	print("all REMs of a gene")
-# # 	REMs = REMAnnotation.objects.filter(geneID = 'ENSG00000139874')
-# # 	for i in REMs:
-# # 		print(i)
-# #
-# # 	print("sampleInfo")
-# # 	sample = sampleInfo.objects.get(sampleID = 'R_ENCBS336CDQ')
-# # 	print(sample)
-# #
-# # This is not working because of the missing primary key, which is geneExpressionID in the database ->same for REMActivity TODO: rausfinden wie man combined primary key angibt in mysql
-# 	print("geneExpression")
-# 	# geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('sampleID__cellTypeID__cellTypeName')
-# 	geneExp = geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1]
-# 	# print(geneExpression.objects.filter(sampleID='R_ENCBS336CDQ')[:1].values('expressionLog2TPM'))
-# 	print(geneExp)
-# # #
-# # 	print("genomeAnnotation")
-# # 	genome = genomeAnnotation.objects.all()
-# # 	print(genome)
-# #
-# # 	print("celltypes")
-# # 	cellType = cellTypes.objects.get(cellTypeID = 'CTID_0000001')
-# # 	print(cellType)
-# #
-# # 	print("geneAnnotation")
-# # 	geneAnno = geneAnnotation.objects.get(geneID = 'ENSG00000223972')
-# # 	print(geneAnno)
-#
-	# print("CREM")
-	# crem = CREMAnnotation.objects.filter(REMID = 'REM0000001')
-	# print(crem)
-#
-	# print("REMActivity")
-	# REMActiv = REMActivity.objects.filter(REMID = 'REM0000001')[:3].values('sampleID__cellTypeID__cellTypeName')
-	# print(REMActiv)
-#
-#
-
-
 
 
 # if __name__ == "__main__":
@@ -111,9 +64,12 @@ def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 			mean_activity = activity/len(matching_samples)
 			REM[cellType + '_dnase1Log2'] = mean_activity
 			REM[cellType + '_samplecount'] = len(matching_samples)
+			REM[cellType + '_score'] = abs(mean_activity * REM['regressionCoefficient'])
 		else:
 			return None  # we return None if there is no match. The Nones are filtered out in the origin function
+
 	return REM
+
 
 
 # Given a list of cellTypes, this function checks whether there are samples in the database that match these cellTypes\
@@ -302,15 +258,30 @@ def API_SymbolToENSG(symbol_list):
 	# no need to update the list to unique values, it is done in the main query
 	hit_list = []
 	invalid_list = []  # collecting the list of symbols that do not exist in the hg38 annotation version
+	doublets_list = []
+	ensembl_IDs = []
 	for symbol in symbol_list:
 		try:
-			this_ID = geneAnnotation.objects.get(geneSymbol=symbol).geneID
-			hit_list.append(this_ID)
 
-		except ObjectDoesNotExist:
+			ensembl_IDs = geneAnnotation.objects.filter(geneSymbol=symbol).values()
+			for ID in ensembl_IDs:
+				hit_list.append(ID['geneID'])
+			# if there is more than one ID for the geneSymbol in geneAnnotation (true for 231), we report it in a
+			# message box later
+			if len(ensembl_IDs) > 1:
+				matching_IDs = []
+				for i in ensembl_IDs:
+					matching_IDs.append(i['geneID'])
+				doublets_list.append([symbol, matching_IDs])
+
+		except ObjectDoesNotExist:  # it is very unlikely that an error occurs above, as ensembl ID will just be an empty Queryset
 			invalid_list.append(symbol)  # collect all the invalid gene Symbols
 
-	return hit_list, invalid_list  # our list of objects, fitting the query_list
+		if len(ensembl_IDs) == 0:
+			invalid_list.append(symbol)
+
+	return hit_list, list(set(invalid_list)), doublets_list  # our list of objects, fitting the query_list
+
 
 
 

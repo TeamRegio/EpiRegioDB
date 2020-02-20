@@ -99,6 +99,7 @@ def region_search_view(request):
     comma_pos = [pos for pos, char in enumerate(query_list_string) if char == ',']
     if len(comma_pos) > 2:
         export_string = query_list_string[:comma_pos[2]].replace(" ", "") + '...' + str(len(comma_pos)-2) + 'more'
+        query_list_string = query_list_string[:comma_pos[2]] + ' and ' + str(len(comma_pos)-2) + ' more'
     else:
         export_string = query_list_string.replace(" ", '')
 
@@ -106,11 +107,16 @@ def region_search_view(request):
 
     no_data = []  # for the regions we need to format it into a list of strings, to be consequent with the
     # chrX:start-end format
-    for i in no_hit:
-        no_data.append(i[0]+':'+str(i[1])+'-'+str(i[2]))
+    if len(no_hit) >= 1:
+        for i in range(len(no_hit)-1):
+            no_data.append(no_hit[i][0]+':'+str(no_hit[i][1])+'-'+str(no_hit[i][2])+', ')
+        no_data.append(no_hit[-1][0]+':'+str(no_hit[-1][1])+'-'+str(no_hit[-1][2]))
+
     invalid_string_list = []
-    for invalid in invalid_list:
-        invalid_string_list.append(invalid[0]+':'+str(invalid[1])+'-'+str(invalid[2]))
+    if len(invalid_list) >= 1:
+        for i in range(len(invalid_list)-1):
+            invalid_string_list.append(invalid_list[i][0]+':'+str(invalid_list[i][1])+'-'+str(invalid_list[i][2]) + ", ")
+        invalid_string_list.append(invalid_list[-1][0]+':'+str(invalid_list[-1][1])+'-'+str(invalid_list[-1][2]))
 
     template = 'regionQuery_search.html'
     if len(data) == 0:
@@ -134,6 +140,6 @@ def region_search_view(request):
         'no_data': no_data,
         'invalid_list': invalid_string_list,
     }
-    # print(context)
+
     return render(request, template, context)
 

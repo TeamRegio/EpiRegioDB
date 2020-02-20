@@ -51,12 +51,16 @@ def rem_search_view(request):
     query_list_string = strip_csv_query(query)[1]
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
         export_string = strip_csv_query(query)[2].replace(" ", '') + '...' + str(len(query_list)-3) + 'more'
+        query_list_string = strip_csv_query(query)[2].replace("_", " ") + ' and ' + str(len(query_list)-3) + ' more'
     else:
         export_string = query_list_string.replace(" ", '')
 
     data, invalid_list = API_REMID(query_list, cell_types_list, activ_thresh)
     template = 'remQuery_search.html'
     error_msg = ''
+
+    for i in range(len(invalid_list)-1):
+        invalid_list[i] += ', '
 
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data

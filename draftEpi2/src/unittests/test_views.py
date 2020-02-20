@@ -134,8 +134,9 @@ class geneQuerySearchTest(TestCase):
             'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
-            'muscle of leg_samplecount': 1
-             })
+            'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
+        })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
         self.assertEqual(response.context['query_string'],' ENSG00000225880, ENSG00000XXXXXX, ENSGINVALID')
@@ -175,6 +176,7 @@ class geneQuerySearchTest(TestCase):
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -214,7 +216,8 @@ class geneQuerySearchTest(TestCase):
             'version': '1',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
-            'muscle of leg_samplecount': 1
+            'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
              })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
@@ -255,6 +258,7 @@ class geneQuerySearchTest(TestCase):
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -334,6 +338,29 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['export_string'], ' LINC00115')
 
 
+    def test_clicked_gene_view(self):
+        print('View Test - Clicked Gene')
+        response = self.client.get('/geneQuery_search_ENSG00000225880/')
+        self.assertTemplateUsed(response, 'geneQuery_search.html')
+        self.assertEqual(response.context['data'][0], {
+            'chr': 'chr1',
+            'start': 827246,
+            'end': 827445,
+            'geneID_id': 'ENSG00000225880',
+            'REMID': 'REM0000742',
+            'regressionCoefficient': -0.0749712,
+            'pValue': 0.75073,
+            'version': '1',
+            'REMsPerCREM': 27,
+            'CREMID': 'CREM0000464',
+            'modelScore': 0.413633959051203,
+            'geneSymbol': 'LINC00115',
+        })
+        self.assertEqual(response.context['query_link'], ' ENSG00000225880')
+        self.assertEqual(response.context['query_string'], ' ENSG00000225880')
+        self.assertEqual(response.context['export_string'], 'ENSG00000225880')
+
+
     def test_crem_view(self):
         print('View Test - CREM')
         response = self.client.get('/cluster/CREM0000464/')
@@ -349,6 +376,7 @@ class geneQuerySearchTest(TestCase):
             'REMsPerCREM': 27,
             'version': 1,
             'REMID_id__geneID': 'ENSG00000225880',
+            "REMID_id__geneID__geneSymbol": 'LINC00115',
             'REMID_id__start': 827246,
             'REMID_id__end': 827445,
             'REMID_id__regressionCoefficient': -0.0749712,
@@ -388,6 +416,7 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
             'modelScore': 0.413633959051203
         })
         self.assertEqual(response.context['invalid_list'], ['Peter:Hans-Jürgen'])
@@ -427,7 +456,8 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'modelScore': 0.413633959051203
+            'modelScore': 0.413633959051203,
+            'muscle of leg_score': 0.9835171843200001,
         })
         self.assertEqual(response.context['invalid_list'], ['chrhildegard:Jutta-Brunhilde'])
         self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
@@ -493,6 +523,7 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
             'modelScore': 0.413633959051203
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
@@ -528,6 +559,7 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
+            'muscle of leg_score': 0.9835171843200001,
             'modelScore': 0.413633959051203
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
@@ -551,7 +583,8 @@ class geneQuerySearchTest(TestCase):
         self.assertTemplateUsed(response, 'empty_data.html')
         self.assertEqual(response.context['data'], [])
         for i in response.context['invalid_list']:
-            self.assertIn(i, ['MAKEPIZZAGREATAGAIN', 'CHOCOLATESALADBESTSALAD'])
+            self.assertIn(i.strip(", "), ['MAKEPIZZAGREATAGAIN', 'CHOCOLATESALADBESTSALAD'])  # we strip i (", ") as
+            # the first entry in the list gets one comma added, but the order of the entries in the query are random
         self.assertEqual(response.context['query_string'], ' MAKEPIZZAGREATAGAIN, CHOCOLATESALADBESTSALAD')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')

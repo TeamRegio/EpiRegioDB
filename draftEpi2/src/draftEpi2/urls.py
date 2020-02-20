@@ -14,14 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include #necessary for REST_API urls
+from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from home.views import *
 from geneQuery.views import *
 from geneQuery.views import *
 from regionQuery.views import *
 from remQuery.views import *
-#from REST_API import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,19 +29,17 @@ urlpatterns = [
     path('help/', help_view),
     path('contact/', contact_view),
 
-
-
-     path('REST_API/', include('REST_API.urls')),
-     #TODO: bei gelegenheit zum REST_API urls.py file packen
-     path('REST_API/', REST_API_view),
-     path('REST_API/GeneInfo/', REST_API_error_view),
-     path('REST_API/GeneQuery/', REST_API_error_view),
-     path('REST_API/RegionQuery/', REST_API_error_view),
-     path('REST_API/REMQuery/', REST_API_error_view),
-     path('REST_API/CREMQuery/', REST_API_error_view),
+    path('REST_API/', include('REST_API.urls')),
+    path('REST_API/', REST_API_view),
+    path('REST_API/GeneInfo/', REST_API_error_view),
+    path('REST_API/GeneQuery/', REST_API_error_view),
+    path('REST_API/RegionQuery/', REST_API_error_view),
+    path('REST_API/REMQuery/', REST_API_error_view),
+    path('REST_API/CREMQuery/', REST_API_error_view),
 
     path('geneQuery/', geneQuery_view, name='geneQuery-page'),
     path('geneQuery_search/', gene_search_view),
+    path('geneQuery_search_<geneID>/', clicked_gene_search_view),
     path('celltype_search', search_cellTypes),
     path('genesymbol_search', search_geneSymbol),
     path('geneQuery_search/<query_string>/', gene_details_view),
@@ -54,9 +51,6 @@ urlpatterns = [
 
     path('REMQuery/', remQuery_view),
     path('REMQuery_search/', rem_search_view),
-
-
-    path('navbars/', navbars_view),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

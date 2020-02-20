@@ -25,7 +25,7 @@
 {% if no_data|length > 0 %}
 <div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">The model did not find putative REMs that are associated with the following genes:</h1>
 {% for empty in no_data %}
-    {{empty}} <br>
+    {{empty}}
 {% endfor %}
 <br>
 </div>
@@ -34,9 +34,24 @@
 {% endif %}
 
 {% if invalid_list|length > 0 %}
-<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">Invalid gene IDs that are not contained in the hg38 genome:</h1>
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">The following gene names are not contained in the hg38 genome. You may want to try looking up their ensembl ID.</h1>
 {% for invalid in invalid_list %}
-    {{invalid}} <br>
+    {{invalid}}
+{% endfor %}
+<br>
+</div>
+<br>
+<br>
+{% endif %}
+
+{% if doublets_list|length > 0 %}
+<div class="no_data_div" style="padding-left: 20px;"><h1 class="inputLabel" style="font-size: 18px;">There are multiple ensembl IDs available for the following gene symbols.
+    All of them are still included in your query. Click on the links to check the GeneCard if necessary. </h1>
+{% for double in doublets_list %}
+    {{double.0}}:
+    {% for ID in double.1 %}
+        <a id="GeneCard_link" class="link" href="https://www.genecards.org/Search/Keyword?queryString={{ID}}">{{ID}}</a>
+    {% endfor %} <br>
 {% endfor %}
 <br>
 </div>
@@ -45,7 +60,7 @@
 {% endif %}
 
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your query for the genes: <a id="gene_detail_link" class="link" href="/geneQuery_search/{{query_string}}/"><strong id="queried_genes"> {{query_string}} </strong></a></caption>
+    <caption>Results based on your query for the genes: <a id="gene_detail_link" class="link" href="/geneQuery_search/{{query_link}}/"><strong id="queried_genes"> {{query_string}} </strong></a></caption>
 
     <thead>
         <script>
@@ -74,28 +89,33 @@
 
         </script>
         <tr>
-            <th>Gene ID</th>
+            <th class="tooltip_table">Gene ID <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
+                Click on the IDs below to receive a table with all REMs associated with the selected gene</span></th>
             <th>Gene symbol</th>
             <th>REM ID</th>
             <th>Chromosome</th>
             <th>REM start</th>
             <th>REM end</th>
             <th>Predicted function</th>
-            <th class="tooltip_table" >Model score<span class="tooltiptext_top">
+            <th class="tooltip_table" >Model score <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -150px;">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
-            <th class="tooltip_table">Associated REM cluster<span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
+            <th class="tooltip_table">Associated REM cluster <b class="info-icon">&#9432;</b><span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
+
             {% if data|length > 0 %}
-            {% for cellType in cell_types_list_upper %}
-                <th class="tooltip_table">{{cellType}} activity (n={% get_cellType_attr data.0 cellType "samplecount" %})
-                    <span class="tooltiptext_top">Mean over the number of samples n</span></th>
-            {% endfor %}
+                {% for cellType in cell_types_list_upper %}
+                <th class="tooltip_table">{{cellType}} score (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b>
+                    <span class="tooltiptext_top" style="width:280px;">Importance of a REM in a cell type-specific manner averaged over n samples (includes the DNase activity)<b class="info-icon">&#9432;</b></span></th>
+
+                <th class="tooltip_table">{{cellType}} activity <b class="info-icon">&#9432;</b>
+                    <span class="tooltiptext_top" style="margin-left: -120px;">Mean of the normalized DNase1 signal<b class="info-icon">&#9432;</b></span></th>
+                {% endfor %}
             {% endif %}
         </tr>
     </thead>
     <tbody>
     {% for item in data %}
         <tr>
-            <td>{{ item.geneID_id }}</td>
+            <td> <a id="gene_link" class="link" href="/geneQuery_search_{{item.geneID_id}}/">{{ item.geneID_id }}</a></td>
             <td>{{ item.geneSymbol }}</td>
             <td>{{ item.REMID }}</td>
             <td>{{ item.chr }}</td>
@@ -107,8 +127,9 @@
                 <td>repressing</td>
             {% endif %}
             <td>{{ item.modelScore|floatformat:5 }}</td>
-            <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} (incl. {{ item.REMsPerCREM }} REMs)</a></td>
+            <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} - incl. {{ item.REMsPerCREM }} REMs</a></td>
             {% for cellType in cell_types_list %}
+                <td>{% get_cellType_attr item cellType "score" %}</td>
                 <td>{% get_cellType_attr item cellType "activity" %}</td>
             {% endfor %}
         </tr>

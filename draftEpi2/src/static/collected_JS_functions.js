@@ -21,38 +21,38 @@ function setDefaultREM() {
     document.getElementById('csv_upload').value = '';
 }
 
-function switchGeneIDField(){
-   var current = document.getElementById("gene_format").value;
-    if (current === 'symbol_format') {
-        document.getElementById("geneID_symbolic").type = "text";
-        document.getElementById("geneID_numeric").type = "hidden";
-        document.getElementById("geneHeader").textContent = "Gene symbol:";
-        document.getElementById("container_geneSymbolHeader").style.visibility = "visible";
-
-// This here hides the error message when switching to the geneSymbol select. Otherwise
-// it would be displayed constantly
-        var validator = $( "#geneQueryForm" ).validate();
-        validator.showErrors({
-              "geneID_numeric": ""
-        });
-        validateGeneQueryForm_symbolic();
-        document.getElementById("geneID_numeric").className = "inputForm";
-    }
-
-    if (current === 'id_format') {
-    document.getElementById("geneID_symbolic").type = "hidden";
-    document.getElementById("geneID_numeric").type = "text";
-    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
-    document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
-
-    var validator = $( "#geneQueryForm" ).validate();
-    validator.showErrors({
-          "geneID_symbolic": ""
-        });
-    validateGeneQueryForm_numeric();
-    document.getElementById("geneID_symbolic").className = "inputForm";
-    }
-}
+//function switchGeneIDField(){
+//   var current = document.getElementById("gene_format").value;
+//    if (current === 'symbol_format') {
+//        document.getElementById("geneID_symbolic").type = "text";
+//        document.getElementById("geneID_numeric").type = "hidden";
+//        document.getElementById("geneHeader").textContent = "Gene symbol:";
+//        document.getElementById("container_geneSymbolHeader").style.visibility = "visible";
+//
+//// This here hides the error message when switching to the geneSymbol select. Otherwise
+//// it would be displayed constantly
+//        var validator = $( "#geneQueryForm" ).validate();
+//        validator.showErrors({
+//              "geneID_numeric": ""
+//        });
+//        validateGeneQueryForm_symbolic();
+//        document.getElementById("geneID_numeric").className = "inputForm";
+//    }
+//
+//    if (current === 'id_format') {
+//    document.getElementById("geneID_symbolic").type = "hidden";
+//    document.getElementById("geneID_numeric").type = "text";
+//    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
+//    document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
+//
+//    var validator = $( "#geneQueryForm" ).validate();
+//    validator.showErrors({
+//          "geneID_symbolic": ""
+//        });
+//    validateGeneQueryForm_numeric();
+//    document.getElementById("geneID_symbolic").className = "inputForm";
+//    }
+//}
 
 function clearFileInputField(tagId) {
 
@@ -73,6 +73,50 @@ function display_threshold(){
         thresh_div.style.visibility = "visible";
     }
 }
+
+
+/*  Switch format to button **************************************** **************************************** */
+
+function id_formatClick(){
+
+    document.getElementById("geneID_symbolic").type = "hidden";
+    document.getElementById("geneID_numeric").type = "text";
+    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
+    document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
+    document.getElementById('id_format').className = 'format_active';
+    document.getElementById('symbol_format').className = 'format_inactive';
+    document.getElementById('gene_format').value = 'id_format';
+
+    var validator = $( "#geneQueryForm" ).validate();
+    validator.showErrors({
+          "geneID_symbolic": ""
+        });
+    validateGeneQueryForm_numeric();
+    document.getElementById("geneID_symbolic").className = "inputForm";
+
+}
+
+function symbol_formatClick(){
+
+    document.getElementById("geneID_symbolic").type = "text";
+    document.getElementById("geneID_numeric").type = "hidden";
+    document.getElementById("geneHeader").textContent = "Gene symbol:";
+    document.getElementById("container_geneSymbolHeader").style.visibility = "visible";
+    document.getElementById('id_format').className = 'format_inactive';
+    document.getElementById('symbol_format').className = 'format_active';
+    document.getElementById('gene_format').value = 'symbol_format';
+
+// This here hides the error message when switching to the geneSymbol select. Otherwise
+// it would be displayed constantly
+    var validator = $( "#geneQueryForm" ).validate();
+    validator.showErrors({
+          "geneID_numeric": ""
+    });
+    validateGeneQueryForm_symbolic();
+    document.getElementById("geneID_numeric").className = "inputForm";
+}
+
+
 
 /*  BUTTON FUNCTIONS **************************************** **************************************** */
 function chooseButton(clicked_id, containerID, if_empty_value){
@@ -98,7 +142,7 @@ function chooseButton(clicked_id, containerID, if_empty_value){
     if (containerID === "container_cellTypes"){
         display_threshold();
     }
-    };
+    }
 }
 
 function ButtonsToInput(containerID, hiddenID){

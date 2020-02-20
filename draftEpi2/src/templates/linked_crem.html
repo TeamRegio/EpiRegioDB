@@ -25,7 +25,7 @@ img.CREM_img{
 <div id="wrapper">
 
 
-<p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema.png' %}" width="800px" alt = 'cluster schema'/>
+<p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema2.png' %}" width="800px" alt = 'cluster schema'/>
     <span class="tooltiptext_right" style="margin-left: -300px; width: 200px;">This is only a schema, not the actual cluster you selected</span></p>
 <br>
 <br>
@@ -60,12 +60,14 @@ img.CREM_img{
         </script>
         <tr>
             <th>REM ID</th>
-            <th>Gene ID</th>
+            <th class="tooltip_table">Gene ID <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
+                Click on the IDs below to receive a table with all REMs associated with the selected gene</span></th>
+            <th>Gene symbol</th>
             <th>Chromosome</th>
             <th>REM start</th>
             <th>REM end</th>
             <th>Predicted function</th>
-            <th class="tooltip_table" style="display: align;">Model score<span class="tooltiptext_top">
+            <th class="tooltip_table" style="display: align;">Model score <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -150px;">
                 Represents the importance of the REM for its associated gene over all cell types.</span></th>
         </tr>
     </thead>
@@ -73,11 +75,12 @@ img.CREM_img{
     {% for item in data %}
         <tr>
             <td>{{ item.REMID_id }}</td>
-            <td>{{ item.REMID_id__geneID }}</td>
+            <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.REMID_id__geneID}}/">{{ item.REMID_id__geneID }}</a></td>
+            <td>{{ item.REMID_id__geneID__geneSymbol }}</td>
             <td>{{ item.chr }}</td>
             <td>{{ item.REMID_id__start }}</td>
             <td>{{ item.REMID_id__end }}</td>
-            {% if item.regressionCoefficient > 0 %}
+            {% if item.REMID_id__regressionCoefficient > 0 %}
                 <td>activating</td>
             {% else %}
                 <td>repressing</td>

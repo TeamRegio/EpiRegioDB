@@ -8,6 +8,7 @@ figure.overview{
 }
 div.introduction{
     border-bottom: 1px solid #cccccc;
+    text-align: justify;
 }
 div.introBlock{
     float: left;
@@ -28,23 +29,19 @@ div.introBlock{
 <div class="introBlock">
 
 <h2>Welcome to EpiRegioDB!</h2>
-<div class='introduction'><p class="textBox"> The field of research on gene regulation has considerably grown during the last years
-and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
-One of the key players are non-coding DNA regions that are able to regulate the expression of genes
-by remodelling the accessibility of chromatin. They are able to support or repress the expression of their associated gene.
-These Regulatory EleMents (REM) can be located far away from their associated genes.
-Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence.
-Different approaches are being used, combining various kinds of genomics data to annotate REMs. An even
-more challenging task is to link the putative REMs to their associated gene.
+<div class='introduction'><p class="textBox">
     <br>
-    <br>
-Here we present the EpiRegio webserver, a resource of REMs, providing information about their associated gene, their relevance for
- its gene's expression and their activity in different cell types and tissues. With EpiRegio you are able to look into
+EpiRegio is a resource of Regulatory EleMents (REMs), non-coding DNA regions that are able to regulate the expression
+    of their target genes. Identifying REMs and their associated genes is an ongoing challenge in epigenomics, as there is no method
+    yet to get a clear readout of a REM and as the target genes can be located up to several kilobases away. <br>
+   EpiRegio's data is based on the results of STITCHIT, a peak-calling free algorithm that uses chromatin
+accessibility signal in combination with gene expression data to identify gene-specific REMs. For more details, please have a look at our <strong><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/Description.html"> documentation</a></strong>.
+   <br> For each REM, EpiRegio provides you with information on its associated gene, its relevance for
+ its gene's expression and its activity in different cell types and tissues. With EpiRegio you are able to look into
     regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about
-    the REMs.
+    the REMs.</p>
     <br>
-EpiRegio's data is based on the results of STITCHIT, a peak-calling free algorithm that uses chromatin
-accessibility signal to identify gene-specific REMs. For more details, please have a look at the <a class="link" href="http://dx.doi.org/10.1101/585125"> preprint</a>.</p></div>
+</div>
     <br>
 
 
@@ -57,8 +54,8 @@ accessibility signal to identify gene-specific REMs. For more details, please ha
     <li>get information about the REMs themselves</li>
     <li>or for a more flexible approach make use of the Rest API</li>
     </ul>
-    For more support visit our <a class="link" href="/help">Help</a> page which provides a detailed documentation, including exemplary use cases.
-    If you have questions or comments please let us know, we'd be glad to hear them.
+    For a detailed documentation including a step-by-step guide and exemplary user cases please visit our <strong><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/"> Read the docs page</a></strong>.
+    If you have questions or comments please <strong><a class="link" href="\contact">let us know</a></strong>, we'd be glad to hear them.
 </div>
     <br>
     <br>

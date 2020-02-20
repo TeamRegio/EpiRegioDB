@@ -82,11 +82,11 @@ input.inputForm{
 
         <tr>
             <td colspan="2">
-            <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected:<span class="tooltiptext_right">Deselect via button click below</span></p>
+            <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right">Deselect via button click below</span></p>
             <div class ='selectedButtons' id="container_cellTypes"> </div>
 
              <div id="threshold_div" style="visibility: hidden;">
-                  <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional):</b><span class="tooltiptext_right" style="width:300px;">
+                  <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:300px;">
                 Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed</span></p><br>
                 <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div>
             </td>
@@ -104,7 +104,7 @@ input.inputForm{
 
 <button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryREMQuery()">Exemplary Query</button>
 
-<input class="query_database" onclick='ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="Save" value="Query Database"  />
+<input class="query_database" onclick='ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="Save" id="QueryButton" value="Query Database"  />
 
 </form>
 </div>

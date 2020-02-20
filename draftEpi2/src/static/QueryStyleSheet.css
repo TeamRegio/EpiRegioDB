@@ -68,10 +68,17 @@ div.no_data_div{
 
 table.error_table{
     margin-left: 50px;
+    margin-right: 50px;
     font-size: 20px;
     border: 1px solid #a6a6a6;
     padding: 10px;
 }
+
+b.info-icon{
+    color:#00404a;
+    font-size:16px;
+}
+
 /* SELECT **************************************** **************************************** */
 select{
     font-size: 18px;
@@ -180,6 +187,27 @@ select{
 
 
 /* BUTTONS **************************************** **************************************** */
+button.format_active {padding:5px 15px; background: #006075;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    color: white;
+    border: solid 1px  #000000;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+    box-shadow: 0 3px  black;}
+
+button.format_inactive {padding:5px 15px; background: white;
+    font-size: 16px;
+    font-family: Adhari;
+    font-weight: bold;
+    color: #4a4a4a;
+    border: solid 1px  #8a8a8a;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 2px;}
+
 
 input.query_database {padding:5px 15px; background: #073946;
     font-size: 16px;
@@ -366,7 +394,7 @@ button.clearFiles:active {
   visibility: visible;
 }
 
-.tooltip_table .tooltiptext_top::after {
+/*.tooltip_table .tooltiptext_top::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -376,7 +404,7 @@ button.clearFiles:active {
   border-style: solid;
   border-color: #073946 transparent transparent transparent;
 }
-
+*/
 /* ERROR MESSAGES **************************************** **************************************** */
 
 div.formError {

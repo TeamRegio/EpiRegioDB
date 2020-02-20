@@ -33,6 +33,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
 
     error_msg = ''
     invalid_list = []
+    doublets_list = []
 
     gene_format = request.POST.get('gene_format')
     csv_file = request.POST.get('csvFile')
@@ -66,19 +67,20 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     cell_types_list_upper = [x.capitalize() for x in cell_types_list]
 
     query_list = strip_csv_query(query)[0]
-    query_list_string = strip_csv_query(query)[1]
+    query_list_string_link = strip_csv_query(query)[1]
 
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
         export_string = strip_csv_query(query)[2].replace(" ", '') + '...' + str(len(query_list)-3) + 'more'
+        query_list_string = strip_csv_query(query)[2].replace("_", ", ") + ' and ' + str(len(query_list)-3) + ' more'
     else:
-        export_string = query_list_string.replace(" ", "")
+        export_string = query_list_string_link.replace(" ", "")
+        query_list_string = strip_csv_query(query)[1]
 
     if gene_format == 'symbol_format':  # in case of geneSymbol as query we first have to look up the respective
         # ensemble ID
-        query_list, invalid_list_symbol = API_SymbolToENSG(query_list)  # our API function to convert geneSymbols to ENSG IDs
+        query_list, invalid_list_symbol, doublets_list = API_SymbolToENSG(query_list)  # our API function to convert geneSymbols to ENSG IDs
         invalid_list = invalid_list_symbol  # if symbol format was chosen, we also want to give back the invalid list
         # as symbols
-
     data, no_data, invalid_list_ensembl = API_ENSGID(query_list, cell_types_list, activ_thresh, gene_format)  # data are
     # the hits, meaning the dictionaries, no_data are the genes for which there was no REM in the db
 
@@ -94,9 +96,16 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         if activ_thresh == 0.0:
             error_msg = 'The model did not find putative REMs that are associated with your queried genes.'
 
+    for i in range(len(no_data)-1):  # to make it look nice in the template
+        no_data[i] += ', '
+
+    for n in range(len(invalid_list)-1):
+        invalid_list[n] += ', '
+
     context = {
         'data': data,
         'query_string': query_list_string,
+        'query_link': query_list_string_link,
         'export_string': export_string,
         'cell_types_string': cell_types,
         'cell_types_list': cell_types_list,
@@ -105,6 +114,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         'error_msg': error_msg,
         'no_data': no_data,
         'invalid_list': invalid_list,
+        'doublets_list': doublets_list,
     }
     # print(context)
     return render(request, template, context)
@@ -146,6 +156,32 @@ def crem_view(request, CREMID):
     return render(request, 'linked_crem.html', context)
 
 
+def clicked_gene_search_view(request, geneID):
+
+    query = geneID
+    query_list = strip_csv_query(query)[0]
+    query_list_string_link = strip_csv_query(query)[1]
+
+    if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
+        export_string = strip_csv_query(query)[2].replace(" ", '') + '...' + str(len(query_list)-3) + 'more'
+        query_list_string = strip_csv_query(query)[2].replace("_", ", ") + ' and ' + str(len(query_list)-3) + ' more'
+    else:
+        export_string = query_list_string_link.replace(" ", "")
+        query_list_string = strip_csv_query(query)[1]
+
+    data, no_data, invalid_list_ensembl = API_ENSGID([geneID], [], 0.0, 'id_format')
+
+    context = {
+        'data': data,
+        'query_string': query_list_string,
+        'query_link': query_list_string_link,
+        'export_string': export_string,
+    }
+    # print(context)
+    return render(request, 'geneQuery_search.html', context)
+
+
+
 # GENE DETAILS VIEW ####################################################################
 
 def gene_details_view(request, query_string):
@@ -154,10 +190,11 @@ def gene_details_view(request, query_string):
     query_list_list = query_list
 
     if query_list[0][:4] != 'ENSG':
-        query_list, invalid_list = API_SymbolToENSG(query_list)
+        query_list = API_SymbolToENSG(query_list)[0]
 
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
-        export_string = strip_csv_query(query_string)[2] + '...' + str(len(query_list)-3) + ' more'
+        export_string = strip_csv_query(query_string)[2] + '...' + str(len(query_list)-3) + 'more'
+        query_string = strip_csv_query(query_string)[2].replace("_", " ") + ' and ' + str(len(query_list)-3) + ' more'
     else:
         export_string = query_string
 
