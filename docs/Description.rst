@@ -26,7 +26,7 @@ For more information, a detailed explanation of the computational method and the
 
 Cluster of regulatory elements
 ===============================
-.. image:: ./images/crem_schema.png
+.. image:: ./images/crem_schema2.png
   :width: 600
   :alt: CREM schema
   
