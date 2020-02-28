@@ -122,4 +122,32 @@ All result tables possess additional functionalities like the possibility to fil
 
 Results in detail
 =================
-The tables you get from the different queries contain the same columns. Here you can get some more detailed information on each of them.  
+The tables you get from the different queries contain the same columns. Here you can get some more detailed information on each of them.
+
+Gene ID and symbol
+~~~~~~~
+For the gene nomenclature we use the hg38 human genome version from the 'Ensembl Genome Browser <https://www.ensembl.org/Homo_sapiens/Info/Index?db=core>'_. For each gene ID we have one gene symbol available. If a queried gene symbol is called to be invalid, try to use the ENSG ID (e.g. ENSG00000000001), as they are more definite. 
+
+REM ID
+~~~~~~~
+*REM ID* is how we define the REMs internally. Each *REM ID* is unique and each REM is associated to only one gene. We started counting from REM0000001 onwards.
+
+Predicted function
+~~~~~~~
+STITCHIT identifies REMs by interpreting differential gene expression, meaning that a REM can be associated with an increase in gene expression as well as with a decrease. This association is represented by the regression coefficient. In case of a positive regression coefficient we assume an activating effect of the REM on its gene's expression and for a negative regression coefficient a repressing effect.
+
+Model score
+~~~~~~~
+The *Model score* is the negative binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator how important a REM is for it gene's expression. The higher the score, the more impact the REM is supposed to have. This p-value is not cell type specific but calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
+
+Associated REM cluster
+~~~~~~~
+As STITCHIT starts with a gene and looks for its regulatory region and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that overlap by at least one basepair. If there is no overlapping other REM, a cluster can also consist of only one REM. The entries of *Associated REM cluster* are links that redirect you to a table with all REMs inside of this cluster.
+
+Cell type score
+~~~~~~~
+*Cell type score* is the absolute product of the regression coefficient and the DNase activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its gene's expression in this cell type. The regression coefficient is not cell type-specific, but the DNase activity is and therefore enables the comparison of REMs in between different cell types.
+
+Cell type activity
+~~~~~~~
+*Cell type activity* is the DNase signal for the cell type measured in the REM region. It is normalized within the two consortia that were used to generate the data hosted by the server. 
