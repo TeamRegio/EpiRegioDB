@@ -1,6 +1,6 @@
 Query Guide
 ---------
-Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Examplary Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at <enter link here> to get an explanation of all the output parameters. 
+Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Examplary Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at :ref:`Results in detail` to get an explanation of all the output parameters. 
 
 Gene Query
 =================
@@ -117,7 +117,7 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 Interactive tables
 =================
 
-All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. For every REM you can click on the chromosome value in its row to view this REM's region inside of the UCSC 'Genome Browser <https://genome.ucsc.edu/>'_. The values in the column *Associated REM cluster* redirects you to a new table with all the REM contained in this cluster. Further, each *Gene ID* in all the tables is also a link that brings you to a new table in which all the REMs are shown that are associated with this gene. After performing a Gene Query, you can click the gene ID in the query header to get to a table containing more details that we have about your queried genes. In addition, inside of this table the gene IDs will redirect you to the gene's 'GeneCard <https://www.genecards.org/>'_.
+All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. For every REM you can click on the chromosome value in its row to view this REM's region inside of the `UCSC Genome Browser <https://genome.ucsc.edu/>`_. The values in the column *Associated REM cluster* redirects you to a new table with all the REM contained in this cluster. Further, each *Gene ID* in all the tables is also a link that brings you to a new table in which all the REMs are shown that are associated with this gene. After performing a Gene Query, you can click the gene ID in the query header to get to a table containing more details that we have about your queried genes. In addition, inside of this table the gene IDs will redirect you to the gene's `GeneCard <https://www.genecards.org/>`_.
 
 
 Results in detail
@@ -126,7 +126,7 @@ The tables you get from the different queries contain the same columns. Here you
 
 Gene ID and symbol
 ~~~~~~~
-For the gene nomenclature we use the hg38 human genome version from the 'Ensembl Genome Browser <https://www.ensembl.org/Homo_sapiens/Info/Index?db=core>'_. For each gene ID we have one gene symbol available. If a queried gene symbol is called to be invalid, try to use the ENSG ID (e.g. ENSG00000000001), as they are more definite. 
+For the gene nomenclature we use the hg38 human genome version from the `Ensembl Genome Browser <https://www.ensembl.org/Homo_sapiens/Info/Index?db=core>`_. For each gene ID we have one gene symbol available. If a queried gene symbol is called to be invalid, try to use the ENSG ID (e.g. ENSG00000000001), as they are more definite. 
 
 REM ID
 ~~~~~~~
