@@ -85,7 +85,7 @@ Example:
 
 Programmatic access via Python
 ---------
-If you wish to call the REST API outside of your browser, for example if you need to get data regularly and want to include it into one of your scripts, you need a program that is capable of doing HTTP requests. One easy-to-use tool is the Python package `Requests <https://requests.readthedocs.io/en/master/>`_. Let's go through an example: you have a Python list with genomic regions and you really want to know which REMs overlap by at least 50% with your regions. In the end, you want to have a new list, containing the REM IDs, their location as well as their cell type score for the left kidney. So here is what we need to get going::
+If you wish to call the REST API outside of your browser, for example if you need to get data regularly and want to include it into one of your scripts, you need a program that is capable of doing HTTP requests. One easy-to-use tool is the Python package `Requests <https://requests.readthedocs.io/en/master/>`_. Let's go through an example: you have a Python list with genomic regions and you really want to know which REMs overlap by at least 50% with your regions. In the end you want to have a new list containing the REM IDs, their location as well as their cell type score for the left kidney. So here is what we need to get going::
 
         import requests
 
