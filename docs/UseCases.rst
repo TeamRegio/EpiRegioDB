@@ -15,8 +15,8 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 2. You can choose to search either with *ensembl ID* or *gene symbol*. The version number of Ensembl IDs is not required. When entering gene symbols, you can add suggestions on the right by clicking on the appearing buttons. Selected buttons will be listed underneath *Currently selected:*. Deselect your choices by reclicking on those buttons. We use the human genome version hg38.
 
-.. image:: ./images/geneQuery_form.png
-  :width: 500
+.. image:: ./images/2802GeneQueryForm.png
+  :width: 400
   :alt: Gene Query form
 
 3. When you have multiple IDs or symbols to search, separate them by comma in the input field or create a csv- or txt-file and upload it. All of the commonly used separators are being recognized. A combination of both, the input field and the uploaded file, is not implemented.
@@ -30,7 +30,7 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 5. The result page shows the information based on your query settings. All the REMs associated to your queried genes are listed with their location, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* indicates how important a REM is for its associated gene over all cell types. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on a CREM ID to get more information on this particular cluster and its REMs. If you selected cell types in your query, the *Cell type score* and the *Cell type activity* of the REMs in these cell types will be shown as average over all the samples n in the database. The *Cell type score* is the absolute product of the regression coefficient and the DNase activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its gene's expression in this cell type. *Cell type activity* is the DNase signal alone. You can export the table as xls-, csv- or pdf-file. For more details on the genes you queried, click on the link at the top of the table. 
 
-.. image:: ./images/geneQuery_table.png
+.. image:: ./images/2802GeneQueryOutput.png
   :alt: Gene Query output
   :width: 800
 
@@ -49,8 +49,8 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
 
 2. You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap. For example, with an overlap of 50% only the REMs will be returned that overlap by at least half of their length with your selected regions.
 
-.. image:: ./images/regionQuery_form.png
-  :width: 500
+.. image:: ./images/2802RegionQueryForm.png
+  :width: 400
   :alt: Region Query form
 
 3. You can also upload a csv-, txt- or bed-file with your regions of interest in which the first value has to be the chromosome, followed by the start and the end position. A combination of both, input field and uploaded file, is not implemented. You can see the format of exemplary upload files below (comma-separated and tab-separated). All of the commonly used separators are being recognized, as long as the order of chromosome, start position and end position is correct. For the bed-files, the columns have to be in the order chromsome, start position and end position as well. All additional columns beside of those first three ones will be ignored. Files with empty fields will not be read correctly. 
@@ -75,7 +75,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   
 5. The result page shows the information based on your query settings. All the REMs located inside of your selected regions are listed with their associated gene, their predicted function, the model score, the REM cluster they belong to and their activity in the cell types you selected. The *Model score* indicates how important a REM is for its associated gene over all cell types. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on a CREM ID to get more information on this particular cluster and its REMs. If you selected cell types in your query, the *Cell type score* and the *Cell type activity* of the REMs in these cell types will be shown as average over all the samples n in the database. The *Cell type score* is the absolute product of the regression coefficient and the DNase activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its gene's expression in this cell type. *Cell type activity* is the DNase signal alone. You can export the table as xls-, csv- or pdf-file.
 
-.. image:: ./images/regionQuery_table.png
+.. image:: ./images/2802RegionQueryOutput.png
   :alt: Region Query output
   :width: 800
 
@@ -95,8 +95,8 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 
 2. Enter the IDs of your REMs of interest. Sepearte multiple ones by comma. You can upload a csv-file containing REM IDs. A combination of both, input field and uploaded file, is not implemented.
 
-.. image:: ./images/REMQuery_form.png
-  :width: 500
+.. image:: ./images/2802REMQueryForm.png
+  :width: 400
   :alt: REMQuery form
 
 
@@ -109,7 +109,7 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 
 4. The result page shows the information based on your query settings. All your queried REMs are listed with their associated gene, their predicted function, the model score, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* indicates how important a REM is for its associated gene over all cell types/tissues. The higher the value, the more important the REM is. The next column *Associated REM cluster* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that overlap by at least 1 bp. Click on a CREM ID to get more information on this particular cluster and its REMs. If you selected cell types in your query, the *Cell type score* and the *Cell type activity* of the REMs in these cell types will be shown as average over all the samples n in the database. The *Cell type score* is the absolute product of the regression coefficient and the DNase activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its gene's expression in this cell type. *Cell type activity* is the DNase signal alone. You can export the table as xls-, csv- or pdf-file.
 
-.. image:: ./images/REMQuery_table.png
+.. image:: ./images/2802REMQueryOutput.png
   :alt: REM Query output  
   :width: 800
 
