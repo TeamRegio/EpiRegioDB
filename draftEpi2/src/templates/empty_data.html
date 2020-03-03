@@ -22,6 +22,11 @@
     <td>Query:</td><td>{{query_string}}</td> </tr>
 <tr>
     <td>Cell types/tissues:</td><td>{{cell_types_string}}</td> </tr>
+{% if overlap %}
+<tr>
+    <td>Overlap:</td><td>{{overlap}}%</td>
+</tr>
+{% endif %}
 <tr>
     <td>Activity threshold:</td><td> {{activ_thresh}}</td></tr>
 </table>

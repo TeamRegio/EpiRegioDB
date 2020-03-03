@@ -5,10 +5,15 @@
 
 <style>
 nav{
-    width: 100vw;
-    background: linear-gradient(to left top, #0d6980 0%,  #073946 60%);
-
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    min-width: 1400px;
 }
+div.nav_menu{
+    background: linear-gradient(to left top, #0d6980 0%,  #073946 60%);
+}
+
 ul.menu {
   list-style-type: none;
   overflow: hidden;
@@ -21,7 +26,7 @@ li.menu {
 
 li a.menu {
   font-family: adhabi;
-  display: block;
+  display: in-line;
   color: white;
   text-decoration: none;
   padding-left: 30px;
@@ -46,9 +51,10 @@ caption{
 
 </style>
 
-<img src="{% static 'Logo_EpiRegio2.png' %}" width="400px" alt = 'logo'/>
-<link rel="shortcut icon" type="image/png" href="{% static '/epiregioico.ico' %}"/>
 <nav>
+<a href="../../"><img src="{% static 'Logo_EpiRegio2.png' %}" width="400px" alt = 'logo'/></a>
+<link rel="shortcut icon" type="image/png" href="{% static '/epiregioico.ico' %}"/>
+<div class="nav_menu">
     <ul class="menu">
         <li class="menu"><h1><a class="menu" href="../../" style="padding-right: 40px;"> Home </a></h1></li>
         <li class="menu" ><h1><a class="menu" style="padding-left: 40px; padding-right: 15px;" href="/geneQuery"> Gene Query </a></h1></li>
@@ -58,4 +64,5 @@ caption{
         <li class="menu side-menu"><h1><a class="menu side-menu" href="/contact">Contact</a></h1></li>
         <li class="menu side-menu"><h1><a class="menu side-menu" href="https://epiregiodb.readthedocs.io/en/latest/">Documentation</a></h1></li>
     </ul>
+</div>
 </nav>

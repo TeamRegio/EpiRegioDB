@@ -24,6 +24,7 @@ def remQuery_view(request):
 def rem_search_view(request):
 
     query = request.POST.get('REMIDs').upper()
+    query = query.replace(',', ';')
     csv_file = request.POST.get('csvFile').upper()
 
     activ_thresh = request.POST.get('activ_thresh')
@@ -37,7 +38,7 @@ def rem_search_view(request):
 
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     if len(cell_types) > 0:
-        cell_types_list = cell_types.split(', ')
+        cell_types_list = cell_types.split('; ')
     else:
         cell_types_list = []
 
@@ -45,13 +46,13 @@ def rem_search_view(request):
 
     # If a file is there, we take it and forget the rest
     if len(csv_file) > 0:
-        query = csv_file
+        query = csv_file.replace(',', ";")
 
     query_list = strip_csv_query(query)[0]
     query_list_string = strip_csv_query(query)[1]
     if len(query_list) > 3:  # if the number of queried genes is too high, we take only three to shorten the export name
         export_string = strip_csv_query(query)[2].replace(" ", '') + '...' + str(len(query_list)-3) + 'more'
-        query_list_string = strip_csv_query(query)[2].replace("_", " ") + ' and ' + str(len(query_list)-3) + ' more'
+        query_list_string = strip_csv_query(query)[2].replace("_", ", ") + ' and ' + str(len(query_list)-3) + ' more'
     else:
         export_string = query_list_string.replace(" ", '')
 

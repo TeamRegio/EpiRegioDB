@@ -11,7 +11,7 @@ h1.queryDescription{
 }
 h1.inputLabel{
     font-size: 22px;
-    font-family: adhari;
+    font-family: Calibri;
 }
 table.regionQueryTable{
     width: 1000px;
@@ -19,7 +19,7 @@ table.regionQueryTable{
 }
 
 p.textBox{
-    font-family: Times New Roman;
+    font-family: Calibri;
     font-size: 20px;
     padding: 25px;
 }
@@ -27,7 +27,7 @@ p.textBox{
 input.inputForm{
     width: 90%;
     font-size: 18px;
-    font-family: adhari;
+    font-family: Calibri;
     border-top: none ;
     border-right: none ;
     border-bottom: solid #cccccc 1px;
@@ -82,7 +82,7 @@ b.info-icon{
 /* SELECT **************************************** **************************************** */
 select{
     font-size: 18px;
-    font-family: adhari;
+    font-family: Calibri;
     height: 24px;
 }
 
@@ -91,7 +91,7 @@ select{
 /*the container must be positioned relative:*/
 .custom-select {
   position: relative;
-  font-family: Adhari;
+  font-family: Calibri;
 }
 
 .custom-select select {
@@ -102,7 +102,7 @@ select{
     background-color: white;
     color: black;
     font-size: 18px;
-    font-family: adhari;
+    font-family: Calibri;
     border-top: none ;
     border-right: none ;
     border-bottom: solid #cccccc 1px;
@@ -189,7 +189,7 @@ select{
 /* BUTTONS **************************************** **************************************** */
 button.format_active {padding:5px 15px; background: #006075;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     color: white;
     border: solid 1px  #000000;
@@ -200,7 +200,7 @@ button.format_active {padding:5px 15px; background: #006075;
 
 button.format_inactive {padding:5px 15px; background: white;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     color: #4a4a4a;
     border: solid 1px  #8a8a8a;
@@ -211,7 +211,7 @@ button.format_inactive {padding:5px 15px; background: white;
 
 input.query_database {padding:5px 15px; background: #073946;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     color: white;
     border: solid 1px  #033d57;
@@ -231,7 +231,7 @@ input.query_database {padding:5px 15px; background: #073946;
 
 button.ajax_search_list {padding: 4px 10px; background: #ffffff;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     border: solid 1px #e6e6e6;
     cursor: pointer;
@@ -249,7 +249,7 @@ button.ajax_search_list:active {
 
 button.NoneButton {padding:5px 15px; background: white;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     border: solid 1px  #060d13;
     cursor: pointer;
@@ -260,7 +260,7 @@ button.NoneButton {padding:5px 15px; background: white;
 
 input.chosenButtons {padding: 4px 10px; background: #ffffff;
     font-size: 16px;
-    font-family: Adhari;
+    font-family: Calibri;
     font-weight: bold;
     border: solid 1px #333333;
     cursor: pointer;
@@ -325,7 +325,7 @@ button.clearFiles:active {
   z-index: 99;
   top: -5px;
   left: 110%;
-  font-family: adhari;
+  font-family: Calibri;
 }
 
 .tooltip:hover .tooltiptext_right{
@@ -355,7 +355,7 @@ button.clearFiles:active {
   position: absolute;
   z-index: 99;
   top: 110%;
-  font-family: adhari;
+  font-family: Calibri;
   margin-left: -200px;
 }
 
@@ -385,7 +385,7 @@ button.clearFiles:active {
   border-radius: 4px;
   position: absolute;
   z-index: 99;
-  font-family: adhari;
+  font-family: Calibri;
   margin-left: -200px;
   bottom: 105%;
 }
@@ -415,6 +415,6 @@ div.formError {
   text-align: left;
   padding: 5px;
   border-radius: 4px;
-  font-family: adhari;
+  font-family: Calibri;
 }
 

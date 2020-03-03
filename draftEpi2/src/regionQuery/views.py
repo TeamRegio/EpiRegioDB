@@ -10,7 +10,7 @@ def regionQuery_view(request):
 
 
 def clear_chr_string(query):
-    region_list = query.split(',')[:-1]  # the last entry is just the empty string after the comma
+    region_list = query.split(';')[:-1]  # the last entry is just the empty string after the comma
     for i in range(len(region_list)):
         region_list[i] = region_list[i].split(':')
         region_list[i] = [region_list[i][0].strip(), region_list[i][1].split('-')[0].strip(), region_list[i][1].split('-')[1].strip()]
@@ -25,6 +25,7 @@ def region_search_view(request):
     query = request.POST.get('geneRegions')
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     activ_thresh = request.POST.get('activ_thresh')
+    overlap = request.POST.get('overlap')
 
     csv_file = request.POST.get('csvFile')
     csv_file_name = request.POST.get('csv_upload')
@@ -33,15 +34,23 @@ def region_search_view(request):
     if len(activ_thresh) > 0:
         try:
             activ_thresh = float(activ_thresh)
-        except ValueError:
+        except ValueError or TypeError:
             activ_thresh = 0.0
     else:
         activ_thresh = 0.0
 
+    if len(overlap) > 0:
+        try:
+            overlap = float(overlap)
+        except ValueError or TypeError:
+            overlap = 100
+    else:
+        overlap = 100
+
     if len(csv_file) > 0:
         query = ''  # if we have a csv-file we discard any selected regions
 
-        if csv_file_name[-3:].lower() == 'csv':  # we treat csv files different than bed files
+        if csv_file_name[-3:].lower() == 'csv' or csv_file_name[-3:].lower() == 'txt':  # we treat csv files different than bed files
             csv_list = [x.strip() for x in csv_file.split(',') if x != '' and x != ' ']
             csv_list = [x for x in csv_list if x != '']  # because of possible empty lines
 
@@ -80,13 +89,13 @@ def region_search_view(request):
         query = request.POST.get('chrField') + ":" + str(request.POST.get('chrStart')) + "-" + str(request.POST.get('chrEnd')) + ",'"
 
     if len(cell_types) > 0:
-        cell_types_list = cell_types.split(', ')
+        cell_types_list = cell_types.split('; ')
     else:
         cell_types_list = []
 
     cell_types_list_upper = [x.capitalize() for x in cell_types_list]
 
-    query_list = clear_chr_string(query)
+    query_list = clear_chr_string(query.replace(",", ";"))
 
     try:
         query_list = list(set(query_list))  # with use of set, we update our query
@@ -103,7 +112,7 @@ def region_search_view(request):
     else:
         export_string = query_list_string.replace(" ", '')
 
-    data, no_hit, invalid_list = API_Region(query_list, cell_types_list, activ_thresh)
+    data, no_hit, invalid_list = API_Region(query_list, cell_types_list, overlap, activ_thresh)
 
     no_data = []  # for the regions we need to format it into a list of strings, to be consequent with the
     # chrX:start-end format
@@ -121,12 +130,12 @@ def region_search_view(request):
     template = 'regionQuery_search.html'
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
-        if activ_thresh != 0.0:
+        if activ_thresh != 0.0 and overlap == 100:
             error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
-                        'activity threshold or modifying the region boundaries.'
-        if activ_thresh == 0.0:
+                        'activity threshold, change the overlap or modifying the region boundaries.'
+        if activ_thresh == 0.0 and overlap == 100:
             error_msg = 'No REMs were found in your selected regions. You might want to try ' \
-                        'changing the region boundaries.'
+                        'changing the overlap or modifying the region boundaries.'
 
     context = {
         'data': data,
@@ -139,6 +148,7 @@ def region_search_view(request):
         'activ_thresh': activ_thresh,
         'no_data': no_data,
         'invalid_list': invalid_string_list,
+        "overlap": int(overlap),
     }
 
     return render(request, template, context)

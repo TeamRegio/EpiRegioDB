@@ -64,8 +64,9 @@ input.inputForm{
         </tr>
 
         <tr>
-            <td colspan="2"><div class="uploadCSVForm" style="margin-top: 30px; margin-bottom: 20px;"><p class="selectionHeader" style="color:black;"><u>Or</u> upload a list of REM IDs as csv-file:</p>
-                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv" > </div>
+            <td colspan="2"><div class="uploadCSVForm" style="margin-top: 30px; margin-bottom: 20px;"><p class="selectionHeader tooltip" style="color:black;"><u>Or</u> upload a list of REM IDs as csv- or txt-file
+                <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right" style="width:250px;">Any delimiter should work, as long as the format is consistent.</span></p>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv,.txt" > </div>
                 <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
             </td>
         </tr>

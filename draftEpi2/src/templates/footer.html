@@ -8,8 +8,14 @@ html, body {
   min-height: 100vh;
   height: 100vh;
 }
+<!--body{-->
+<!--background: #c9c9c9;-->
+<!--}-->
+<!--div{-->
+<!--  background: white;-->
+<!--}-->
 
-#wrapper {
+div.wrapper {
   min-height: 76vh;
   height: auto !important;
   margin-bottom: -26px; /* the bottom margin is the negative value of the footer's total height */
@@ -18,13 +24,14 @@ html, body {
 #wrapper:after {
   content: "";
   display: block;
-      height: 26px; /* the footer's total height */
+  height: 26px; /* the footer's total height */
 }
 
 #footer {
   bottom: 0;
   height: 26px; /* the footer's total height */
   text-align: right;
+  font-family: Calibri;
   width: 100%;
   position: fixed;
 }
@@ -54,7 +61,7 @@ html, body {
   background-color: white;
   color: black;
   font-size: 16px;
-  font-family: Times New Roman;
+  font-family: Calibri;
 }
 
 a.link_foot{
@@ -66,16 +73,23 @@ a.link_foot:hover{
  text-decoration: none;
 }
 
+p.copyright_notice{
+position: relative;
+color: white;
+text-align: center;
+}
+
 </style>
 
 <footer id="footer"><div id="footer-content">
 <div id="tested_browsers">
   <a style="float: left; position: relative; color: white;">Tested for:</a>
 </div>
-<img class='homefig' src="{% static '/Browser_icons/Chrome-256.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Chrome_icon'/>
-<img class='homefig' src="{% static '/Browser_icons/Firefox_256.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Firefox_icon'/>
-<img class='homefig' src="{% static '/Browser_icons/MS_Edge200.png' %}" style="position:static; width: 20px; float: left; padding-left: 10px;" alt = 'Edge_icon'/>
+<img class='homefig' src="{% static '/Browser_icons/Chrom-256C.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Chrome_icon'/>
+<img class='homefig' src="{% static '/Browser_icons/Firefox_256C.png' %}" style="position:static; width: 25px; float: left; padding-left: 10px;" alt = 'Firefox_icon'/>
+<img class='homefig' src="{% static '/Browser_icons/MS_Edge200C.png' %}" style="position:static; width: 20px; float: left; padding-left: 10px;" alt = 'Edge_icon'/>
 
+<a id="copyright_notice" style="margin-right: 100px; color: white;">&copy; 2020 Institute for Cardiovascular Regeneration, Goethe University Frankfurt</a>
 
 <a style="color:white;" class="link_foot" href="/help">Help</a>&emsp;&emsp;&emsp;
 <a style="color:white;" class="link_foot" href="/contact">Contact</a>&emsp;&emsp;&emsp;

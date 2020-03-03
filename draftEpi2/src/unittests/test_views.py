@@ -96,8 +96,8 @@ class geneQuerySearchTest(TestCase):
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000225880', geneSymbol='LINC00115', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
         # one geneAnnotation without a REM, to test for valid genes we have no data for
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000XXXXXX', geneSymbol='LINCXXXXX', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
-        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, version='1')
-        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, version='1')
+        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, version=1, consortium='b')
+        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, version=1)
         geneExpression.objects.create(geneID_id='ENSG00000225880', sampleID_id='R_ENCBS011TVS', expressionLog2TPM=0.265575, species='HUMAN')
         CREMAnnotation.objects.create(REMID_id='REM0000742', CREMID='CREM0000464', chr='chr1', start=826308, end=827500, REMsPerCREM=27, version=1)
         print('View Test - Gene Query Search')
@@ -131,7 +131,8 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -172,7 +173,8 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -213,7 +215,8 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -254,7 +257,8 @@ class geneQuerySearchTest(TestCase):
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
             'geneSymbol': 'LINC00115',
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
@@ -350,7 +354,8 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'modelScore': 0.413633959051203,
@@ -397,6 +402,7 @@ class geneQuerySearchTest(TestCase):
             'activ_thresh': 0.0,
             'csv_upload': '',
             'csvFileRows': '',
+            'overlap': 100,
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'regionQuery_search.html')
@@ -410,7 +416,8 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -427,6 +434,7 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
+        self.assertEqual(response.context['overlap'], 100)
         self.assertEqual(response.context['export_string'], 'chr1-816308-837500,chr2-1369428-2056742,Peter-Hans-Jürgen')
 
 
@@ -439,6 +447,7 @@ class geneQuerySearchTest(TestCase):
             'activ_thresh': 0.0,
             'csv_upload': 'TestWritingIsSuperFun!.csv',
             'csvFileRows': '3',
+            'overlap': 100,
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'regionQuery_search.html')
@@ -450,7 +459,8 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -467,6 +477,7 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
+        self.assertEqual(response.context['overlap'], 100)
         self.assertEqual(response.context['export_string'], 'chr1-816308-837500,chr2-1369428-2056742,chrhildegard-Jutta-Brunhilde')
 
 
@@ -479,6 +490,7 @@ class geneQuerySearchTest(TestCase):
             'activ_thresh': 0.0,
             'csv_upload': '',
             'csvFileRows': '',
+            'overlap': 100,
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'empty_data.html')
@@ -490,8 +502,10 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
-        self.assertEqual(response.context['error_msg'], 'No REMs were found in your selected regions. You might want to try changing the region boundaries.')
+        self.assertEqual(response.context['error_msg'], 'No REMs were found in your selected regions. You might want to try changing the overlap or modifying the region boundaries.')
         self.assertEqual(response.context['export_string'], 'chr2-1369428-2056742,Peter-Hans-Jürgen')
+        self.assertEqual(response.context['overlap'], 100)
+
 
     # ==========================================================================
     # REM Query
@@ -517,7 +531,8 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
@@ -553,7 +568,8 @@ class geneQuerySearchTest(TestCase):
             'REMID': 'REM0000742',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
-            'version': '1',
+            'version': 1,
+            'consortium': 'b',
             'REMsPerCREM': 27,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',

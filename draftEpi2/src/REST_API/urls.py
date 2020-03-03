@@ -17,7 +17,7 @@ urlpatterns = [
 	url(r'^GeneQuery/(?P<gene_id>[-\w]+)/$', views.GeneQuery, name = "Gene_info"),
 
 	#RegionQuery: /REST_API/RegionQuery/<chr:start-end>
-	url(r'^RegionQuery/(?P<region>[:\-\w]+)/$', views.RegionQuery, name = "Region_info"),
+	url(r'^RegionQuery/(?P<overlap>[:\-\w]+/)?(?P<region>[:\-\w]+)/$', views.RegionQuery, name = "Region_info"),
 ]
 
 

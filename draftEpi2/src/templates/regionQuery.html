@@ -89,7 +89,7 @@
         </tr>
 
         <tr>
-            <td style="padding-top:10px;" colspan="2">
+            <td style="padding-top:10px;" colspan="3">
             <p class="selectionHeader tooltip" id="container_geneRegionsHeader"> Currently selected <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right" style="width: 300px;">Deselect via button click below. Only REMs overlapping entirely with your queried regions will be displayed.</span></p>
             <div class ="selectedButtons" id="container_geneRegions" style="padding-bottom: 2em;"></div></td>
             <td colspan="2">
@@ -97,15 +97,22 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><div class="uploadCSVForm"><p class="selectionHeader tooltip" style="color:black;"><u>Or</u> upload a list of regions as csv- or bed-file <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right" style="width:350px;">
+
+            <td colspan="3"><div class="uploadCSVForm"><p class="selectionHeader tooltip" style="color:black;"><u>Or</u> upload a list of regions as csv-, txt- or bed-file <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right" style="width:350px;">
                 For BED-files only the first three columns are considered [chromosome, start, end]. Every row has to contain the exact same amount of columns without empty entries.</span></p>
-                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv,.bed" > </div>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv,.bed,.txt" > </div>
                 <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
+            </td>
+            <td colspan="1">
+                <div id="overlap_div">
+                <p id="overlap_header" class="tooltip"><b>Overlap percentage (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:250px;">
+                    Only REMs that overlap with your regions by at least the set value (in %) will be shown. Leave empty to get only those that overlap entirely.</span></p><br>
+                <input style="width:50px; font-size: 16px; margin-bottom: 6px;" class='inputForm' type="text" id="overlap" name="overlap" placeholder="100" /></div>
             </td>
             <td colspan="2"><div class="errorMessage"></div></td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="3">
                 <br>
             <h1 class='inputLabel' id="fieldname">Filter for cell types/tissues:</h1>
 

@@ -3,10 +3,10 @@
 
 
 function setDefaultGeneID() {
-    document.getElementById("geneID_symbolic").type = "hidden";
-    document.getElementById("geneID_numeric").type = "text";
-    document.getElementById("geneHeader").textContent = "Ensembl gene ID:";
-    document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
+    document.getElementById("geneID_symbolic").type = "text";
+    document.getElementById("geneID_numeric").type = "hidden";
+    document.getElementById("geneHeader").textContent = "Gene symbol:";
+//    document.getElementById("container_geneSymbolHeader").style.visibility = "hidden";
     document.getElementById('csv_upload').value = '';
     document.getElementById('container_geneSymbol').innerHTML = '';
     document.getElementById('container_cellTypes').innerHTML = '';
@@ -150,7 +150,7 @@ function ButtonsToInput(containerID, hiddenID){
     var txtc = "";
     var i;
     for (i=0; i < container.length; i++) {
-        txtc = txtc + container[i].value + ", ";
+        txtc = txtc + container[i].value + "; ";
     }
     $("#"+hiddenID).val(txtc);
 }
@@ -354,7 +354,7 @@ function exemplaryREMQuery(){
 
 function exemplaryRegionQuery(){
     chooseRegion("chr4", "100650", "120123", 1);
-    chooseRegion("chr2", "1369428", "2056742", 1);
+    chooseRegion("chr2", "14000", "120000", 1);
     chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
     chooseButton("CTID_0000052", "container_cellTypes", "heart");
@@ -388,6 +388,22 @@ function uploadCSV(){
 }
 
 
+/* CUSTOMIZE DOWNLOAD **************************************** **************************************** */
+ function customizeCSV(csv){
+//    csv = csv.replace(/"/g, "");
+            header_end = csv.search("\n");
+            header_curr = csv.substr(0, header_end);
+            header_curr_arr = header_curr.split("\t");
+            header_new = "";
+            for (i = 0; i < header_curr_arr.length; i++) {
+                header_new += header_curr_arr[i].split("ⓘ")[0] + "\t";
+                }
+            new_csv = header_new.substr(0, header_new.length -1) + csv.substr(header_end);
+//            new_csv = new_csv.replace(/ ,/g, ",");
+            return new_csv;
+}
+
+
 
 /* VALIDATION **************************************** **************************************** */
 
@@ -400,12 +416,12 @@ function validateGeneQueryForm_numeric(){
     jQuery.validator.addMethod("checkENSG",function(value,element,param)
     {
        csv_val = document.getElementById('csv_upload').value;
-      if(/ENSG+[0-9]{10}.*$/.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
+      if(/ENSG+[0-9]{10}.*$/.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='txt')
         {
           return true;
         }
         return false;
-    },"Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv-file.");
+    },"Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv- or txt-file.");
 
     $('#geneQueryForm').validate(
     {
@@ -413,7 +429,7 @@ function validateGeneQueryForm_numeric(){
             {
               geneID_numeric:{checkENSG:true }
             },
-            messages: {geneID_numeric: { required:  "Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv-file."}},
+            messages: {geneID_numeric: { required:  "Please enter an ID, written as 'ENSG' followed by ten digits. Separate multiple by comma. Or upload a valid csv- or txt-file."}},
             errorElement : 'div',
             errorClass: "formError",
             highlight: function(element, errorClass) {
@@ -428,12 +444,12 @@ function validateGeneQueryForm_symbolic(){
         jQuery.validator.addMethod("checkSymbol", function(value,element,param)
     {
         csv_val = document.getElementById('csv_upload').value;
-      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 1 || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
+      if (document.getElementById("container_geneSymbol").children.length > 0 || document.getElementById("geneID_symbolic").value.length > 1 || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='txt')
         {
           return true;
         }
         return false;
-    },"Please select a gene symbol or upload a valid csv-file.");
+    },"Please select a gene symbol or upload a valid csv- or txt-file.");
 
     $('#geneQueryForm').validate(
       {
@@ -441,7 +457,7 @@ function validateGeneQueryForm_symbolic(){
         {
           geneID_symbolic:{ checkSymbol:true }
         },
-        messages: {geneID_symbolic: { required:  "Please select a gene symbol or upload a valid csv-file."}},
+        messages: {geneID_symbolic: { required:  "Please select a gene symbol or upload a valid csv- or txt-file."}},
         errorElement : 'div',
         errorClass: "formError",
         highlight: function(element, errorClass) {
@@ -454,12 +470,12 @@ function validateREMQueryForm(){
     jQuery.validator.addMethod("checkREM",function(value,element,param)
     {
    csv_val = document.getElementById('csv_upload').value;
-      if(/REM+[0-9]{7}.*$/i.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1)==='csv')
+      if(/REM+[0-9]{7}.*$/i.test(value) || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase()==='txt')
         {
           return true;
         }
         return false;
-    },"Please enter an ID, written as 'REM' followed by seven digits. Separate multiple by comma. Or upload a valid csv-file.");
+    },"Please enter an ID, written as 'REM' followed by seven digits. Separate multiple by comma. Or upload a valid csv- or txt-file.");
 
     $('#remQueryForm').validate(
       {
@@ -487,7 +503,7 @@ function validateRegionQueryForm(){
     jQuery.validator.addMethod("checkSubmission",function(value,element,param)
     {
     csv_val = document.getElementById('csv_upload').value;
-      if(csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='bed' || document.getElementById("container_geneRegions").children.length > 0)
+      if(csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='csv' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='bed' || csv_val.substr(csv_val.length-3, csv_val.length-1).toLowerCase() ==='txt' || document.getElementById("container_geneRegions").children.length > 0)
         {
           return true;
         }
@@ -496,7 +512,7 @@ function validateRegionQueryForm(){
         return true;
         }
         return false;
-    },"Please select a region or upload a valid csv-file");
+    },"Please select a region or upload a valid txt/bed/csv-file");
 
     $('#regionQueryForm').validate(
       {
@@ -543,17 +559,6 @@ function validateRegion(){
         regionErrors.innerHTML = regionErrors.innerHTML  + 'The start has to be lower than the end' + '<br>';
         regionErrors.style.visibility = "visible";
         }
-        if(end.value > chr_start_end[chr.value][1])
-        {
-        regionErrors.innerHTML = regionErrors.innerHTML  + 'Please select a lower end position' + '<br>';
-        regionErrors.style.visibility = "visible";
-        }
-        if(start.value < chr_start_end[chr.value][0])
-        {
-        regionErrors.innerHTML = regionErrors.innerHTML  + 'Please select a higher start position' + '<br>';
-        regionErrors.style.visibility = "visible";
-        }
-
         // If now error is there, meaning our error div is empty, we can create the button
         if(regionErrors.innerHTML==='')
         {

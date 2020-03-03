@@ -118,7 +118,7 @@ def GeneQuery(request, gene_id):
 		return Response(serializers.data)
 
 @api_view(['GET'])
-def RegionQuery(request, region):
+def RegionQuery(request, region, overlap='100/'):
 	""" displays for each input region chr:start-end with start <= end (e.g. chr16:75423948-75424405) all REMs which are contained in it """
 	if request.method == 'GET':
 		#parse input
@@ -129,6 +129,10 @@ def RegionQuery(request, region):
 			serializers = ErrorSerializer({'info' : "Error - given region is not valid " + helper_list})
 			return Response(serializers.data)
 
+		try:
+			overlap = overlap[:-1]  # overlap till -1 as we have a slash at the end to have it optional in the url
+		except TypeError:
+			overlap = 100
 #			return Response(status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 		#parse chr:start-end in list format
 		region_list = []
@@ -137,7 +141,7 @@ def RegionQuery(request, region):
 			h2 = h1[1].split("-")
 			region_list.append([h1[0], h2[0], h2[1]])
 		#call API function to get REM info
-		REM = API_Region_celltype_activity(region_list)
+		REM = API_Region_celltype_activity(region_list, overlap)
 		serializers = RegionQuerySerializer(REM, many = True) #wenn man mehrer objects zuruekgeben mag
 		return Response(serializers.data)
 

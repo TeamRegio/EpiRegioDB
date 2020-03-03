@@ -16,7 +16,7 @@ def geneQuery_view(request):
 # To be able to return the Query as string (to display and to name the export-files), we clean
 # it up:
 def strip_csv_query(query):
-    query = [x.split()[0] for x in query.split(',') if x != '' and x != ' ']  # We write a list out of the csv input string
+    query = [x.split()[0] for x in query.split(';') if x != '' and x != ' ']  # We write a list out of the csv input string
     query_cleaned_string = ""
     export_string = ""
     for i in query:
@@ -49,19 +49,19 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
 
     if gene_format == 'id_format':
         query = request.POST.get('geneID_numeric')  # if it's numeric, we just want to get the string in the field
-
+        query = query.replace(',', ';')
     else:
         query = request.POST.get('geneSymbol')  # our hidden html that stores the content of the selected buttons
         if len(query) == 0:  # if someone doesn't use the buttons, we look at the input field
             query = request.POST.get('geneID_symbolic')  # this is our input field with the string
     # If a file is there, we take it and forget the rest
     if len(csv_file) > 0:
-        query = csv_file
+        query = csv_file.replace(",", ";")
 
     cell_types = request.POST.get('cellTypes')[:-2]  # the hidden html element storing the content of the selected cell
     # types buttons and we directly get rid of the last comma and whitespace
     if len(cell_types) > 0:
-        cell_types_list = cell_types.split(', ')
+        cell_types_list = cell_types.split('; ')
     else:
         cell_types_list = []
     cell_types_list_upper = [x.capitalize() for x in cell_types_list]

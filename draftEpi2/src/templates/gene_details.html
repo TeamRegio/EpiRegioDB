@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/Buttons-1.6.0/css/buttons.dataTables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+    <script src="{% static 'collected_JS_functions.js' %}"></script>
 
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/dataTables.buttons.min.js' %}"></script>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/buttons.flash.min.js' %}"></script>
@@ -47,7 +48,14 @@
                  buttons: {
                         buttons: [
                             { extend: 'excel', filename: today.concat("_GeneDetails_Query__", export_string)},
-                            { extend: 'csv', filename: today.concat("_GeneDetails_Query__", export_string)},
+                            { extend: 'csv', filename: today.concat("_GeneDetails_Query__", export_string),
+                                fieldSeparator: '\t',
+                                fieldBoundary: "",
+                                customize: function (csv) {
+                                    csv = customizeCSV(csv);
+                                    return csv;
+                            },
+                            },
                             { extend: 'pdf', filename: today.concat("_GeneDetails_Query__", export_string), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
@@ -58,9 +66,10 @@
         <tr>
             <th>Gene ID</th>
             <th>Gene symbol</th>
-            <th>Chromosome</th>
-            <th>Gene Start</th>
-            <th>Gene End</th>
+            <th class="tooltip_table">Chr <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
+                Click on the chr below to view the region in the UCSC Genome Browser</span></th>
+            <th>Gene start</th>
+            <th>Gene end</th>
             <th>Strand</th>
             <th>Genome annotation version</th>
         </tr>
@@ -70,7 +79,7 @@
         <tr>
             <td><a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.geneID }}">{{item.geneID}}</a></td>
             <td>{{ item.geneSymbol }}</td>
-            <td>{{ item.chr }}</td>
+            <td><a class="link" href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position={{item.chr}}%3A{{item.start}}%2D{{item.end}}&hgsid=236086963_0USP3lpsBdlGgMyrEMm5UP1i7oiU">{{ item.chr }}</a></td>
             <td>{{ item.start }}</td>
             <td>{{ item.end }}</td>
             <td>{{ item.strand }}</td>

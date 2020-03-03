@@ -126,14 +126,15 @@ class REMAnnotationModelTest(TestCase):
         field_label5 = test_obj._meta.get_field('regressionCoefficient').verbose_name
         field_label6 = test_obj._meta.get_field('pValue').verbose_name
         field_label7 = test_obj._meta.get_field('version').verbose_name
-        field_labels = [field_label0, field_label1, field_label2, field_label3, field_label4, field_label5, field_label6, field_label7]
-        self.assertEquals(field_labels, ['chr', 'start', 'end', 'geneID', 'REMID', 'regressionCoefficient', 'pValue', 'version'])
+        field_label8 = test_obj._meta.get_field('consortium').verbose_name
+        field_labels = [field_label0, field_label1, field_label2, field_label3, field_label4, field_label5, field_label6, field_label7, field_label8]
+        self.assertEquals(field_labels, ['chr', 'start', 'end', 'geneID', 'REMID', 'regressionCoefficient', 'pValue', 'version', 'consortium'])
 
     def test_REMAnnotation_max_length(self):
         test_obj = REMAnnotation.objects.get(REMID='2TSBakingPowder')
         max_length0 = test_obj._meta.get_field('chr').max_length
         max_length1 = test_obj._meta.get_field('REMID').max_length
-        max_length2 = test_obj._meta.get_field('version').max_length
+        max_length2 = test_obj._meta.get_field('consortium').max_length
         max_lengths = [max_length0, max_length1, max_length2]
         self.assertEquals(max_lengths, [10, 255, 1])
 

@@ -11,6 +11,7 @@ img.CREM_img{
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/Buttons-1.6.0/css/buttons.dataTables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+    <script src="{% static 'collected_JS_functions.js' %}"></script>
 
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/dataTables.buttons.min.js' %}"></script>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/Buttons-1.6.0/js/buttons.flash.min.js' %}"></script>
@@ -30,7 +31,8 @@ img.CREM_img{
 <br>
 <br>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>REMs contained in the cluster with the ID: <strong id="queried_regions"> {{query}} </strong> ({{data.0.chr}}: {{data.0.start}} - {{data.0.end}})</caption>
+    <caption>REMs contained in the cluster with the ID: <strong id="queried_regions"> {{query}} </strong><p class="tooltip"><a class="link" href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position={{data.0.chr}}%3A{{data.0.start}}%2D{{data.0.end}}&hgsid=236086963_0USP3lpsBdlGgMyrEMm5UP1i7oiU">
+        ({{data.0.chr}}: {{data.0.start}} - {{data.0.end}})</a>    <span class="tooltiptext_top" style="margin: -100px; margin-left:-300px; width: 200px;">View CREM region in the UCSC Genome Browser</span></p></caption>
 
     <thead>
         <script>
@@ -49,8 +51,22 @@ img.CREM_img{
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat(" Cluster of REMs ", queried_regions)},
-                            { extend: 'csv', filename: today.concat(" Cluster of REMs ", queried_regions)},
+                            { extend: 'excel', filename: today.concat(" Cluster of REMs ", queried_regions),
+                                customize: function ( xlsx ) {
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('c[r=B3] t', sheet).text( 'Gene ID' );
+                                    $('c[r=D3] t', sheet).text( 'Chr' );
+                                    $('c[r=H3] t', sheet).text( 'Model score' );
+                                }
+                            },
+                            { extend: 'csv', filename: today.concat(" Cluster of REMs ", queried_regions),
+                                fieldSeparator: '\t',
+                                fieldBoundary: "",
+                                customize: function (csv) {
+                                    csv = customizeCSV(csv);
+                                    return csv;
+                            },
+                            },
                             { extend: 'pdf', filename: today.concat(" Cluster of REMs ", queried_regions), pageSize: "LEGAL", orientation: 'landscape'}
                           ]
                       }
@@ -63,7 +79,8 @@ img.CREM_img{
             <th class="tooltip_table">Gene ID <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
                 Click on the IDs below to receive a table with all REMs associated with the selected gene</span></th>
             <th>Gene symbol</th>
-            <th>Chromosome</th>
+            <th class="tooltip_table">Chr <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
+                Click on the chr below to view the region in the UCSC Genome Browser</span></th>
             <th>REM start</th>
             <th>REM end</th>
             <th>Predicted function</th>
@@ -77,7 +94,7 @@ img.CREM_img{
             <td>{{ item.REMID_id }}</td>
             <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.REMID_id__geneID}}/">{{ item.REMID_id__geneID }}</a></td>
             <td>{{ item.REMID_id__geneID__geneSymbol }}</td>
-            <td>{{ item.chr }}</td>
+            <td><a class="link" href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position={{item.chr}}%3A{{item.start}}%2D{{item.end}}&hgsid=236086963_0USP3lpsBdlGgMyrEMm5UP1i7oiU">{{ item.chr }}</a></td>
             <td>{{ item.REMID_id__start }}</td>
             <td>{{ item.REMID_id__end }}</td>
             {% if item.REMID_id__regressionCoefficient > 0 %}

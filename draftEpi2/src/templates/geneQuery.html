@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
 </head>
 
-<body onload="validateGeneQueryForm_numeric()" onbeforeunload="setDefaultGeneID()">
+<body onload="validateGeneQueryForm_symbolic()" onbeforeunload="setDefaultGeneID()">
 <div id="wrapper">
 
 <!-- INITIATE INPUT FORM ---------------------------------------------------------------------------------- -->
@@ -38,9 +38,9 @@
 <!-- GET GENE FORMAT ---------------------------------------------------------------------------------- -->
 <div style="display: inline-block;">
 <h1 style="display: inline;" class="inputLabel">Gene nomenclature:&nbsp;&nbsp;</h1>
-    <button type="button" class="format_active" id="id_format" name="id_format" onclick="id_formatClick()" value="active">ensembl ID</button>
-    <button type="button" class="format_inactive" id="symbol_format" name="symbol_format" onclick="symbol_formatClick()">gene symbol</button>
-<!--    <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >-->
+    <button type="button" class="format_active" id="symbol_format" name="symbol_format" onclick="symbol_formatClick()" value="active">gene symbol</button>
+    <button type="button" class="format_inactive" id="id_format" name="id_format" onclick="id_formatClick()" >ensembl ID</button>
+    <!--    <select style="display: inline;"  name="gene_format" id="gene_format" onchange="switchGeneIDField()" >-->
 <!--    <option selected='selected' value="id_format">ensembl ID</option>-->
 <!--    <option value="symbol_format">gene symbol</option>-->
 <!--</select>-->
@@ -54,10 +54,10 @@
     <table class="geneQueryTable">
         <tr>
             <td>
-            <h1 class="inputLabel" id="geneHeader"> Ensembl gene ID:</h1>
-            <input width="90%" class='inputForm' id="geneID_numeric" name='geneID_numeric' type="text"  placeholder="E.g. ENSG00000139874, separate multiple IDs by comma" />
-            <input class='inputForm' id="geneID_symbolic" name='geneID_symbolic' type="hidden"  placeholder="Type and select buttons on the right, deselect by clicking below" />
-            <p  style="visibility:hidden;" class="selectionHeader" id="container_geneSymbolHeader"> Currently selected:</p>
+            <h1 class="inputLabel" id="geneHeader"> Gene symbol:</h1>
+            <input class='inputForm' id="geneID_symbolic" name='geneID_symbolic' type="text"  placeholder="Type and select buttons on the right, deselect by clicking below" />
+            <input width="90%" class='inputForm' id="geneID_numeric" name='geneID_numeric'  type="hidden" placeholder="E.g. ENSG00000139874, separate multiple IDs by comma" />
+            <p  style="visibility:visible;" class="selectionHeader" id="container_geneSymbolHeader"> Currently selected:</p>
             <div class ='selectedButtons'  id="container_geneSymbol"> </div>
             </td>
 
@@ -66,8 +66,9 @@
             </td>
         </tr>
         <tr>
-            <td><div class="uploadCSVForm"><p class="selectionHeader" style="color:black;"><u>Or</u> upload a list of genes as csv-file:</p>
-                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv" > </div>
+            <td><div class="uploadCSVForm"><p class="selectionHeader tooltip" style="color:black;"><u>Or</u> upload a list of genes as csv- or txt-file
+                <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right" style="width:250px;">Any delimiter should work, as long as the format is consistent.</span></p>
+                <div id="uploadCSVDiv" > <input oninput="uploadCSV()" style="font-size:14px;" id="csv_upload" name="csv_upload" type="file" accept=".csv,.txt" > </div>
                 <button type="button" class="clearFiles" onclick="clearFileInputField('uploadCSVDiv')">Clear files </button></div>
             </td>
         </tr>
@@ -101,7 +102,7 @@
 
 
 <!-- SUBMIT FORM ---------------------------------------------------------------------------------- -->
-<input type="hidden" id="gene_format" name="gene_format" value="id_format"/>
+<input type="hidden" id="gene_format" name="gene_format" value="symbol_format"/>
 <input type="hidden" id="geneSymbol" name="geneSymbol"/>
 <input type="hidden" id="cellTypes" name="cellTypes"/>
 <input type="hidden" id="csvFile" name="csvFile"/>
