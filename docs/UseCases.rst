@@ -130,7 +130,7 @@ For the gene nomenclature we use the hg38 human genome version from the `Ensembl
 
 REM ID
 ~~~~~~~
-*REM ID* is how we define the REMs internally. Each *REM ID* is unique and each REM is associated to only one gene. We started counting from REM0000001 onwards.
+*REM ID* is how we define the REMs internally. Each *REM ID* is unique.  Also the REMs, which have the exact same genomic region but are associated to different genes (happens rarly), are assigned to different *REM IDs*. We started counting from REM0000001 onwards.
 
 Predicted function
 ~~~~~~~
