@@ -146,8 +146,8 @@ As STITCHIT determine REMs for each gene seperately and not the other way around
 
 Cell type score
 ~~~~~~~
-*Cell type score* is the absolute product of the regression coefficient and the DNase activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its gene's expression in this cell type. The regression coefficient is not cell type-specific, but the DNase activity is and therefore enables the comparison of REMs in between different cell types.
+*Cell type score* is the absolute product of the regression coefficient and the DNase1 activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its target gene's expression in this cell type. The regression coefficient is not cell type-specific, but the DNase1 activity is and therefore enables the comparison of REMs in between different cell types.
 
 Cell type activity
 ~~~~~~~
-*Cell type activity* is the DNase signal for the cell type measured in the REM region. It is normalized within the two consortia that were used to generate the data hosted by the server. 
+*Cell type activity* is the DNase1 signal for the cell type of interest measured in the REM region. It is normalized for sequening depth. 
