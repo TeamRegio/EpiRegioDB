@@ -22,12 +22,12 @@ Therefore, the inputs need to be separated by an underscore '_'. This can be don
 
         https://epiregio.de/REST_API/GeneQuery/ENSG00000223972_ENSG00000223974/
 
-returns all REMs associated to the genes ENSG00000223972, and ENSG00000223974. 
+and returns all REMs associated to the genes ENSG00000223972, and ENSG00000223974. 
 The following provides more information as well as an example for each of the query types.
 
 GeneQuery
 ----------------
-Given an ensembl gene ID or gene symbol (or multiple ones) as input, this query returns the associated REMs.
+Providing an ensembl gene ID or gene symbol (or multiple ones) as input, this query returns the associated REMs.
 In detail, the geneID, geneSymbol, REMID, chr, start, end, regressionCoefficient, p-value, version of the Epiregio database, number of REMs per CREM, CREM ID, and a list of the log2(dnase1 signal) of the cell type used in STITCHIT are displayed.
 
 Example
@@ -36,7 +36,7 @@ Please have a look at the *General Information* section above for an example.
 
 RegionQuery
 -----------
-Given a genomic region, this query returns all REMs that lie completely within this region. 
+Providing a genomic region, this query returns all REMs that lie completely within this region. 
 The genomic region must be given as chr:start-end, where start is smaller or equal than end (e.g. chr16:75423948-75424405). 
 The output has the same format as the *GeneQuery* output. Optionally, you can also hand an overlap value to the URL like this: RegionQuery/50/... which retrieves all REMs that overlap with the regions by at least 50% of their length.
 
@@ -85,7 +85,7 @@ Example:
 
 Programmatic access via Python
 ---------
-If you wish to call the REST API outside of your browser, for example if you need to get data regularly and want to include it into one of your scripts, you need a program that is capable of doing HTTP requests. One easy-to-use tool is the Python package `Requests <https://requests.readthedocs.io/en/master/>`_. Let's go through an example: you have a Python list with genomic regions and you really want to know which REMs overlap by at least 50% with your regions. In the end you want to have a new list containing the REM IDs, their location as well as their cell type score for the left kidney. So here is what we need to get going::
+If you wish to call the REST API outside of your browser, for example if you need to get data regularly and want to include it into one of your scripts, you need a program that is capable of doing HTTP requests. One easy-to-use tool is the Python package `Requests <https://requests.readthedocs.io/en/master/>`_. Let's go through an example: You have a Python list with genomic regions and you want to know which REMs overlap by at least 50% with your regions. In the end you want to have a new list containing the REM IDs, their location as well as their cell type score for the left kidney. So here is what we need to get going::
 
         import requests
 
