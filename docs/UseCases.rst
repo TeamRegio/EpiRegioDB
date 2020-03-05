@@ -130,19 +130,19 @@ For the gene nomenclature we use the hg38 human genome version from the `Ensembl
 
 REM ID
 ~~~~~~~
-*REM ID* is how we define the REMs internally. Each *REM ID* is unique.  Also the REMs, which have the exact same genomic region but are associated to different genes (happens rarly), are assigned to different *REM IDs*. We started counting from REM0000001 onwards.
+*REM ID* is how we define the REMs internally. Each *REM ID* is unique.  Also the REMs, which have the exact same genomic region but are associated to different genes (happens rarly), are assigned to different *REM IDs*. We start counting from REM0000001 onwards.
 
 Predicted function
 ~~~~~~~
-STITCHIT identifies REMs by interpreting differential gene expression, meaning that a REM can be associated with an increase in gene expression as well as with a decrease. This association is represented by the regression coefficient. In case of a positive regression coefficient we assume an activating effect of the REM on its gene's expression and for a negative regression coefficient a repressing effect.
+STITCHIT identifies REMs by interpreting differential gene expression, meaning that a REM can be associated with an increase in gene expression as well as with a decrease. This association is represented by the regression coefficient. In case of a positive regression coefficient we assume an activating effect of the REM on its target gene's expression and for a negative regression coefficient a repressing effect.
 
 Model score
 ~~~~~~~
-The *Model score* is the negative binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator how important a REM is for it gene's expression. The higher the score, the more impact the REM is supposed to have. This p-value is not cell type specific but calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
+The *Model score* is the negative binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator how important a REM is for its target gene's expression. The higher the score, the more impact the REM is supposed to have. This value is not cell type specific because it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
 
 Associated REM cluster
 ~~~~~~~
-As STITCHIT starts with a gene and looks for its regulatory region and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that overlap by at least one basepair. If there is no overlapping other REM, a cluster can also consist of only one REM. The entries of *Associated REM cluster* are links that redirect you to a table with all REMs inside of this cluster.
+As STITCHIT determine REMs for each gene seperately and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that overlap by at least one base pair (bp). If there is no overlapping other REM, a cluster can also consist of only one REM. Each *REM cluster*  is assigned to a unique *REM cluster ID*. We start counting from CREM0000001 onwards. The entries of *Associated REM cluster* are links that redirect you to a table with all REMs inside of this cluster. 
 
 Cell type score
 ~~~~~~~
