@@ -13,7 +13,7 @@ Here we present the EpiRegio webserver, a resource of REMs, providing informatio
 
 Overview of possible queries 
 ===============================================
-.. image:: ./images/overview_doc.png
+.. image:: ./images/overview_withoutDB.png
   :width: 600
   :alt: Overview of possible queries 
 
