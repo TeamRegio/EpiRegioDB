@@ -120,6 +120,65 @@ Interactive tables
 All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. For every REM you can click on the chromosome value in its row to view this REM's region inside of the `UCSC Genome Browser <https://genome.ucsc.edu/>`_. The values in the column *Associated REM cluster* redirects you to a new table with all the REM contained in this cluster. Further, each *Gene ID* in all the tables is also a link that brings you to a new table in which all the REMs are shown that are associated with this gene. After performing a Gene Query, you can click the gene ID in the query header to get to a table containing more details that we have about your queried genes. In addition, inside of this table the gene IDs will redirect you to the gene's `GeneCard <https://www.genecards.org/>`_.
 
 
+Available cell and tissue types
+=================
+In case you are wondering, whether your cell type or tissue is availale on EpiRegio, we list the available ones here. Every name is written as you would find it in the field where you filter for cell types. From the Roadmap dataset we provide the following:
+
+.. hlist::
+   :columns: 3
+    skin fibroblast
+    fibroblast of skin of abdomen 
+    imr-90
+    trophoblast cell  
+    muscle of arm 
+    stomach
+    muscle of back
+    small intestine
+    muscle of leg
+    large intestine
+    left lung
+    kidney
+    right lung 
+    thymus
+    heart
+    renal cortex
+    adrenal gland
+    renal pelvis
+    left kidney
+    left renal cortex
+    left renal pelvis
+    right renal pelvis
+    spinal cord
+    right renal cortex interstitium
+    spleen
+    psoas muscle
+    muscle of trunk
+    ovary
+    pancreas
+    testis
+    forelimb muscle
+    hindlimb muscle
+    h1-hesc
+
+From Blueprint we included the following cell types:
+
+.. hlist::
+   :columns: 3
+    "cd8-positive, alpha-beta t cell"
+    "cd14-positive, cd16-negative classical monocyte"
+    acute lymphocytic leukemia
+    macrophage
+    "cd34-negative, cd41-positive, cd42-positive megakaryocyte cell"
+    "cd4-positive, alpha-beta t cell"
+    erythroblast
+    macrophage
+    inflammatory macrophage
+    acute myeloid leukemia
+    chronic lymphocytic leukemia
+    macrophage – b-glucan
+    cd14-positive monocyte
+
+
 Results in detail
 =================
 The tables you get from the different queries contain the same columns. Here you can get some more detailed information on each of them.
