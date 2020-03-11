@@ -122,61 +122,61 @@ All result tables possess additional functionalities like the possibility to fil
 
 Available cell and tissue types
 =================
-In case you are wondering, whether your cell type or tissue is availale on EpiRegio, we list the available ones here. Every name is written as you would find it in the field where you filter for cell types. From the Roadmap dataset we provide the following:
+In case you are wondering, whether your cell type or tissue is availale on EpiRegio, we list the available ones here. Every name is written as you would find it in the field where you filter for cell types (without the bullet point of course). From the Roadmap dataset we provide the following:
 
 .. hlist::
    :columns: 3
-    skin fibroblast
-    fibroblast of skin of abdomen 
-    imr-90
-    trophoblast cell  
-    muscle of arm 
-    stomach
-    muscle of back
-    small intestine
-    muscle of leg
-    large intestine
-    left lung
-    kidney
-    right lung 
-    thymus
-    heart
-    renal cortex
-    adrenal gland
-    renal pelvis
-    left kidney
-    left renal cortex
-    left renal pelvis
-    right renal pelvis
-    spinal cord
-    right renal cortex interstitium
-    spleen
-    psoas muscle
-    muscle of trunk
-    ovary
-    pancreas
-    testis
-    forelimb muscle
-    hindlimb muscle
-    h1-hesc
+    *skin fibroblast
+    *fibroblast of skin of abdomen 
+    *imr-90
+    *trophoblast cell  
+    *muscle of arm 
+    *stomach
+    *muscle of back
+    *small intestine
+    *muscle of leg
+    *large intestine
+    *left lung
+    *kidney
+    *right lung 
+    *thymus
+    *heart
+    *renal cortex
+    *adrenal gland
+    *renal pelvis
+    *left kidney
+    *left renal cortex
+    *left renal pelvis
+    *right renal pelvis
+    *spinal cord
+    *right renal cortex interstitium
+    *spleen
+    *psoas muscle
+    *muscle of trunk
+    *ovary
+    *pancreas
+    *testis
+    *forelimb muscle
+    *hindlimb muscle
+    *h1-hesc
 
 From Blueprint we included the following cell types:
 
 .. hlist::
    :columns: 3
-    "cd8-positive, alpha-beta t cell"
-    "cd14-positive, cd16-negative classical monocyte"
-    acute lymphocytic leukemia
-    macrophage
-    "cd34-negative, cd41-positive, cd42-positive megakaryocyte cell"
-    "cd4-positive, alpha-beta t cell"
-    erythroblast
-    macrophage
-    inflammatory macrophage
-    acute myeloid leukemia
-    chronic lymphocytic leukemia
-    macrophage – b-glucan
-    cd14-positive monocyte
+    *"cd8-positive, alpha-beta t cell"
+    *"cd14-positive, cd16-negative classical monocyte"
+    *acute lymphocytic leukemia
+    *macrophage
+    *"cd34-negative, cd41-positive, cd42-positive megakaryocyte cell"
+    *"cd4-positive, alpha-beta t cell"
+    *erythroblast
+    *macrophage
+    *inflammatory macrophage
+    *acute myeloid leukemia
+    *chronic lymphocytic leukemia
+    *macrophage – b-glucan
+    *cd14-positive monocyte
 
 
 Results in detail
@@ -197,16 +197,16 @@ STITCHIT identifies REMs by interpreting differential gene expression, meaning t
 
 Model score
 ~~~~~~~
-The *Model score* is the negative binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator how important a REM is for its target gene's expression. The higher the score, the more impact the REM is supposed to have. This value is not cell type specific because it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
+The *Model score* is the absolute binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator how important a REM is for the expression prediction of its target gene. The higher the score, the more impact the REM is supposed to have. This value is not cell type specific as it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
 
 Associated REM cluster
 ~~~~~~~
-As STITCHIT determine REMs for each gene seperately and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that overlap by at least one base pair (bp). If there is no overlapping other REM, a cluster can also consist of only one REM. Each *REM cluster*  is assigned to a unique *REM cluster ID*. We start counting from CREM0000001 onwards. The entries of *Associated REM cluster* are links that redirect you to a table with all REMs inside of this cluster. 
+As STITCHIT determine REMs for each gene seperately and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that overlap by at least one base pair (bp). If there is no overlapping other REM, a cluster can also consist of only one REM. Each *REM cluster*  is assigned to a unique *REM cluster ID*. We start counting from CREM0000001 onwards. By clicking on the *Associated REM cluster* ID you get forwareded to a table with all REMs inside of this cluster. 
 
 Cell type score
 ~~~~~~~
-*Cell type score* is the absolute product of the regression coefficient and the DNase1 activity, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its target gene's expression in this cell type. The regression coefficient is not cell type-specific, but the DNase1 activity is and therefore enables the comparison of REMs in between different cell types.
+*Cell type score* is the absolute product of the regression coefficient and the DNase1 activity in a REM, indicating how important a REM is in this cell type. The higher the value, the higher the REMs expected contribution to its target gene's expression in this cell type. The regression coefficient is not cell type-specific, but the DNase1 activity is. Therefore, the *Cell type score* can be used to rank REMs according to their importance between cell types for the same gene or to rank REMs within one cell type.
 
 Cell type activity
 ~~~~~~~
-*Cell type activity* is the DNase1 signal for the cell type of interest measured in the REM region. It is normalized for sequening depth. 
+*Cell type activity* is the DNase1 signal for the cell type of interest measured in the REM region. It is normalized for sequening depth and can be used to compare the activity of REMs between samples. As we have more than one sample for each cell type, we took the average activity of those samples.
