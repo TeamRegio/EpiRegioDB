@@ -126,6 +126,7 @@ In case you are wondering, whether your cell type or tissue is availale on EpiRe
 
 .. hlist::
   :columns: 3
+  
   * skin fibroblast
   * fibroblast of skin of abdomen 
   * imr-90
@@ -164,6 +165,7 @@ From Blueprint we included the following cell types:
 
 .. hlist::
   :columns: 3
+  
   * "cd8-positive, alpha-beta t cell"
   * "cd14-positive, cd16-negative classical monocyte"
   * acute lymphocytic leukemia
