@@ -164,7 +164,7 @@ In case you are wondering, whether your cell type or tissue is availale on EpiRe
 From Blueprint we included the following cell types:
 
 .. hlist::
-  :columns: 3
+  :columns: 2
   
   * "cd8-positive, alpha-beta t cell"
   * "cd14-positive, cd16-negative classical monocyte"
