@@ -153,7 +153,7 @@ class geneQuerySearchTest(TestCase):
         print('-- symbolic')
         response = self.client.post('/geneQuery_search/', {
             'geneID_numeric': '',
-            'geneSymbol': 'LINC00115, LINCXXXXX, LINCINVALID',  # is the button field
+            'geneSymbol': 'LINC00115; LINCXXXXX; LINCINVALID',  # is the button field
             'gene_format': 'symbol_format',
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page

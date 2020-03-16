@@ -54,6 +54,8 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         query = request.POST.get('geneSymbol')  # our hidden html that stores the content of the selected buttons
         if len(query) == 0:  # if someone doesn't use the buttons, we look at the input field
             query = request.POST.get('geneID_symbolic')  # this is our input field with the string
+            if query is not None:  # we got to check this, as the query can still be empty in case of a csv file
+                query = query.replace(',', ';')
     # If a file is there, we take it and forget the rest
     if len(csv_file) > 0:
         query = csv_file.replace(",", ";")

@@ -41,9 +41,11 @@ class REMQuerySerializer(serializers.Serializer):
 	geneSymbol = serializers.CharField()
 	regressionCoefficient = serializers.FloatField()
 	pValue = serializers.FloatField()
+	modelScore = serializers.FloatField()
 	version = serializers.IntegerField()
 	REMsPerCREM = serializers.IntegerField()
 	CREMID = serializers.CharField()
+	cellTypeScore = serializers.DictField(child=serializers.FloatField())
 	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
 
 
@@ -77,7 +79,10 @@ class GeneQuerySerializer(serializers.Serializer):
 	version = serializers.IntegerField()
 	REMsPerCREM = serializers.IntegerField()
 	CREMID = serializers.CharField()
+	modelScore = serializers.FloatField()
+	cellTypeScore = serializers.DictField(child=serializers.FloatField())
 	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+
 
 class RegionQuerySerializer(serializers.Serializer):
 	geneID = serializers.CharField(source='geneID_id') #rename field name (source is the name of the filed in the dict
@@ -88,10 +93,13 @@ class RegionQuerySerializer(serializers.Serializer):
 	end = serializers.IntegerField()
 	regressionCoefficient = serializers.FloatField()
 	pValue = serializers.FloatField()
+	modelScore = serializers.FloatField()
 	version = serializers.IntegerField()
 	REMsPerCREM = serializers.IntegerField()
 	CREMID = serializers.CharField()
+	cellTypeScore = serializers.DictField(child=serializers.FloatField())
 	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+
 
 class ErrorSerializer(serializers.Serializer):
 	info = serializers.CharField()

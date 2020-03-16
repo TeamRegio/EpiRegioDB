@@ -53,7 +53,6 @@ class GeneInfo(APIView):
 			serializers = ErrorSerializer({'info' : "Error - at least one given Gene ID is not valid"})
 			return Response(serializers.data)
 			#return Response(status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
-
 		serializers = GeneInfoSerializer(gene, many = True) #wenn man mehrer objects zuruekgeben mag
 		return Response(serializers.data)
 		
