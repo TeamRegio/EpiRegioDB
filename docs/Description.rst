@@ -1,5 +1,5 @@
-About
-======
+About `EpiRegio <https://epiregio.de/>`_ Web Server
+===================================================
 The field of research on gene regulation has considerably grown during the last years
 and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
 One of the key players are non-coding DNA regions, which regulate gene expression
