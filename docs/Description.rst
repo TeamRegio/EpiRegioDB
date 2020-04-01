@@ -9,7 +9,7 @@ Identifying REMs is difficult, as there is no method yet to get a clear readout 
 Different computational approaches are being used, combining various kinds of genomics data to annotate REMs. An even
 more challenging task is to link the putative REMs to their associated gene.
 
-Here we present the EpiRegio webserver, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
+Here we present the _`EpiRegio webserver <https://epiregio.de/>`_, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
 
 Overview of possible queries 
 ===============================================
