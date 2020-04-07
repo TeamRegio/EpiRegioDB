@@ -122,7 +122,9 @@ All result tables possess additional functionalities like the possibility to fil
 
 Available cell and tissue types
 =================
-In case you are wondering, whether your cell type or tissue is availale on EpiRegio, we list the available ones here. Every name is written as you would find it in the field where you filter for cell types (without the bullet point of course). From the Roadmap dataset we provide the following:
+In case you are wondering, whether your cell type or tissue is availale on EpiRegio, we list the available ones here. Every name is written as you would find it in the field where you filter for cell types (without the bullet point of course). 
+
+The following cell/tissue types are available from Roadmap. Please note that we list the cell/tissue type (biosample) names as listed in the ENCODE website, which also hosts the Roadmap data. :
 
 .. hlist::
   :columns: 3
