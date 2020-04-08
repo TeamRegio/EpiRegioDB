@@ -30,7 +30,7 @@ Cluster of regulatory elements
   :width: 600
   :alt: CREM schema
   
-The way STITCHIT identifies REMs results in REMs that are mapped to one gene. This does not mean that we assume each separate regulatory region in the genome to be associated to just one gene. Regions are not exclusive to REMs, other REMs can overlap with them. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREMs). One CREM consists of all REMs that overlap with each other without any break in between (see the schema above). A CREM ends when there is no overlapping neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes and we know which part of it links to which gene.
+The way STITCHIT identifies REMs results in REMs that are mapped to one gene. This does not mean that we assume each separate regulatory region in the genome to be associated to just one gene. Regions are not exclusive to REMs, other REMs can overlap with them. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other without any break in between (see the schema above). A CREM ends when there is no overlapping neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes and we know which part of it links to which gene.
 
 
 Cite Us
