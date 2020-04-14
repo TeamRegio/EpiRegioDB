@@ -23,4 +23,6 @@ Issue: One of the parameters you have set is wrong!
 
 Solution: If you are using Chrome, please try to clear the cache in your browser, and try again. Still the issue persists? Please check all your inputs, and the options you selected.
 
-If you still have problems, please let us know through GitHub issues!
+We are aware of issues causing a Server Error 500 if the input list is too large. We are working on solving this issue. In the meantime, unfortunately, you might have to try to provide your input in smaller chunks.
+
+If you face other problems, please let us know through GitHub issues!
