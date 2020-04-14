@@ -26,12 +26,16 @@ For more information, a detailed explanation of the computational method and the
 
 Cluster of regulatory elements
 ===============================
-.. image:: ./images/crem_schema2.png
+.. image:: ./images/crem_schema3.png
   :width: 600
   :alt: CREM schema
   
 The way STITCHIT identifies REMs results in REMs that are mapped to one gene. This does not mean that we assume each separate regulatory region in the genome to be associated to just one gene. Regions are not exclusive to REMs, other REMs can overlap with them. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other without any break in between (see the schema above). A CREM ends when there is no overlapping neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes and we know which part of it links to which gene.
 
+
+Future releases
+===============================
+We will continuously update and expand EpiRegio. Besides of adding more functionalities and analyses, we will also update the underlying dataset if we can make improvements by including new datasets or by tweaking processes of STITCHIT. Right now, version 1 is available. Every file you export contains the current day and the version number. All dataset versions are available at our Zenodo repository, so that you can still reproduce all your analyses even after a version upgrade.
 
 Cite Us
 =======
