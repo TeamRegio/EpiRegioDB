@@ -5,5 +5,6 @@ EpiRegio: Analysis and retrieval of regulatory elements linked to genes
    
    Description.rst
    UseCases.rst
+   ApplicationScenario.rst
    RESTAPI.rst
    KnownIssues.rst
