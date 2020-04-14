@@ -25,4 +25,4 @@ Solution: If you are using Chrome, please try to clear the cache in your browser
 
 We are aware of issues causing a Server Error 500 if the input list is too large. We are working on solving this issue. In the meantime, unfortunately, you might have to try to provide your input in smaller chunks.
 
-If you face other problems, please let us know through GitHub issues!
+If you face other problems, please let us know through `GitHub issues <https://github.com/TeamRegio/EpiRegioDB/issues>`_!
