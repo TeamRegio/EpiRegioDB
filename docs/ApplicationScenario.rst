@@ -12,7 +12,8 @@ The application scenario is based on the section *Elucidation of disease pathway
 
   wget 'https://www.encodeproject.org/files/ENCFF002CVL/@@download/ENCFF002CVL.bed.gz'.
   
- Unzip the file using e.g.::
+
+Unzip the file using e.g.::
  
     gzip -d ENCFF002CVL.bed.gz 
 
