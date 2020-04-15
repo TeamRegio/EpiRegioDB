@@ -16,7 +16,7 @@ The application scenario is based on the section *Elucidation of disease pathway
  
     gzip -d ENCFF002CVL.bed.gz 
 
-**Step 2:** Use EpiRegio's  `Region Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#region-query>`_ to search for REMs overlapping at least by 50% with the TF-ChIP peaks. Go to https://epiregio.de/regionQuery/, click *choose File* and upload the ChIP-seq peaks from Step 1. Next to the upload field, you can see a option *Overlap percentage (optional)* to define the percentage the binding locations and the REMs should overlap. Since we want a 50% overlap, type 50 in this field and click *Query Database*. 
+**Step 2:** Use EpiRegio's  `Region Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#region-query>`_ to search for REMs overlapping at least by 50% with the TF-ChIP peaks. Go to https://epiregio.de/regionQuery/, click *choose File* and upload the unzipped ChIP-seq peaks from Step 1. Next to the upload field, you can see a option *Overlap percentage (optional)* to define the percentage the binding locations and the REMs should overlap. Since we want a 50% overlap, type 50 in this field and click *Query Database*. 
 TODO: add screenshot where you see exactly this 
 
 **Step 3:** Click the bottom *Functional enrichment analysis g:Profiler* in the upper left corner, to perform a GO term enrichment analysis using g:Profiler (default parameters) of the resulting REMs.  
@@ -26,23 +26,22 @@ TODO: add screenshot
 How to use EpiRegio to identify enriched TFs of a set of genes of interest
 =================
 The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_  and `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine.
-TODO: provide TRAP script with normalization on GitHub page
+TODO: add TRAP script with normalization on GitHub page
 
 **Step 1:**  As an example, we consider a set of differential expressed genes based on a single-cell RNAseq
 data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However the analysis works with every set of genes. If you want to perform the example you can download the differential expressed genes from our GitHub repository (link).
 
-**Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs assoiacted to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues:*. We are interested on the regulatory effect of the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If your are using an individual data set, please also choose a celltype or tissue which is most suitable for your data. Next click *Query Database*. TODO: add screenshot
+**Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs assoiacted to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues*. We are interested in the regulatory effects of the REMs for the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If your are using an individual data set, please also choose a celltype or tissue which is most suitable for your data. Next click *Query Database*. TODO: add screenshot
 
 **Step 3:**   To apply *PASTAA*, we need a ranking of the resulting REMs. Therefore, we sort them in descending order based on the column *heart score*. To do so, click on the arrows next to *heart score*. Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
 
-**Step 4:** Next we determine the DNA-sequence of the identified REMs using *bedtools* and then run *PASTAA* to perform the motif enrichment analysis. On our GitHub repository we provide a workflow to run the analysis. Download the folder ... (link).
-There we also provide a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow, enter the following command to our consol:: 
+**Step 4:** Next we determine the DNA-sequence of the identified REMs using *bedtools* and run *PASTAA* to perform the motif enrichment analysis. In our GitHub repository we provide a workflow to run the analysis. Download the folder ... (link).
+There we also provide a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow the following command can be used:: 
 
-  bash workflow.sh <pathToMotifs> <pathToPASTAA> <pathToBedtools> <REMs> <outputDir> <pvalue>
+  bash workflow.sh <Motifs> <pathToPASTAA> <pathToBedtools> <REMs> <outputDir> <pvalue>,
 
+where *<Motifs>* represents the path to the TF motif file, *<pathToPASTAA>* is the path to the PASTAA source directory, *<pathToBedtools>* is the path to the bedtools source directory, *<REMs>* is the path to the downloaded csv-file, and *<output>* is the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA smaller or equal the parameter *<pvalue>* the TF motif is assumed to be significant enriched. For this example,set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Addscreenshoot from result.
 
-
-pvalue 0:05
 
 How to use EpiRegio to identify TF binding sites within REMs of a gene of interest
 =================
