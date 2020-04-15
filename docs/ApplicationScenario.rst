@@ -41,7 +41,7 @@ There we also provide a set of TF binding motifs downloaded from the JASPAR data
 
   bash workflow.sh <Motifs> <pathToPASTAA> <pathToBedtools> <REMs> <outputDir> <pvalue>,
 
-where *<Motifs>* represents the path to the TF motif file, *<pathToPASTAA>* is the path to the PASTAA source directory, *<pathToBedtools>* is the path to the bedtools source directory, *<REMs>* is the path to the downloaded csv-file, and *<output>* is the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA smaller or equal the parameter *<pvalue>* the TF motif is assumed to be significant enriched. For this example,set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Addscreenshoot from result.
+where *<Motifs>* represents the path to the TF motif file, *<pathToPASTAA>* is the path to the PASTAA source folder, *<pathToBedtools>* is the path to the bedtools source folder, *<REMs>* is the path to the downloaded csv-file, and *<output>* is the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA smaller or equal the parameter *<pvalue>* the TF motif is assumed to be significant enriched. For this example,set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Addscreenshoot from result.
 
 
 How to use EpiRegio to identify TF binding sites within REMs of a gene of interest
