@@ -3,6 +3,7 @@
 {% load rem_template_tags %}
 
 <head>
+    <title>Gene details</title>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/datatables.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/Buttons-1.6.0/css/buttons.dataTables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}">
@@ -23,12 +24,12 @@
 <br>
 <br>
 <div class="no_data_div" style="border: 1px solid #bfbfbf; width: 800px; "><p class="inputLabel" style="margin-left: 10px; margin-right:10px;">For further details on the genes,
-    click on the IDs in the table below which will redirect you to the Ensembl webpage.</p></div>
+    click on the <b>IDs</b> in the table below which will redirect you to the <b><a class="link" href="http://www.ensembl.org/index.html">Ensembl webpage</a></b>.</p></div>
 
 <br>
 <br>
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>More details on your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
+    <caption class="table_header">More details on your queried genes: <strong id="queried_genes"> {{query_string}} </strong></caption>
 
     <thead>
         <script>
@@ -38,7 +39,7 @@
             var dd = String(today.getDate()).padStart(2, '0');
             var mm = String(today.getMonth() + 1).padStart(2, '0');
             var yyyy = today.getFullYear();
-            today = mm + '_' + dd + '_' + yyyy;
+            today = mm + '_' + dd + '_' + yyyy + '_' + 'v' + {{version}};
 
             $(document).ready( function () {
             $('#QueryResults').DataTable({
@@ -47,27 +48,37 @@
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat("_GeneDetails_Query__", export_string)},
-                            { extend: 'csv', filename: today.concat("_GeneDetails_Query__", export_string),
+                            { extend: 'excel', filename: today.concat("_GeneDetails_Query__", export_string), title:"",
+                                customize: function ( xlsx ) {
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('c[r=A1] t', sheet).text('');
+                                    $('c[r=A2] t', sheet).text( 'Gene ID' );
+                                    $('c[r=D2] t', sheet).text( 'Chr' );
+                                }
+                                },
+                                { extend: 'csv', filename: today.concat("_GeneDetails_Query__", export_string),
                                 fieldSeparator: '\t',
                                 fieldBoundary: "",
                                 customize: function (csv) {
                                     csv = customizeCSV(csv);
                                     return csv;
                             },
-                            },
-                            { extend: 'pdf', filename: today.concat("_GeneDetails_Query__", export_string), pageSize: "LEGAL", orientation: 'landscape'}
-                          ]
+                            }                          ]
                       }
                  } );
             } );
 
         </script>
         <tr>
-            <th>Gene ID</th>
+            <th class="tooltip_table"><span class="table_icon"><a href="http://www.ensembl.org/index.html"><img src="{% static '/Icons/ebang-400dpi.png' %}" style="width: 30px; margin-bottom: 10px; margin-left:10px;" alt = 'Ensembl-Icon'/></a>
+             </span>Gene <nobr>ID <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: 5px; width: 250px;">
+                The icon redirects you to the <b>Ensembl home page</b>, the row entries below directly to the Ensembl entry of the respective gene</span></th>
             <th>Gene symbol</th>
-            <th class="tooltip_table">Chr <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
-                Click on the chr below to view the region in the UCSC Genome Browser</span></th>
+            <th class="tooltip_table"><span class="table_icon"><a href="https://genome.ucsc.edu/"><img src="{% static '/Icons/ucscHelixLogo.png' %}"
+                                                                                                       style="width: 120px; height: 30px; margin-left: 65px; margin-bottom: 10px;" alt = 'UCSC-Icon'/></a></span><nobr>Chr <b class="info-icon">&#9432;</b></nobr>
+                <span class="tooltiptext_top" style="margin-left: -100px;">
+                    Click on the chr row entries below to see the region in the <b>UCSC Genome Browser</b></span></th>
+
             <th>Gene start</th>
             <th>Gene end</th>
             <th>Strand</th>

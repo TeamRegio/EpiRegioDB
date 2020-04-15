@@ -27,18 +27,39 @@ for cellTypes (if any cellTypes given) and for adding the CREM information are c
 added to the dictionaries.
 """
 
+# Function to get the link to the gProfiler analysis with the genes that are associated to the REMs in the query result.
+def gProfiler_link(data):
+
+	try:
+		entry = [x for x in list(data[0].keys()) if x.startswith('geneID') or x.endswith('geneID')][0]
+		gene_list = list(set([x[entry] for x in data]))
+		gene_string = '%0A'.join(gene_list)
+		# print(gene_string)
+		link = "https://biit.cs.ut.ee/gprofiler/gost?organism=hsapiens&query=" + gene_string + "&ordered=false&all_results=false&no_iea=false&combined=false&measure_underrepresentation=false&domain_scope=annotated&significance_threshold_method=g_SCS&user_threshold=0.05&numeric_namespace=ENTREZGENE_ACC&sources=GO:MF,GO:CC,GO:BP,KEGG,TF,REAC,MIRNA,HPA,CORUM,HP,WP&background="
+		return link
+	except IndexError:
+		return None
+
+
+# def recreation_link(request):
+#
+# 	post_data = {'gene_format': 'numeric', 'geneID_numeric':'ENSG00000139874, ENSG00000274220'}
+# 	response = request.get('http://127.0.0.1:8000/geneQuery/', data=post_data)
+
+
+# As we normalized the modelScore and added it as column to the REMAnnotation table, we don't need this function anymore
 # Function to add the modelScore to the dictionary, taking a list of dictionaries
-def API_modelScore(hit_list):
-
-	for hit in range(len(hit_list)):
-		try:
-			hit_list[hit]['modelScore'] = -math.log2(hit_list[hit]['pValue'])
-		except KeyError:
-			hit_list[hit] = None
-
-	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
-
-	return hit_list
+# def API_modelScore(hit_list):
+#
+# 	for hit in range(len(hit_list)):
+# 		try:
+# 			hit_list[hit]['modelScore'] = -math.log2(hit_list[hit]['pValue'])
+# 		except KeyError:
+# 			hit_list[hit] = None
+#
+# 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+#
+# 	return hit_list
 
 
 # For every query, we give the possibility to give back the activity of the REMs. This function is only
@@ -60,13 +81,17 @@ def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 	for cellType in cellTypes_list:
 		matching_samples = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).filter(dnase1Log2__gte=activ_thresh).values()
 		activity = 0
+		stand_activity = 0
+
 		if len(matching_samples) > 0:  # as it's possible that no REM is remaining
 			for sample in matching_samples:
 				activity += sample['dnase1Log2']
+				stand_activity += sample['standDnase1Log2']
 			mean_activity = activity/len(matching_samples)
+			mean_stand_activity = stand_activity/len(matching_samples)
 			REM[cellType + '_dnase1Log2'] = mean_activity
 			REM[cellType + '_samplecount'] = len(matching_samples)
-			REM[cellType + '_score'] = abs(mean_activity * REM['regressionCoefficient'])
+			REM[cellType + '_score'] = abs(mean_stand_activity * REM['regressionCoefficient'])
 		else:
 			return None  # we return None if there is no match. The Nones are filtered out in the origin function
 
@@ -111,14 +136,18 @@ def API_CREM(REM):
 	try:
 		REMID = REM['REMID']
 	except KeyError:
-		return None
+		return REM
 	# get the additional columns for the CREMS
 	CREMInfo = CREMAnnotation.objects.filter(REMID=REMID).values()
-	try:
-		REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
-		REM['CREMID'] = CREMInfo[0]['CREMID']
-	except IndexError:
-		return None
+	if len(CREMInfo) > 0:  # if we the REM belongs to a CREM
+		try:
+			REM['REMsPerCREM'] = CREMInfo[0]['REMsPerCREM']  # append the attributes
+			REM['CREMID'] = CREMInfo[0]['CREMID']
+		except IndexError:
+			return REM
+	else:  # if not, we add the no crem label manually
+		REM['REMsPerCREM'] = '-'
+		REM['CREMID'] = 'No CREM'
 
 	return REM
 
@@ -138,16 +167,16 @@ def API_CREM_overview(CREMID_list):
 			dataset = list(CREMAnnotation.objects.filter(CREMID=crem).values(
 				'REMID_id', 'CREMID', 'chr', 'start', 'end', 'REMsPerCREM', 'version', 'REMID_id__geneID', 'REMID_id__geneID__geneSymbol',
 				'REMID_id__start',
-				'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue'))
+				'REMID_id__end', 'REMID_id__regressionCoefficient', 'REMID_id__pValue', 'REMID_id__normModelScore'))
 		except KeyError:
 			continue
 
 	# We don't use the other function, as the dictionary entry has a different name for the CREMs
-		for n in range(len(dataset)):
-			try:
-				dataset[n]['modelScore'] = -math.log2(dataset[n]['REMID_id__pValue'])
-			except KeyError:
-				dataset[n] = None
+	# 	for n in range(len(dataset)):
+	# 		try:
+	# 			dataset[n]['modelScore'] = -math.log2(dataset[n]['REMID_id__pValue'])
+	# 		except KeyError:
+	# 			dataset[n] = None
 		hit_list = hit_list + dataset
 
 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
@@ -178,6 +207,7 @@ def API_cellType_activity_per_REM(rem_id):
 	except KeyError:
 		return None
 	activity = {}
+	stand_activity = {}
 	score = {}
 	for elem in matching_samples:
 
@@ -185,14 +215,17 @@ def API_cellType_activity_per_REM(rem_id):
 		cellType_name = cellType_name.replace('\"', '')
 		if cellType_name in activity.keys():  # take care of tisue or celltypes that occur more than once
 			activity[cellType_name] += [elem['dnase1Log2']]
+			stand_activity[cellType_name] += [elem['standDnase1Log2']]
 		# 	activity[cellType_name] = (float(activity[cellType_name]) + float(elem['dnase1Log2']))/2
 		else:
 			activity[cellType_name] = [elem['dnase1Log2']]
+			stand_activity[cellType_name] = [elem['standDnase1Log2']]
 		#
 	for cell in activity.keys():
 		activity[cell] = np.mean(activity[cell])  # we created a list of all activities we have for this one REMID, now
 		# we get the mean of these activity list and take them as new dict entry
-		score[cell] = abs(activity[cell]*curr_reg)
+		mean_stand_activity = np.mean(stand_activity[cell])
+		score[cell] = abs(mean_stand_activity*curr_reg)
 
 	rem_id['cellTypeScore'] = score  # we add the score in the same format as the activity
 	rem_id['cellTypeActivity'] = activity
@@ -253,13 +286,11 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 	# we returned None into the list, now we get rid of it
 
-	hit_list = API_modelScore(hit_list)
+	# hit_list = API_modelScore(hit_list)
 
 	return hit_list, invalid_list  # our list of objects, fitting the query_list
 
-###############################################################
-# NINA HIER AUCH! EIN OUTPUT MEHR
-###############################################################
+
 # If a user provides the geneSymbols, we convert them into ENSG format and use the other functions
 def API_SymbolToENSG(symbol_list):
 
@@ -341,7 +372,7 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='symb
 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 	# we returned None into the list, now we get rid of it
 
-	hit_list = API_modelScore(hit_list)
+	# hit_list = API_modelScore(hit_list)
 
 	if gene_format == 'symbol_format':  # if there are no REMs for a gene and the user filtered for symbols,
 		# we also show the symbols
@@ -467,6 +498,6 @@ def API_Region(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 	# we returned None into the list, now we get rid of it
 
-	hit_list = API_modelScore(hit_list)
+	# hit_list = API_modelScore(hit_list)
 
 	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list

@@ -96,8 +96,8 @@ class geneQuerySearchTest(TestCase):
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000225880', geneSymbol='LINC00115', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
         # one geneAnnotation without a REM, to test for valid genes we have no data for
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000XXXXXX', geneSymbol='LINCXXXXX', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
-        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, version=1, consortium='b')
-        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, version=1)
+        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, normModelScore=0.5, meanDNase1Signal=2,  sdDNase1Signal=1, version=1, consortium='b')
+        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, standDnase1Log2=1.5, version=1)
         geneExpression.objects.create(geneID_id='ENSG00000225880', sampleID_id='R_ENCBS011TVS', expressionLog2TPM=0.265575, species='HUMAN')
         CREMAnnotation.objects.create(REMID_id='REM0000742', CREMID='CREM0000464', chr='chr1', start=826308, end=827500, REMsPerCREM=27, version=1)
         print('View Test - Gene Query Search')
@@ -129,14 +129,16 @@ class geneQuerySearchTest(TestCase):
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
-            'modelScore': 0.413633959051203,
+            'normModelScore': 0.5,
             'geneSymbol': 'LINC00115',
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
+            'muscle of leg_score': 0.1124568,
         })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
@@ -171,14 +173,16 @@ class geneQuerySearchTest(TestCase):
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
-            'modelScore': 0.413633959051203,
+            'normModelScore': 0.5,
             'geneSymbol': 'LINC00115',
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
+            'muscle of leg_score': 0.1124568,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -213,14 +217,16 @@ class geneQuerySearchTest(TestCase):
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
-            'modelScore': 0.413633959051203,
+            'normModelScore': 0.5,
             'geneSymbol': 'LINC00115',
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
+            'muscle of leg_score': 0.1124568,
              })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
@@ -255,14 +261,16 @@ class geneQuerySearchTest(TestCase):
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
-            'modelScore': 0.413633959051203,
+            'normModelScore': 0.5,
             'geneSymbol': 'LINC00115',
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
+            'muscle of leg_score': 0.1124568,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -299,47 +307,47 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['export_string'], 'LINCXXXXX,LINCINVALID')
 
     # when clicking on the query string, to provide more details on the genes
-    def test_gene_detail_view_numeric(self):
-        print('View Test - Gene Details numeric')
-        response = self.client.get('/geneQuery_search/ ENSG00000225880/')
-        self.assertTemplateUsed(response, 'gene_details.html')
-        self.assertTemplateUsed(response, 'navbar.html')
-        self.assertTemplateUsed(response, 'footer.html')
-        self.assertEqual(response.context['data'][0], {
-            'chr': 'chr1',
-            'start': 826206,
-            'end': 827522,
-            'geneID': 'ENSG00000225880',
-            'geneSymbol': 'LINC00115',
-            'alternativeGeneID': '',
-            'isTF': 'Unknown',
-            'strand': '-',
-            'annotationVersion_id': 'V26',
-        })
-        self.assertEqual(response.context['query_list'], ['ENSG00000225880'])
-        self.assertEqual(response.context['query_string'], ' ENSG00000225880')
-        self.assertEqual(response.context['query_list_list'], ['ENSG00000225880'])
-        self.assertEqual(response.context['export_string'], ' ENSG00000225880')
+    # def test_gene_detail_view_numeric(self):
+    #     print('View Test - Gene Details numeric')
+    #     response = self.client.get('/geneQuery_search/ ENSG00000225880/')
+    #     self.assertTemplateUsed(response, 'gene_details.html')
+    #     self.assertTemplateUsed(response, 'navbar.html')
+    #     self.assertTemplateUsed(response, 'footer.html')
+    #     self.assertEqual(response.context['data'][0], {
+    #         'chr': 'chr1',
+    #         'start': 826206,
+    #         'end': 827522,
+    #         'geneID': 'ENSG00000225880',
+    #         'geneSymbol': 'LINC00115',
+    #         'alternativeGeneID': '',
+    #         'isTF': 'Unknown',
+    #         'strand': '-',
+    #         'annotationVersion_id': 'V26',
+    #     })
+    #     self.assertEqual(response.context['query_list'], ['ENSG00000225880'])
+    #     self.assertEqual(response.context['query_string'], ' ENSG00000225880')
+    #     self.assertEqual(response.context['query_list_list'], ['ENSG00000225880'])
+    #     self.assertEqual(response.context['export_string'], ' ENSG00000225880')
 
-    def test_gene_detail_view_symbolic(self):
-        print('View Test - Gene Details symbolic')
-        response = self.client.get('/geneQuery_search/ LINC00115/')
-        self.assertTemplateUsed(response, 'gene_details.html')
-        self.assertEqual(response.context['data'][0], {
-            'chr': 'chr1',
-            'start': 826206,
-            'end': 827522,
-            'geneID': 'ENSG00000225880',
-            'geneSymbol': 'LINC00115',
-            'alternativeGeneID': '',
-            'isTF': 'Unknown',
-            'strand': '-',
-            'annotationVersion_id': 'V26',
-        })
-        self.assertEqual(response.context['query_list'], ['ENSG00000225880'])
-        self.assertEqual(response.context['query_string'], ' LINC00115')
-        self.assertEqual(response.context['query_list_list'], ['LINC00115'])
-        self.assertEqual(response.context['export_string'], ' LINC00115')
+    # def test_gene_detail_view_symbolic(self):
+    #     print('View Test - Gene Details symbolic')
+    #     response = self.client.get('/geneQuery_search/ LINC00115/')
+    #     self.assertTemplateUsed(response, 'gene_details.html')
+    #     self.assertEqual(response.context['data'][0], {
+    #         'chr': 'chr1',
+    #         'start': 826206,
+    #         'end': 827522,
+    #         'geneID': 'ENSG00000225880',
+    #         'geneSymbol': 'LINC00115',
+    #         'alternativeGeneID': '',
+    #         'isTF': 'Unknown',
+    #         'strand': '-',
+    #         'annotationVersion_id': 'V26',
+    #     })
+    #     self.assertEqual(response.context['query_list'], ['ENSG00000225880'])
+    #     self.assertEqual(response.context['query_string'], ' LINC00115')
+    #     self.assertEqual(response.context['query_list_list'], ['LINC00115'])
+    #     self.assertEqual(response.context['export_string'], ' LINC00115')
 
 
     def test_clicked_gene_view(self):
@@ -357,8 +365,10 @@ class geneQuerySearchTest(TestCase):
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'CREMID': 'CREM0000464',
-            'modelScore': 0.413633959051203,
+            'normModelScore': 0.5,
             'geneSymbol': 'LINC00115',
         })
         self.assertEqual(response.context['query_link'], ' ENSG00000225880')
@@ -386,7 +396,7 @@ class geneQuerySearchTest(TestCase):
             'REMID_id__end': 827445,
             'REMID_id__regressionCoefficient': -0.0749712,
             'REMID_id__pValue': 0.75073,
-            'modelScore': 0.413633959051203
+            'REMID_id__normModelScore': 0.5
         })
         self.assertEqual(response.context['query'], 'CREM0000464')
 
@@ -419,12 +429,14 @@ class geneQuerySearchTest(TestCase):
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
-            'modelScore': 0.413633959051203
+            'muscle of leg_score': 0.1124568,
+            'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['Peter:Hans-Jürgen'])
         self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
@@ -462,12 +474,14 @@ class geneQuerySearchTest(TestCase):
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'modelScore': 0.413633959051203,
-            'muscle of leg_score': 0.9835171843200001,
+            'normModelScore': 0.5,
+            'muscle of leg_score': 0.1124568,
         })
         self.assertEqual(response.context['invalid_list'], ['chrhildegard:Jutta-Brunhilde'])
         self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
@@ -534,12 +548,14 @@ class geneQuerySearchTest(TestCase):
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
-            'modelScore': 0.413633959051203
+            'muscle of leg_score': 0.1124568,
+            'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
         self.assertEqual(response.context['query_string'], ' REM0000742, SCHAQUELIENE')
@@ -571,12 +587,14 @@ class geneQuerySearchTest(TestCase):
             'version': 1,
             'consortium': 'b',
             'REMsPerCREM': 27,
+            'sdDNase1Signal': 1.0,
+            'meanDNase1Signal': 2.0,
             'CREMID': 'CREM0000464',
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.9835171843200001,
-            'modelScore': 0.413633959051203
+            'muscle of leg_score': 0.1124568,
+            'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
         self.assertEqual(response.context['query_string'], ' REM0000742, SCHAQUELIENE')

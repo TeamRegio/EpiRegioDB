@@ -13,6 +13,9 @@ def help_view(request):
 def contact_view(request):
     return render(request, 'contact.html', {})
 
+def download_view(request):
+    return render(request, 'download.html', {})
+
 
 def navbars_view(request):
     return render(request, 'navbars.html', {})

@@ -1,0 +1,16 @@
+Firefox, 20.12.19 16:27https://www.iconspedia.com/icon/mozilla-firefox-2020.html
+
+Chrome, 20.12.19 16:30
+https://www.iconspedia.com/icon/chrome-icon-24455.html
+
+MS Edge, 20.12.19 16:37
+https://de.wikipedia.org/wiki/Datei:Microsoft_Edge_logo.svg
+
+Ensembl, 02.04.20 11:50
+logo policy https://m.ensembl.org/info/about/legal/logo_policy.html
+
+UCSC, 02.04. 13:14https://genome.ucsc.edu/
+Conditions of use: https://genome.ucsc.edu/conditions.html
+
+gProfiler, 02.04.20 16:37 
+https://biit.cs.ut.ee/gprofiler/gost?organism=hsapiens&query=ENSG00000174307%0AENSG00000132604&ordered=false&all_results=false&no_iea=false&combined=false&measure_underrepresentation=false&domain_scope=annotated&significance_threshold_method=g_SCS&user_threshold=0.05&numeric_namespace=ENTREZGENE_ACC&sources=GO:MF,GO:CC,GO:BP,KEGG,TF,REAC,MIRNA,HPA,CORUM,HP,WP&background=

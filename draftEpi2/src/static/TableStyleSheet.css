@@ -41,11 +41,11 @@ table.dataTable {
     background-repeat:no-repeat;
     background-position:center right}
     table.dataTable thead .sorting{
-    background-image:url("DataTables/DataTables-1.10.20/images/sort_both.png")}
+    background-image:url("DataTables/DataTables-1.10.20/images/sort_both2.png")}
     table.dataTable thead .sorting_asc{
-    background-image:url("DataTables/DataTables-1.10.20/images/sort_asc.png")}
+    background-image:url("DataTables/DataTables-1.10.20/images/sort_asc2.png")}
     table.dataTable thead .sorting_desc{
-    background-image:url("DataTables/DataTables-1.10.20/images/sort_desc.png")}
+    background-image:url("DataTables/DataTables-1.10.20/images/sort_desc2.png")}
     table.dataTable thead .sorting_asc_disabled{
     background-image:url("DataTables/DataTables-1.10.20/images/sort_asc_disabled.png")}
     table.dataTable thead .sorting_desc_disabled{
@@ -222,7 +222,7 @@ table.dataTable td {
   zoom: 1; }
   .dataTables_wrapper .dataTables_length {
     float: right;
-    margin-right: 6em;
+    margin-right: 1em;
     font-size: 16px;
     font-weight: bold;}
   .dataTables_wrapper .dataTables_filter {
@@ -231,8 +231,9 @@ table.dataTable td {
      font-size: 16px;
      font-weight: bold;}
     .dataTables_wrapper .dataTables_filter input {
-      margin-right: 5em;
+      margin-right: 2em;
       font-size: 16px;
+      width: 120px;
       font-family: "Times New Roman"}
   .dataTables_wrapper .dataTables_info {
     clear: both;
@@ -383,7 +384,7 @@ table.dataTable td {
 
 .dataTables_wrapper .dt-buttons {
   float:right;
-  margin-right: 4em;
+  margin-right: 2em;
   margin-top: -0.5em;
 }
 

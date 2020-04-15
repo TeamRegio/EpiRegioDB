@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import genomeAnnotation, geneExpression, sampleInfo, cellTypes, REMActivity, REMAnnotation, geneAnnotation
 from geneQuery.views import search_cellTypes
-from API import API_Region
+from API import *
 # Works similar to the geneID Query app. The views file there is commented more detailed
 
 def regionQuery_view(request):
@@ -137,6 +137,8 @@ def region_search_view(request):
             error_msg = 'No REMs were found in your selected regions. You might want to try ' \
                         'changing the overlap or modifying the region boundaries.'
 
+    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+    # print(list(data[0].keys()))
     context = {
         'data': data,
         'error_msg': error_msg,
@@ -149,6 +151,8 @@ def region_search_view(request):
         'no_data': no_data,
         'invalid_list': invalid_string_list,
         "overlap": int(overlap),
+        'version': 1,
+        'gP_link': gP_link
     }
 
     return render(request, template, context)

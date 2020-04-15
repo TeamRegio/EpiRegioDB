@@ -104,6 +104,8 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     for n in range(len(invalid_list)-1):
         invalid_list[n] += ', '
 
+    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+
     context = {
         'data': data,
         'query_string': query_list_string,
@@ -117,8 +119,10 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         'no_data': no_data,
         'invalid_list': invalid_list,
         'doublets_list': doublets_list,
+        'version': 1,
+        'gP_link': gP_link
     }
-    # print(context)
+    # print(data)
     return render(request, template, context)
 
 
@@ -151,9 +155,14 @@ def search_cellTypes(request):
 
 def crem_view(request, CREMID):
 
+    data = API_CREM_overview([CREMID])
+    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+
     context = {
-        'data': API_CREM_overview([CREMID]),
+        'data': data,
         'query': CREMID,
+        'version': 1,
+        'gP_link': gP_link
     }
     return render(request, 'linked_crem.html', context)
 
@@ -178,17 +187,17 @@ def clicked_gene_search_view(request, geneID):
         'query_string': query_list_string,
         'query_link': query_list_string_link,
         'export_string': export_string,
+        'version': 1,
     }
     # print(context)
     return render(request, 'geneQuery_search.html', context)
-
 
 
 # GENE DETAILS VIEW ####################################################################
 
 def gene_details_view(request, query_string):
 
-    query_list = strip_csv_query(query_string)[0]
+    query_list = strip_csv_query(query_string.replace(',', ';'))[0]
     query_list_list = query_list
 
     if query_list[0][:4] != 'ENSG':
@@ -206,6 +215,7 @@ def gene_details_view(request, query_string):
         'query_list_list': query_list_list,
         'query_string': query_string,
         'export_string': export_string,
+        'version': 1,
     }
     # print(context)
     return render(request, 'gene_details.html', context)

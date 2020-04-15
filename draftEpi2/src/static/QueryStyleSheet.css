@@ -22,6 +22,7 @@ p.textBox{
     font-family: Calibri;
     font-size: 20px;
     padding: 25px;
+    text-align: justify;
 }
 
 input.inputForm{
@@ -48,8 +49,12 @@ p.selectionHeader{
 }
 
 caption{
-padding:20px;
+padding: 20px;
 font-size: 24px;
+}
+
+caption.table_header{
+margin-bottom: 20px;
 }
 
 a.link{
@@ -59,6 +64,7 @@ color: #00537d;
 a.link:hover{
  background: #ededed;
 }
+
 div.no_data_div{
     border: 1px black solid;
     position: center;
@@ -247,7 +253,10 @@ button.ajax_search_list:active {
   transform: translateY(1px);
 }
 
-button.NoneButton {padding:5px 15px; background: white;
+button.NoneButton {
+    padding:5px 15px;
+    background: #f5f5f5;
+    width: 300px;
     font-size: 16px;
     font-family: Calibri;
     font-weight: bold;
@@ -255,7 +264,8 @@ button.NoneButton {padding:5px 15px; background: white;
     cursor: pointer;
     -webkit-border-radius: 5px;
     border-radius: 4px;
-    box-shadow: 0 3px  #060d13;}
+    box-shadow: 0 3px  #060d13;
+}
 
 
 input.chosenButtons {padding: 4px 10px; background: #ffffff;
@@ -301,7 +311,34 @@ button.clearFiles:active {
   transform: translateY(1px);
 }
 
-/* TOOLTIPS **************************************** **************************************** */
+button.gProfilerButton{
+    font-size: 12px;
+    float: right;
+    position: relative;
+    width: 195px;
+    height: 41px;
+    background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+    border: 1px solid #999;
+    border-radius: 2px;
+    background-color: #e9e9e9;
+    z-index: 12;
+}
+
+button.gProfilerButton:hover{
+    cursor: pointer;
+    border: 1px solid #4d4d4d;
+}
+
+/* TOOLTIPS **************************************** *****************************************/
+.gProfilerSpan{
+  width: 100px;
+  position: static;
+  margin-bottom: -33px;
+  margin-right: 636px;
+  float: right;
+}
+
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -309,6 +346,7 @@ button.clearFiles:active {
 .tooltip_table{
     display: align;
     position: relative;
+    z-index: 1;
 }
 
 
@@ -316,16 +354,17 @@ button.clearFiles:active {
   visibility: hidden;
   width: 120px;
   font-size: 16px;
-  background-color: #073946;
+  background-color: #002a35;
   color: #fff;
   text-align: center;
   padding: 5px;
   border-radius: 4px;
   position: absolute;
-  z-index: 99;
+  z-index: 10;
   top: -5px;
   left: 110%;
   font-family: Calibri;
+  border: 1px solid black;
 }
 
 .tooltip:hover .tooltiptext_right{
@@ -340,23 +379,25 @@ button.clearFiles:active {
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent #073946 transparent transparent;
+  border-color: transparent #002a35 transparent transparent;
 }
 
 .tooltip .tooltiptext_top{
   visibility: hidden;
   width: 180px;
   font-size: 16px;
-  background-color: #073946;
+  background-color: #002a35;
   color: #fff;
   text-align: center;
   padding: 5px;
   border-radius: 4px;
   position: absolute;
-  z-index: 99;
+  z-index: 15;
   top: 110%;
   font-family: Calibri;
+  font-weight: normal;
   margin-left: -200px;
+  border: 1px solid black;
 }
 
 .tooltip:hover .tooltiptext_top{
@@ -371,28 +412,66 @@ button.clearFiles:active {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #073946 transparent transparent transparent;
+  border-color: #002a35 transparent transparent transparent;
 }
 
 .tooltip_table .tooltiptext_top{
   visibility: hidden;
   width: 180px;
   font-size: 16px;
-  background-color: #073946;
+  background-color: #002a35;
   color: #fff;
   text-align: center;
   padding: 5px;
   border-radius: 4px;
   position: absolute;
-  z-index: 99;
+  z-index: 10;
   font-family: Calibri;
+  font-weight: normal;
   margin-left: -200px;
   bottom: 105%;
+  border: 2px solid black;
 }
 
 .tooltip_table:hover .tooltiptext_top{
   visibility: visible;
 }
+
+
+.tooltip_table .table_icon{
+  width: 100px;
+  position: absolute;
+  z-index: 1;
+  bottom: 75%;
+  margin-left: -6px;
+  margin-right: 50px;
+}
+
+
+.gProfilerSpan .gProfiler_tooltip{
+  visibility: hidden;
+  width: 320px;
+  font-size: 16px;
+  background-color: #002a35;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 11;
+  font-family: Calibri;
+  bottom: 110%;
+  right: -72%;
+  border: 2px solid black;
+}
+/*  margin-left: -240px;
+  bottom: 105%;
+  right: 105%; */
+
+.gProfilerButton:hover .gProfiler_tooltip{
+  visibility: visible;
+}
+
 
 /*.tooltip_table .tooltiptext_top::after {
   content: "";

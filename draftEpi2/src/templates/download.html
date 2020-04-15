@@ -1,0 +1,62 @@
+{% include 'navbar.html' %}
+{% load static %}
+<style>
+figure.homefig{
+    float: left;
+}
+
+div.introBlock{
+    float: left;
+    display: inline;
+}
+figure.questionfig{
+    margin-left: 700px;
+    position: absolute;
+    margin-top: 2em;
+}
+
+p.contactText{
+    border-bottom: 1px solid #cccccc;
+}
+
+p.contactText {
+    display: block;
+    text-align: justify;
+    width: 600px;
+    text-align: left;
+    float: left;
+}
+
+</style>
+<head>
+    <title>Download</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+</head>
+
+<body>
+<div id="wrapper">
+
+<div class="introBlock">
+
+<blockquote>
+<h2>Download</h2>
+
+<p class='contactText textBox'>
+We deposited all tables containing the data behind EpiRegio in Zenodo. Once new versions are published, you will find all previous versions
+    there, so that you can still reproduce older analyses. Currently the only existing version 1 is live. You can see the version number
+    underneath the logo as well as in the filename of all files you export from a query.<br> <br>
+    Get to the Zenodo data repository here: <strong><a class="link" href="https://zenodo.org/record/3752510#.XpcWES2B06U">Version 1 tables</a></strong>.
+    <br><br>
+    Beside of the data, we also provide the source code of our server on Zenodo. We will also keep all older versions of the code. You can also visit our
+    <strong><a class="link" href="https://github.com/TeamRegio/EpiRegioDB">GitHub repository</a></strong>.
+    <br><br>
+    Get to the Zenodo source code repository here:<strong><a class="link" href="https://zenodo.org/record/3751189#.XpcWZy2B06U">Version 1 source code </a></strong>
+</p>
+</blockquote>
+</div>
+</div>
+</body>
+
+{% include 'footer.html' %}
+
+

@@ -114,7 +114,7 @@ class REMAnnotationModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, normModelScore=1, meanDNase1Signal=1, sdDNase1Signal=1, consortium='b', version=1)
 
     def test_REMAnnotation_label(self):
         test_obj = REMAnnotation.objects.get(REMID='2TSBakingPowder')
@@ -127,8 +127,11 @@ class REMAnnotationModelTest(TestCase):
         field_label6 = test_obj._meta.get_field('pValue').verbose_name
         field_label7 = test_obj._meta.get_field('version').verbose_name
         field_label8 = test_obj._meta.get_field('consortium').verbose_name
-        field_labels = [field_label0, field_label1, field_label2, field_label3, field_label4, field_label5, field_label6, field_label7, field_label8]
-        self.assertEquals(field_labels, ['chr', 'start', 'end', 'geneID', 'REMID', 'regressionCoefficient', 'pValue', 'version', 'consortium'])
+        field_label9 = test_obj._meta.get_field('normModelScore').verbose_name
+        field_label10 = test_obj._meta.get_field('meanDNase1Signal').verbose_name
+        field_label11 = test_obj._meta.get_field('sdDNase1Signal').verbose_name
+        field_labels = [field_label0, field_label1, field_label2, field_label3, field_label4, field_label5, field_label6, field_label7, field_label8, field_label9, field_label10, field_label11]
+        self.assertEquals(field_labels, ['chr', 'start', 'end', 'geneID', 'REMID', 'regressionCoefficient', 'pValue', 'version', 'consortium', 'normModelScore', 'meanDNase1Signal', 'sdDNase1Signal'])
 
     def test_REMAnnotation_max_length(self):
         test_obj = REMAnnotation.objects.get(REMID='2TSBakingPowder')
@@ -222,8 +225,8 @@ class REMActivityModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
-        REMActivity.objects.create(REMID_id='2TSBakingPowder', sampleID_id='300gDarkChocolate', dnase1Log2=1.0, version='1')
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, normModelScore=1, meanDNase1Signal=1, sdDNase1Signal=1, consortium='b', version=1)
+        REMActivity.objects.create(REMID_id='2TSBakingPowder', sampleID_id='300gDarkChocolate', dnase1Log2=1.0, standDnase1Log2=1.0, version='1')
 
     def test_REMActivity_label(self):
         test_obj = REMActivity.objects.get(sampleID='300gDarkChocolate')
@@ -231,8 +234,9 @@ class REMActivityModelTest(TestCase):
         field_label1 = test_obj._meta.get_field('sampleID').verbose_name
         field_label2 = test_obj._meta.get_field('dnase1Log2').verbose_name
         field_label3 = test_obj._meta.get_field('version').verbose_name
-        field_labels = [field_label0, field_label1, field_label2, field_label3]
-        self.assertEquals(field_labels, ['REMID', 'sampleID', 'dnase1Log2', 'version'])
+        field_label4 = test_obj._meta.get_field('standDnase1Log2').verbose_name
+        field_labels = [field_label0, field_label1, field_label2, field_label3, field_label4]
+        self.assertEquals(field_labels, ['REMID', 'sampleID', 'dnase1Log2', 'version', 'standDnase1Log2'])
 
     def test_REMActivity_string(self):  # also shows that all attributes were assigned correctly
         test_obj = REMActivity.objects.get(sampleID='300gDarkChocolate')
@@ -249,7 +253,7 @@ class CREMAnnotationModelTest(TestCase):
         geneAnnotation.objects.create(chr='250gButter', start=1, end=2, geneID='200gBrownSugar',
                                       geneSymbol='175gSugar', alternativeGeneID='2Eggs', isTF='375gFlour',
                                       strand='+', annotationVersion_id='the')
-        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, version='1')
+        REMAnnotation.objects.create(chr='200gNuts', start=1, end=2, geneID_id='200gBrownSugar', REMID='2TSBakingPowder', regressionCoefficient=1.0, pValue=0.0001, normModelScore=1, meanDNase1Signal=1, sdDNase1Signal=1, consortium='b', version=1)
         CREMAnnotation.objects.create(REMID_id='2TSBakingPowder', CREMID='MixWithChocolateAndNuts', chr='FormHeaps', start=1, end=2, REMsPerCREM=42, version=1)
 
     def test_CREMAnnotation_label(self):

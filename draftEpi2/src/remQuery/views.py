@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from table_manager.models import *
 from geneQuery.views import search_cellTypes, strip_csv_query, crem_view
-from API import API_REMID
+from API import *
 
 
 def remQuery_view(request):
@@ -71,6 +71,8 @@ def rem_search_view(request):
             error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
                     'activity threshold.'
 
+    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+
     context = {
         'data': data,
         'query_string': query_list_string,
@@ -81,5 +83,7 @@ def rem_search_view(request):
         'activ_thresh': activ_thresh,
         'error_msg': error_msg,
         'invalid_list': invalid_list,
+        'version': 1,
+        'gP_link': gP_link,
     }
     return render(request, template, context)

@@ -3,6 +3,7 @@
 {% load rem_template_tags %}
 
 <head>
+    <title>REM Query results</title>
     <script type="text/javascript" charset="UTF-8" src="{% static '/DataTables/datatables.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/Buttons-1.6.0/css/buttons.dataTables.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/DataTables/datatables.min.css' %}">
@@ -32,9 +33,14 @@
 <br>
 {% endif %}
 
+<div class="gProfilerSpan"><button class="gProfilerButton" id="gProfilerButton" onclick="window.location.href = '{{gP_link}}'">
+            Functional enrichment analysis<img src="{% static '/Icons/gProfilerLogo.png' %}" style="width: 80px;" alt='gProfiler-Icon'/><span class="gProfiler_tooltip">
+                You will get redirected to the g:Profiler page. The link is adapted to your current query and initiates a functional enrichment analysis of all unique genes in the <b>Gene ID</b> column with default settings.</span></button>
+            </div>
+
+
 <table id="QueryResults" class="cell-border hover order-column">
-    <caption>Results based on your query for the REMs: <strong id="queried_REMs"> {{query_string}} </strong></caption>
-        <br>
+    <caption class="table_header">Results based on your query for the REMs: <strong id="queried_REMs"> {{query_string}} </strong></caption>
 
     <thead>
         <script>
@@ -44,7 +50,7 @@
             var dd = String(today.getDate()).padStart(2, '0');
             var mm = String(today.getMonth() + 1).padStart(2, '0');
             var yyyy = today.getFullYear();
-            today = mm + '_' + dd + '_' + yyyy;
+            today = mm + '_' + dd + '_' + yyyy + '_' + 'v' + {{version}};
 
             $(document).ready( function () {
             $('#QueryResults').DataTable({
@@ -53,25 +59,25 @@
                  dom: 'lfBtip',
                  buttons: {
                         buttons: [
-                            { extend: 'excel', filename: today.concat("_REM_Query__", queried_REMs),
+                            { extend: 'excel', filename: today.concat("_REM_Query__", queried_REMs), title: "",text: 'Download Excel',
                                 customize: function ( xlsx ) {
                                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                                    $('c[r=B3] t', sheet).text( 'Gene ID' );                                    $('c[r=D3] t', sheet).text( 'Chromosome' );
-                                    $('c[r=D3] t', sheet).text( 'Chr' );
-                                    $('c[r=H3] t', sheet).text( 'Model score' );
-                                    $('c[r=I3] t', sheet).text( 'Associated REM cluster' );
-                                    $('c[r=H3] t', sheet).text( 'Model score' );
+                                    $('c[r=A1] t', sheet).text('');
+                                    $('c[r=B2] t', sheet).text( 'Gene ID' );
+                                    $('c[r=C2] t', sheet).text( 'Gene symbol' );
+                                    $('c[r=D2] t', sheet).text( 'Chr' );
+                                    $('c[r=H2] t', sheet).text( 'Model score' );
+                                    $('c[r=I2] t', sheet).text( 'Cluster of REMs (CREM) ID' );
+                                    $('c[r=J2] t', sheet).text( 'Number of REMs in the CREM' );
                                 }},
-                            { extend: 'csv', filename: today.concat("_REM_Query__", queried_REMs),
+                            { extend: 'csv', filename: today.concat("_REM_Query__", queried_REMs),text: 'Download CSV',
                                 fieldSeparator: '\t',
                                 fieldBoundary: "",
                                 customize: function (csv) {
                                     csv = customizeCSV(csv);
                                     return csv;
                             },
-                            },
-                            { extend: 'pdf', filename: today.concat("_REM_Query__", queried_REMs), pageSize: "LEGAL", orientation: 'landscape'}
-                          ]
+                            }                          ]
                       }
                  } );
             } );
@@ -79,25 +85,44 @@
         </script>
         <tr>
             <th>REM ID</th>
-            <th class="tooltip_table">Gene ID <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
-                Click on the IDs below to receive a table with all REMs associated with the selected gene</span></th>
-            <th>Gene symbol</th>
-            <th class="tooltip_table">Chr <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -100px;">
-                Click on the chr below to view the region in the UCSC Genome Browser</span></th>
-            <th>REM start</th>
-            <th>REM end</th>
-            <th>Predicted function</th>
-            <th class="tooltip_table" style="display: align;">Model score <b class="info-icon">&#9432;</b><span class="tooltiptext_top" style="margin-left: -150px;">
-                Represents the importance of the REM for its associated gene over all cell types.</span></th>
-            <th class="tooltip_table">Associated REM cluster <b class="info-icon">&#9432;</b><span class="tooltiptext_top">REMs overlapping by at least 1 bp form a cluster</span></th>
-            {% if data|length > 0 %}
-            {% for cellType in cell_types_list_upper %}
-                <th class="tooltip_table">{{cellType}} score (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b>
-                    <span class="tooltiptext_top" style="width:280px;">Importance of a REM in a cell type-specific manner averaged over n samples (includes the DNase activity)<b class="info-icon">&#9432;</b></span></th>
 
-                <th class="tooltip_table">{{cellType}} activity <b class="info-icon">&#9432;</b>
-                    <span class="tooltiptext_top" style="margin-left: -120px;">Mean of the normalized DNase1 signal<b class="info-icon">&#9432;</b></span></th>
-            {% endfor %}
+            <th class="tooltip_table">Gene <nobr>ID <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: -75px; width: 250px;">
+            The row entries below will redirect you to the <b>Ensembl</b> entry of the respective gene</span></th>
+
+            {% if gP_link|length > 0 %}
+                <th class="tooltip_table">Gene <nobr>symbol <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: -100px; width: 250px;">
+                    Click on the IDs below to receive a table with all REMs associated to the selected gene</span></th>
+            {% else %}
+                <th>Gene symbol</th>
+            {% endif %}
+
+            <th class="tooltip_table"><nobr>Chr <b class="info-icon">&#9432;</b></nobr>
+                <span class="tooltiptext_top" style="margin-left: -100px; width: 250px;">
+                    Click on the chr row entries below to see the region in the <b>UCSC Genome Browser</b></span></th>
+
+            <th>REM start</th>
+
+            <th>REM end</th>
+
+            <th>Predicted function</th>
+
+            <th class="tooltip_table" >Model <nobr>score <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: -150px; width: 200px;">
+                Represents the importance of the REM for its associated gene over all cell types</span></th>
+
+            <th class="tooltip_table"><nobr>Cluster of REMs</nobr> <nobr>(CREM) ID <b class="info-icon">&#9432;</b></nobr>
+                <span class="tooltiptext_top" style="width:200px;">We define REMs that overlap by at least 1 bp as <b>cluster of REMs (CREMs)</b> with a unique ID</span></th>
+
+            <th class="tooltip_table"><nobr>Number of REMs</nobr> in the <nobr>CREM <b class="info-icon">&#9432;</b></nobr>
+                <span class="tooltiptext_top" style="margin-left: -120px;">REMs contained in the CREM. CREMs consist of a minimum of 2 REMs.</span></th>
+
+            {% if data|length > 0 %}
+                {% for cellType in cell_types_list_upper %}
+            <th class="tooltip_table">{{cellType}} <nobr>score (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b></nobr>
+                    <span class="tooltiptext_top" style="width:220px;">Importance of a REM in a cell type-specific manner averaged over n samples</span></th>
+
+            <th class="tooltip_table">{{cellType}} DNase <nobr>signal (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b></nobr>
+                    <span class="tooltiptext_top" style="margin-left: -180px;">Mean of the DNase1 signal in this cell type averaged over n samples</span></th>
+                {% endfor %}
             {% endif %}
         </tr>
     </thead>
@@ -105,18 +130,39 @@
     {% for item in data %}
         <tr>
             <td>{{ item.REMID }}</td>
-            <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.geneID_id}}/">{{ item.geneID_id }}</a></td>
-            <td>{{ item.geneSymbol }}</td>
+
+            <td> <a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.geneID_id }}">{{ item.geneID_id }}</a></td>
+
+            {% if gP_link|length > 0 %}
+            <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.geneID_id}}/">{{ item.geneSymbol }}</a></td>
+            {% else %}
+                <td>{{ item.geneSymbol }}</td>
+            {% endif %}
             <td><a class="link" href="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position={{item.chr}}%3A{{item.start}}%2D{{item.end}}&hgsid=236086963_0USP3lpsBdlGgMyrEMm5UP1i7oiU">{{ item.chr }}</a></td>
+
             <td>{{ item.start }}</td>
+
             <td>{{ item.end }}</td>
+
             {% if item.regressionCoefficient > 0 %}
                 <td>activating</td>
             {% else %}
                 <td>repressing</td>
             {% endif %}
-            <td>{{ item.modelScore|floatformat:5 }}</td>
-            <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }} - incl. {{ item.REMsPerCREM }} REMs</a></td>
+
+            <td>{{ item.normModelScore|floatformat:7 }}</td>
+
+            {% if item.REMsPerCREM > 0 %}
+            <td> <a id="crem_link" class="link" href="/cluster/{{ item.CREMID }}/">{{ item.CREMID }}</a></td>
+            {% else %}
+                <td>No CREM</td>
+            {% endif %}
+            {% if item.REMsPerCREM > 0 %}
+                    <td>{{ item.REMsPerCREM }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+
             {% for cellType in cell_types_list %}
                 <td>{% get_cellType_attr item cellType "score" %}</td>
                 <td>{% get_cellType_attr item cellType "activity" %}</td>

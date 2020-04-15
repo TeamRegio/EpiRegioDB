@@ -9,6 +9,7 @@
 <!-- INCLUDE STYLES AND FUNCTIONALITY ---------------------------------------------------------------------------------- -->
 
 <head>
+    <title>Region Query</title>
     <script src="{% static 'collected_JS_functions.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
     <script src="{% static 'ajax_cellTypes.js' %}"></script>
@@ -147,7 +148,7 @@
 <input type="hidden" id="csvFileRows" name="csvFileRows"/>
 
 
-<button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryRegionQuery()">Exemplary Query</button>
+<button type="button" class='ajax_search_list' id="exemplary_query" onclick="exemplaryRegionQuery()">Example Query</button>
 
 <input class="query_database" onclick='ButtonsToInput("container_geneRegions", "geneRegions"); ButtonsToInput("container_cellTypes", "cellTypes")' type="submit" name="queryRegionsButton" id="queryRegionsButton" value="Query Database"  />
 

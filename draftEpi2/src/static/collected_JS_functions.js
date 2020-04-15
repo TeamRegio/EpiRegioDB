@@ -200,30 +200,30 @@ function changeSlider(slider_id, field_id){
 /* CUSTOM DROPDOWN LIST **************************************** **************************************** */
 
 
-var chr_start_end = {chr1: [8000, 248944655],
-                    chr2: [14154, 242175634],
-                    chr3: [173346, 198230196],
-                    chr4: [100650, 190206737],
-                    chr5: [58198, 181472430],
-                    chr6: [95124, 170745982],
-                    chr7: [8000, 159233377],
-                    chr8: [60001, 145070549],
-                    chr9: [10154, 138286430],
+var chr_start_end = {chr1: [8000, 248945543],
+                    chr2: [14000, 242186286],
+                    chr3: [23757, 198234696],
+                    chr4: [8000, 190203407],
+                    chr5: [50000, 181472430],
+                    chr6: [68752, 170746002],
+                    chr7: [8000, 159242044],
+                    chr8: [58000, 145078599],
+                    chr9: [8000, 138333607],
                     chr10: [14061, 133778699],
-                    chr11: [75780, 135075899],
-                    chr12: [10000, 133238549],
-                    chr13: [18171247, 114351402],
-                    chr14: [16057472, 106879812],
+                    chr11: [61754, 135076200],
+                    chr12: [8000, 133267408],
+                    chr13: [18171550, 114356886],
+                    chr14: [16057472, 106883452],
                     chr15: [19878555, 101981208],
-                    chr16: [8000, 90226646],
-                    chr17: [61649, 83245396],
-                    chr18: [11103, 80247546],
-                    chr19: [59993, 58607252],
-                    chr20: [87250, 64330704],
-                    chr21: [5008799, 46691226],
-                    chr22: [10736171, 50808150],
-                    chrX: [253252, 156029695],
-                    chrY: [2784749, 56875803]}
+                    chr16: [8000, 90227251],
+                    chr17: [58000, 83246800],
+                    chr18: [11103, 80262301],
+                    chr19: [60000, 58610090],
+                    chr20: [87250, 64335694],
+                    chr21: [5010013, 46700006],
+                    chr22: [10736171, 50808244],
+                    chrX: [222553, 156030825],
+                    chrY: [2784749, 56887853]}
 
 function createDropdown(){
     var x, i, j, selElmnt, a, b, c;
@@ -325,7 +325,7 @@ function exemplaryGeneIDQuery(){
 
     if (current === 'id_format') {
         document.getElementById("geneID_numeric").value = "ENSG00000139874, ENSG00000274220";
-        chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+        chooseButton("CTID_0000064", "container_cellTypes", "pancreas");
         chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
         chooseButton("CTID_0000052", "container_cellTypes", "heart");
         errorMsg = document.getElementById("geneID_numeric-error")
@@ -335,7 +335,7 @@ function exemplaryGeneIDQuery(){
         chooseButton("SSTR1", 'container_geneSymbol', "SSTR1");
         chooseButton("DBR1", 'container_geneSymbol', "DBR1");
         chooseButton("RP11-77K12.9", 'container_geneSymbol', "RP11-77K12.9");
-        chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+        chooseButton("CTID_0000064", "container_cellTypes", "pancreas");
         chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
         chooseButton("CTID_0000052", "container_cellTypes", "heart");
         errorMsg = document.getElementById("geneID_symbolic-error")
@@ -345,7 +345,7 @@ function exemplaryGeneIDQuery(){
 
 function exemplaryREMQuery(){
     document.getElementById("REMIDs").value = "REM0595948, REM0236120, REM0236139 ";
-    chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
+    chooseButton("CTID_0000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
     chooseButton("CTID_0000052", "container_cellTypes", "heart");
     errorMsg = document.getElementById("REMIDs-error")
@@ -355,6 +355,7 @@ function exemplaryREMQuery(){
 function exemplaryRegionQuery(){
     chooseRegion("chr4", "100650", "120123", 1);
     chooseRegion("chr2", "14000", "120000", 1);
+    chooseRegion("chr6", "53681142", "53781142", 1);
     chooseButton("CTID_00000064", "container_cellTypes", "pancreas");
     chooseButton("CTID_0000038", "container_cellTypes", "skin fibroblast");
     chooseButton("CTID_0000052", "container_cellTypes", "heart");
@@ -396,7 +397,14 @@ function uploadCSV(){
             header_curr_arr = header_curr.split("\t");
             header_new = "";
             for (i = 0; i < header_curr_arr.length; i++) {
-                header_new += header_curr_arr[i].split("ⓘ")[0] + "\t";
+                var curr_string = header_curr_arr[i];
+                if(curr_string.includes('g:Profiler'))
+                {
+                    header_new += "Gene ID\t";
+                }
+                else{
+                    header_new += curr_string.split("ⓘ")[0] + "\t";
+                }
                 }
             new_csv = header_new.substr(0, header_new.length -1) + csv.substr(header_end);
 //            new_csv = new_csv.replace(/ ,/g, ",");
