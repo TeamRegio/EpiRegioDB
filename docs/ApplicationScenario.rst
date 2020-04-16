@@ -47,7 +47,7 @@ where *<Motifs>* represents the path to the TF motif file, *<pathToPASTAA>*  the
 How to use EpiRegio to identify TF binding sites within REMs of a gene of interest
 =================
 
-To perform the analysis `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. You also need a current version of a human genome in fasta format (add link). 
+To perform the analysis `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. You also need a current version of a human genome in fasta format, e.g. it can be downloaded on the `UCSC webpage  <https://hgdownload.soe.ucsc.edu/downloads.html#human>'. 
 
 **Step 1:** Use Epiregio’s `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify REMs associated to your gene of interest. In this example we want to perform the analysis for the gene KDM4B.  Go to https://epiregio.de/geneQuery/, enter KDM4B in the field *Gene symbol*. After typing several letters, gene names starting with the entered letters will appear. Click at KDM4B and the gene name is listed under *Currently selected*. Next select *Query Database*. TODO add screenshot
 
