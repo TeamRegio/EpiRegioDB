@@ -19,7 +19,7 @@ Unzip the file using e.g.::
 
 **Step 2:** Use EpiRegio's  `Region Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#region-query>`_ to search for REMs overlapping at least by 50% with the TF-ChIP peaks. Go to https://epiregio.de/regionQuery/, click *choose File* and upload the unzipped ChIP-seq peaks from Step 1. Next to the upload field, you can see an option *Overlap percentage (optional)* to define the percentage the binding locations and the REMs should overlap. Since we want a 50% overlap, type 50 in this field and click *Query Database*. 
 
-.. image:: ./images/AS_RegionQuery_1.png
+.. image:: ./images/AS_RegionQuery1.png
   :width: 400
   :alt: Region Query
  
@@ -37,9 +37,12 @@ The application scenario is based on the section *Identify enriched transcriptio
 In the repository the TRAP version,  a script PASTAA is using, is slightly changed. We adapt it to multithreading and normalize the resulting TRAP affinities by the TF binding motif length.
 
 **Step 1:**  As an example, we consider a set of differential expressed genes based on a single-cell RNAseq
-data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example please have a look at our GitHub repository where we provide a file called ?? containing this set of genes.
+data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example please have a look at our GitHub repository where we provide a file called *GeneSet.txt* containing this set of genes.
 
-**Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs associated to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues*. We are interested in the regulatory effects of REMs for the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If you are using an individual data set, please also choose a cell type or tissue which is most suitable for your data. Next click *Query Database*. TODO: add screenshot
+**Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs associated to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues*. We are interested in the regulatory effects of REMs for the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If you are using an individual data set, please also choose a cell type or tissue which is most suitable for your data. Next click *Query Database*.
+.. image:: ./images/AS_GeneQuery1.png
+  :width: 400
+  :alt: Region Query
 
 **Step 3:**   To apply *PASTAA*, we need a ranking of the resulting REMs. Therefore, we sort them in descending order based on the column *heart score*. To do so, click on the arrows next to *heart score*. Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
 
