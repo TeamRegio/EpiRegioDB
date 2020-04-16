@@ -40,6 +40,7 @@ In the repository the TRAP version,  a script PASTAA is using, is slightly chang
 data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example please have a look at our GitHub repository where we provide a file called *GeneSet.txt* containing this set of genes.
 
 **Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs associated to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues*. We are interested in the regulatory effects of REMs for the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If you are using an individual data set, please also choose a cell type or tissue which is most suitable for your data. Next click *Query Database*.
+
 .. image:: ./images/AS_GeneQuery1.png
   :width: 400
   :alt: Region Query
