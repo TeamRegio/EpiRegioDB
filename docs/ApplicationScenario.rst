@@ -43,7 +43,7 @@ data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUV
 
 .. image:: ./images/AS_GeneQuery1.png
   :width: 400
-  :alt: Region Query
+  :alt: Gene Query 1
 
 **Step 3:**   To apply *PASTAA*, we need a ranking of the resulting REMs. Therefore, we sort them in descending order based on the column *heart score*. To do so, click on the arrows next to *heart score*. Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
 
@@ -61,6 +61,9 @@ To perform the analysis `bedtools <https://bedtools.readthedocs.io/en/latest/con
 
 **Step 1:** Use Epiregio’s `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify REMs associated to your gene of interest. In this example we want to perform the analysis for the gene KDM4B.  Go to https://epiregio.de/geneQuery/, enter KDM4B in the field *Gene symbol*. After typing several letters, gene names starting with the entered letters will appear. Click at KDM4B and the gene name is listed under *Currently selected*. Next select *Query Database*. TODO add screenshot
 
+.. image:: ./images/AS_GeneQuery3.png
+  :width: 400
+  :alt: Gene Query 3
 
 **Step 2:** After the query is done, download the table with the resulting REMs by clicking on the bottom *CSV*. Before we can determine the DNA-sequence of the REMs, we need to format the CSV file to a bed file with the following command::
 
