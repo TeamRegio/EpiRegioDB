@@ -60,7 +60,7 @@ where *<yourCSVFile>* represents the file you just downloaded from the server. U
 
 	<pathToBedtools>/bedtools getfasta -fi <humanGenome> -bed REMs.bed -fo REMs.fa.
 	
-*<pathToBedTools>* represents to our bedtools source folder (if not included to your environment variables) and *<humanGenome> the path to a file holding the human genome in fasta format.
+*<pathToBedTools>* represents to our bedtools source folder (if not included to your environment variables) and *<humanGenome>* the path to a file holding the human genome in fasta format.
 
 **Step 3:** To identify TF binding sites we use the tool Fimo from the MEME suite. Fimo requires the DNA-sequences of the REMs from Step 2 and a set of known TF binding motifs.  From our GitHub repository you can download the human motifs from the JASPAR database (version 2020) in meme format (link meme format). Go to http://meme-suite.org/tools/fimo, in the section *Input the motifs* click *choose file* and upload the motifs. Next click at *Ensembl Ab initio Predicted Proteins* in the section*Input the sequences* and select *Upload sequences*.  A field where you can upload the DNA-sequences will appear. To do so, select *Choose file* and upload the fasta file from Step 2. Click *Start search*. Note that it can take some minutes until the calculations are done.
 
