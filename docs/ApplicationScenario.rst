@@ -26,18 +26,20 @@ TODO: add screenshot
 
 How to use EpiRegio to identify enriched TFs of a set of genes of interest
 =================
-The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_ and `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine.
-TODO: add TRAP script with normalization on GitHub page
+The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. In addition, we provide a GitHub repository (add link) with an example file, the TF binding motifs and the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_, which we use in Step 4. To clone the repository use:: 
+
+	TODO: add command
+
+In the repository the TRAP version,  a script PASTAA is using, is slightly changed. We adapt it to multithreading and normalize the resulting TRAP affinities by the TF binding motif length.
 
 **Step 1:**  As an example, we consider a set of differential expressed genes based on a single-cell RNAseq
-data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example you can download the differential expressed genes from our GitHub repository (link).
+data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example please have a look at our GitHub repository where we provide a file called ?? containing this set of genes.
 
 **Step 2:** Use EpiRegio's `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify the REMs associated to the genes of interest. Go to https://epiregio.de/geneQuery/, click *choose File* and upload the file from Step 1. Enter *heart* to the field *Filter for cell types/tissues*. We are interested in the regulatory effects of REMs for the tissue heart because endothelial cells within the heart undergo EndoMT during cardiac development. If you are using an individual data set, please also choose a cell type or tissue which is most suitable for your data. Next click *Query Database*. TODO: add screenshot
 
 **Step 3:**   To apply *PASTAA*, we need a ranking of the resulting REMs. Therefore, we sort them in descending order based on the column *heart score*. To do so, click on the arrows next to *heart score*. Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
 
-**Step 4:** Next we determine the DNA-sequence of the identified REMs using *bedtools* and run *PASTAA* to perform the motif enrichment analysis. In our GitHub repository we provide a workflow to run the analysis. Download the folder ... (link).
-There we also provide a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow the following command can be used:: 
+**Step 4:** Next we determine the DNA-sequence of the identified REMs using *bedtools* and run *PASTAA* to perform the motif enrichment analysis. In our GitHub repository we provide a workflow to run the analysis and a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow the following command can be used:: 
 
   bash workflow.sh <Motifs> <pathToPASTAA> <pathToBedtools> <pathToGenome> <REMs> <outputDir> <pvalue>,
 
