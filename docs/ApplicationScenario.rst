@@ -52,10 +52,15 @@ To perform the analysis `bedtools <https://bedtools.readthedocs.io/en/latest/con
 **Step 1:** Use Epiregio’s `Gene Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#query-guide>`_ to identify REMs associated to your gene of interest. In this example we want to perform the analysis for the gene KDM4B.  Go to https://epiregio.de/geneQuery/, enter KDM4B in the field *Gene symbol*. After typing several letters, gene names starting with the entered letters will appear. Click at KDM4B and the gene name is listed under *Currently selected*. Next select *Query Database*. TODO add screenshot
 
 
-**Step 2:** After the query is done, download the table with the resulting REMs by clicking on the bottom *CSV*. Next we determine the DNA-sequence of the REMs using bedtools. To do so, we provide a script in our GitHub repository (link).  To run the script perform the following command::
+**Step 2:** After the query is done, download the table with the resulting REMs by clicking on the bottom *CSV*. Before we can determine the DNA-sequence of the REMs, we need to format the CSV file to a bed file with the following command::
 
-	TODO: add command
+	awk 'NR!=1{print $4 "\t" $5 "\t" $6}' <yourCSVFile>  >REMs.bed,
 	
+where *<yourCSVFile>* represents the file you just downloaded from the server. Using bedtools getFasta command, we are able to extract the DNA-sequences of the REMs::
 
-**Step 3:**    To identify TF binding sites we use the tool Fimo from the MEME suite. Fimo requires the DNA-sequences of the REMs from Step 2 and a set of known TF binding motifs.  From our GitHub repository you can download the human motifs from the JASPAR database (version 2020) in meme format (link meme format). Go to http://meme-suite.org/tools/fimo, in the section *Input the motifs* click *choose file* and upload the motifs. Next click at *Ensembl Ab initio Predicted Proteins* in the section*Input the sequences* and select *Upload sequences*.  A field where you can upload the DNA-sequences will appear. To do so, select *Choose file* and upload the fasta file from Step 2. Click *Start search*. Note that it can take some minutes until the calculations are done.
+	<pathToBedtools>/bedtools getfasta -fi <humanGenome> -bed REMs.bed -fo REMs.fa.
+	
+*<pathToBedTools>* represents to our bedtools source folder (if not included to your environment variables) and *<humanGenome> the path to a file holding the human genome in fasta format.
+
+**Step 3:** To identify TF binding sites we use the tool Fimo from the MEME suite. Fimo requires the DNA-sequences of the REMs from Step 2 and a set of known TF binding motifs.  From our GitHub repository you can download the human motifs from the JASPAR database (version 2020) in meme format (link meme format). Go to http://meme-suite.org/tools/fimo, in the section *Input the motifs* click *choose file* and upload the motifs. Next click at *Ensembl Ab initio Predicted Proteins* in the section*Input the sequences* and select *Upload sequences*.  A field where you can upload the DNA-sequences will appear. To do so, select *Choose file* and upload the fasta file from Step 2. Click *Start search*. Note that it can take some minutes until the calculations are done.
 
