@@ -20,7 +20,7 @@ Unzip the file using e.g.::
 **Step 2:** Use EpiRegio's  `Region Query <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#region-query>`_ to search for REMs overlapping at least by 50% with the TF-ChIP peaks. Go to https://epiregio.de/regionQuery/, click *choose File* and upload the unzipped ChIP-seq peaks from Step 1. Next to the upload field, you can see an option *Overlap percentage (optional)* to define the percentage the binding locations and the REMs should overlap. Since we want a 50% overlap, type 50 in this field and click *Query Database*. 
 
 .. image:: ./images/AS_RegionQuery_1.png
-  :width: 100
+  :width: 50
   :alt: Region Query
  
 
