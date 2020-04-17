@@ -35,6 +35,10 @@ The application scenario is based on the section *Identify enriched transcriptio
 	TODO: add command
 
 In the repository the TRAP version,  a script PASTAA is using, is slightly changed. We adapt it to multithreading and normalize the resulting TRAP affinities by the TF binding motif length.
+Next go to the src folder in the cloned repository and compile PASTAA via::
+
+	cd ApplicationScenariosExamples/src/
+	make
 
 **Step 1:**  As an example, we consider a set of differential expressed genes based on a single-cell RNAseq
 data set from Glaser et al. (cite), where Human Umbilical Endothelial Cells (HUVECs) were treated with TGF-beta to trigger an endothelial-to-mesenchymal transition (EndoMT). However, the analysis works with every set of genes. If you want to perform the example please have a look at our GitHub repository where we provide a file called *GeneSet.txt* containing this set of genes.
