@@ -55,7 +55,7 @@ data set from Glaser et al. (doi.org/10.1073/pnas.1913481117), where Human Umbil
 
   bash <pathToClonedRepo>identifyEnrichedTFs/workflow.sh <Motifs> <pathToClonedRepo> <pathToGenome> <REMs> <outputDir> <pvalue>,
 
-where *<pathToClonedRepo>* represents the path to the cloned repository, *<Motifs>* the path to the TF motif file,  *<pathToGenome>* the path to the fasta file of the human genome, *<REMs>* the path to the downloaded csv-file, and *<output>* the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA smaller or equal the parameter *<pvalue>* the motif is assumed to be significant enriched. For this example, set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Add screenshot from result.
+where *<pathToClonedRepo>* represents the path to the cloned repository and *<Motifs>* the path to the TF motif file. There it is possible to use the one we provide in our repository (??/identifyEnrichedTFs/JASPAR2020_HUMAN_transfac.txt) or an user-defined one. The motifs should be in TRANFAC format. *<pathToGenome>* represents the path to the fasta file of the human genome, *<REMs>* the path to the downloaded csv-file, and *<output>* the path to an user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA is smaller or equal the parameter *<pvalue>* the motif is assumed to be significant enriched. For this example, set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Add screenshot from result.
 
 
 How to use EpiRegio to identify TF binding sites within REMs of a gene of interest
