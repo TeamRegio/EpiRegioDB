@@ -146,7 +146,7 @@
                 Represents the importance of the REM for its associated gene over all cell types</span></th>
 
             <th class="tooltip_table"><nobr>Cluster of REMs</nobr> <nobr>(CREM) ID <b class="info-icon">&#9432;</b></nobr>
-                <span class="tooltiptext_top" style="width:250px;">We define REMs that overlap by at least 1 bp as <b>cluster of REMs (CREMs)</b> with a unique ID</span></th>
+                <span class="tooltiptext_top" style="width:250px;">We define adjacent and overlapping REMs as <b>cluster of REMs (CREMs)</b> with a unique ID</span></th>
 
             <th class="tooltip_table"><nobr>Number of REMs</nobr> in the <nobr>CREM <b class="info-icon">&#9432;</b></nobr>
                 <span class="tooltiptext_top" style="margin-left: -120px;">REMs contained in the CREM. CREMs consist of a minimum of 2 REMs.</span></th>
@@ -165,7 +165,7 @@
     <tbody>
     {% for item in data %}
         <tr>
-            <td> <a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.geneID_id }}">{{ item.geneID_id }}</a></td>
+            <td> <a id="ensembl_link" class="link" href="https://dec2017.archive.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.geneID_id }}">{{ item.geneID_id }}</a></td>
 
             {% if gP_link|length > 0 %}
             <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.geneID_id}}/">{{ item.geneSymbol }}</a></td>

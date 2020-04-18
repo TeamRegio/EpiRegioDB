@@ -112,7 +112,7 @@ def region_search_view(request):
     else:
         export_string = query_list_string.replace(" ", '')
 
-    data, no_hit, invalid_list = API_Region(query_list, cell_types_list, overlap, activ_thresh)
+    data, no_hit, invalid_list = API_RegionBED(query_list, cell_types_list, overlap, activ_thresh)
 
     no_data = []  # for the regions we need to format it into a list of strings, to be consequent with the
     # chrX:start-end format

@@ -28,7 +28,7 @@ img.CREM_img{
 
     <div class="no_data_div" style="border: 1px solid #bfbfbf; padding: 12px; font-size: 20px;">
         We define <b>C</b>lusters of <b>R</b>egulatory <b>E</b>le<b>M</b>ents (<b>CREMs</b>) as genomic regions that
-        contain REMs overlapping by at least 1 base pair. Have a look at our <b><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements">documentation</a></b> for more details.</div>
+        contain adjacent and overlapping REMs. Have a look at our <b><a class="link" href="https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements">documentation</a></b> for more details.</div>
 
 <!--<p class="tooltip"> <img class='CREM_img' src="{% static '/crem_schema2.png' %}" width="800px" alt = 'cluster schema'/>-->
 <!--    <span class="tooltiptext_right" style="margin-left: -300px; width: 200px;">This is only a schema, not the actual cluster you selected</span></p>-->
@@ -117,7 +117,7 @@ img.CREM_img{
         <tr>
             <td>{{ item.REMID_id }}</td>
 
-            <td> <a id="ensembl_link" class="link" href="https://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.REMID_id__geneID }}">{{ item.REMID_id__geneID }}</a></td>
+            <td> <a id="ensembl_link" class="link" href="https://dec2017.archive.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g={{ item.REMID_id__geneID }}">{{ item.REMID_id__geneID }}</a></td>
 
             {% if gP_link|length > 0 %}
             <td><a id="gene_link" class="link" href="/geneQuery_search_{{item.REMID_id__geneID__geneSymbol}}/">{{ item.REMID_id__geneID__geneSymbol }}</a></td>

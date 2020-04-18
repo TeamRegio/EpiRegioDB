@@ -421,11 +421,87 @@ def API_Region_celltype_activity(region_list, overlap=100):
 	return hit_list
 
 
-###############################################################
-# NINA HIER! ZWEI OUTPUTS MEHR
-###############################################################
+
 # For the GeneRegion query: find all the REMs located in the given regions
-def API_Region(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
+# def API_Region(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
+#
+# 	try:
+# 		region_list = [list(x) for x in set(tuple(row) for row in region_list)]  # with use of set, we update our query
+# 		# list, so we only have unique values in it
+# 	except TypeError:  # if the format wasn't right we continue.
+# 		pass
+#
+# 	hit_list = []
+# 	no_hit = []  # collecting the regions that are valid as input but do not contain any REMs
+# 	invalid_list = []  # collect the wrongly formatted inputs
+#
+# 	for i in region_list:
+#
+# 		try:
+# 			# duet to the overlap option, we have 4 scenarios. 1. the rems that overlap completely, 2. the ones that
+# 			# overlap but have a lower start position, 3. with a higher end position and 4. those who stick out to
+# 			# both ends but still overlap enough
+# 			dataset = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
+#
+# 			if overlap != 100:
+# 				dataset_left = list(REMAnnotation.objects.filter(chr=i[0]).filter(end__lt=i[2]).filter(start__lt=i[1]).values())  # REMs that 'stick out' on the left side
+# 				dataset_right = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gt=i[1]).filter(end__gt=i[2]).values())
+# 				dataset_both = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__lt=i[1]).filter(end__gt=i[2]).values())
+#
+# 				for n in dataset_left:
+# 					if int(i[1]) - int(n['start']) <= (int(n['end'])-int(n['start']))*(overlap/100):
+# 						dataset.append(n)
+# 				for n in dataset_right:
+# 					if int(n['end']) - int(i[2]) <= (int(n['end'])-int(n['start']))*(overlap/100):
+# 						dataset.append(n)
+# 				for n in dataset_both:
+# 					if int(n['end']) - int(i[2]) + int(i[1]) - int(n['start']) <= (int(n['end'])-int(n['start']))*(overlap/100):
+# 						dataset.append(n)
+# 			# check for valid input without a dataset, everything else is considered invalid, meaning start greater
+# 			# than end or not a valid chr, only necessary if there is no data found, otherwise there would be a result
+# 			if len(dataset) == 0:  # if it is empty it could also be that the input is valid but there is no REM
+# 				if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
+# 					try:
+# 						if int(i[1]) < int(i[2]):
+# 							no_hit.append(i)
+# 						else:
+# 							invalid_list.append(i)
+# 					except ValueError:  # meaning that start and ends are no ints
+# 						invalid_list.append(i)
+# 				else:
+# 					try:
+# 						if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
+# 							# in range and whether start and end are valid ints
+# 							no_hit.append(i)
+# 						else:
+# 							invalid_list.append(i)
+#
+# 					except ValueError:
+# 						invalid_list.append(i)
+#
+# 			for n in range(len(dataset)):
+# 				dataset[n] = API_CREM(dataset[n])
+# 				dataset[n]['geneSymbol'] = geneAnnotation.objects.get(geneID=dataset[n]['geneID_id']).geneSymbol
+#
+# 				if len(cellTypes_list) > 0:
+# 					dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
+#
+# 		except (ValueError, IndexError, KeyError):  # everything throwing an error now, should be caused by an invalid
+# 			# input
+# 			invalid_list.append(i)
+# 			continue
+#
+# 		hit_list = hit_list + dataset
+#
+# 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
+# 	# we returned None into the list, now we get rid of it
+#
+# 	# hit_list = API_modelScore(hit_list)
+#
+# 	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list
+
+
+def API_RegionBED(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 
 	try:
 		region_list = [list(x) for x in set(tuple(row) for row in region_list)]  # with use of set, we update our query
@@ -436,68 +512,57 @@ def API_Region(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 	hit_list = []
 	no_hit = []  # collecting the regions that are valid as input but do not contain any REMs
 	invalid_list = []  # collect the wrongly formatted inputs
+	REM_bed_file = 'static/REMAnnotation.bed'
 
+	region = ''
 	for i in region_list:
+		region += '\t'.join(i) + '\n'
+	region_bed = BedTool(region, from_string=True)
+	hits = region_bed.intersect(REM_bed_file, F=overlap/100, wb=True)
+	rem_hit_list = [x[6] for x in hits]
 
-		try:
-			# duet to the overlap option, we have 4 scenarios. 1. the rems that overlap completely, 2. the ones that
-			# overlap but have a lower start position, 3. with a higher end position and 4. those who stick out to
-			# both ends but still overlap enough
-			dataset = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gte=i[1]).filter(end__lte=i[2]).values())
+	# if len(these_rems) == 0:  # if it is empty it could also be that the input is valid but there is no REM
+	# 	if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
+	# 		try:
+	# 			if int(i[1]) < int(i[2]):
+	# 				no_hit.append(i)
+	# 			else:
+	# 				invalid_list.append(i)
+	# 		except ValueError:  # meaning that start and ends are no ints
+	# 			invalid_list.append(i)
+	# 	else:
+	# 		try:
+	# 			if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
+	# 				# in range and whether start and end are valid ints
+	# 				no_hit.append(i)
+	# 			else:
+	# 				invalid_list.append(i)
+	#
+	# 		except ValueError:
+	# 			invalid_list.append(i)
 
-			if overlap != 100:
-				dataset_left = list(REMAnnotation.objects.filter(chr=i[0]).filter(end__lt=i[2]).filter(start__lt=i[1]).values())  # REMs that 'stick out' on the left side
-				dataset_right = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__gt=i[1]).filter(end__gt=i[2]).values())
-				dataset_both = list(REMAnnotation.objects.filter(chr=i[0]).filter(start__lt=i[1]).filter(end__gt=i[2]).values())
+	# rem_hit_list += these_rems
+	try:
+		# due to the overlap option, we have 4 scenarios. 1. the rems that overlap completely, 2. the ones that
+		# overlap but have a lower start position, 3. with a higher end position and 4. those who stick out to
+		# both ends but still overlap enough
+		dataset = list(REMAnnotation.objects.filter(REMID__in=rem_hit_list).values())
+		# check for valid input without a dataset, everything else is considered invalid, meaning start greater
+		# than end or not a valid chr, only necessary if there is no data found, otherwise there would be a result
+		for n in range(len(dataset)):
+			dataset[n] = API_CREM(dataset[n])
+			dataset[n]['geneSymbol'] = geneAnnotation.objects.get(geneID=dataset[n]['geneID_id']).geneSymbol
 
-				for n in dataset_left:
-					if int(i[1]) - int(n['start']) <= (int(n['end'])-int(n['start']))*(overlap/100):
-						dataset.append(n)
-				for n in dataset_right:
-					if int(n['end']) - int(i[2]) <= (int(n['end'])-int(n['start']))*(overlap/100):
-						dataset.append(n)
-				for n in dataset_both:
-					if int(n['end']) - int(i[2]) + int(i[1]) - int(n['start']) <= (int(n['end'])-int(n['start']))*(overlap/100):
-						dataset.append(n)
-			# check for valid input without a dataset, everything else is considered invalid, meaning start greater
-			# than end or not a valid chr, only necessary if there is no data found, otherwise there would be a result
-			if len(dataset) == 0:  # if it is empty it could also be that the input is valid but there is no REM
-				if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
-					try:
-						if int(i[1]) < int(i[2]):
-							no_hit.append(i)
-						else:
-							invalid_list.append(i)
-					except ValueError:  # meaning that start and ends are no ints
-						invalid_list.append(i)
-				else:
-					try:
-						if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
-							# in range and whether start and end are valid ints
-							no_hit.append(i)
-						else:
-							invalid_list.append(i)
-
-					except ValueError:
-						invalid_list.append(i)
-
-			for n in range(len(dataset)):
-				dataset[n] = API_CREM(dataset[n])
-				dataset[n]['geneSymbol'] = geneAnnotation.objects.get(geneID=dataset[n]['geneID_id']).geneSymbol
-
-				if len(cellTypes_list) > 0:
-					dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
-
-		except (ValueError, IndexError, KeyError):  # everything throwing an error now, should be caused by an invalid
-			# input
-			invalid_list.append(i)
-			continue
-
+			if len(cellTypes_list) > 0:
+				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
 		hit_list = hit_list + dataset
+
+	except (ValueError, IndexError, KeyError):  # everything throwing an error now, should be caused by an invalid
+		# input
+		pass
 
 	hit_list = [x for x in hit_list if x is not None]  # if a REM's activity in a cell type is under the threshold,
 	# we returned None into the list, now we get rid of it
 
 	# hit_list = API_modelScore(hit_list)
-
 	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list

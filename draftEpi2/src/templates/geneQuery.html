@@ -1,7 +1,11 @@
 {% include 'navbar.html' %}
 {% load static %}
 
-
+<style>
+#GeneQuery_nav{
+    background:black;
+}
+</style>
 <!-- INCLUDE STYLES AND FUNCTIONALITY ---------------------------------------------------------------------------------- -->
 
 <head>
@@ -12,6 +16,7 @@
     <script src="{% static 'papaparse.min.js' %}"></script>
     <script src="{% static 'jquery-validation-1.19.1/dist/jquery.validate.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/QueryStyleSheet.css' %}">
+
 </head>
 
 <body onload="validateGeneQueryForm_symbolic()" onbeforeunload="setDefaultGeneID()">
