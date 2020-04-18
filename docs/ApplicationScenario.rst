@@ -32,7 +32,7 @@ How to use EpiRegio to identify enriched TFs of a set of genes of interest
 =================
 The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis python3 and  `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. In addition, we provide a GitHub repository (add link) with an example file, the TF binding motifs and the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_, which we use in Step 4. To clone the repository use:: 
 
-	TODO: add command
+	git clone https://github.com/TeamRegio/ApplicationScenarioExamples.git
 
 In the repository the TRAP version,  a script PASTAA is using, is slightly changed. We adapt it to multithreading and normalize the resulting TRAP affinities by the TF binding motif length.
 Next go to the src folder in the cloned repository and compile PASTAA via::
