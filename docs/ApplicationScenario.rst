@@ -30,7 +30,7 @@ TODO: add screenshot
 
 How to use EpiRegio to identify enriched TFs of a set of genes of interest
 =================
-The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis python3 and  `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. You also need a current version of a human genome in fasta format, e.g. it can be downloaded on the  `UCSC webpage <https://hgdownload.soe.ucsc.edu/downloads.html#human>`_. In addition, we provide a GitHub repository with an example file, the TF binding motifs and the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_, which we use in Step 4. To clone the repository use:: 
+The application scenario is based on the section *Identify enriched transcription factors of differentially expressed genes* from our paper. To perform the analysis python3 and  `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_ must be installed on your machine. You also need a current version of a human genome in fasta format, e.g. it can be downloaded on the  `UCSC webpage <https://hgdownload.soe.ucsc.edu/downloads.html#human>`_. In addition, we provide a GitHub  `repository <https://github.com/TeamRegio/ApplicationScenarioExamples/>`_ with an example file, the TF binding motifs and the motif enrichment tool `PASTAA <http://trap.molgen.mpg.de/PASTAA/>`_, which we use in Step 4. To clone the repository use:: 
 
 	git clone https://github.com/TeamRegio/ApplicationScenarioExamples.git
 
