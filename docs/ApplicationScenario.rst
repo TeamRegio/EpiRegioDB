@@ -79,5 +79,9 @@ where *<yourCSVFile>* represents the file you just downloaded from the server. U
 	
 *<pathToBedTools>* represents to path to your bedtools source folder (if not included to your environment variables) and *<humanGenome>* the path to a file holding the human genome in fasta format.
 
-**Step 3:** To identify TF binding sites, we use the tool *Fimo* from the MEME suite. *Fimo* requires the DNA-sequences of the REMs from Step 2 and a set of known TF binding motifs.  From our GitHub  `repository <https://github.com/TeamRegio/ApplicationScenarioExamples/>`_  you can download the human motifs from the JASPAR database (version 2020) in meme format (identifyTFBindingSites/JASPAR2020_HUMAN_meme.txt). Go to http://meme-suite.org/tools/fimo, in the section *Input the motifs* click *choose file* and upload the motifs. Next click at *Ensembl Ab initio Predicted Proteins* in the section*Input the sequences* and select *Upload sequences*.  A field where you can upload the DNA-sequences will appear. To do so, select *Choose file* and upload the fasta file from Step 2. Click *Start search*. Note that it can take some minutes until the calculations are done.
+**Step 3:** To identify TF binding sites, we use the tool *Fimo* from the MEME suite. *Fimo* requires the DNA-sequences of the REMs from Step 2 and a set of known TF binding motifs. In our GitHub  `repository <https://github.com/TeamRegio/ApplicationScenarioExamples/>`_  we provide human motifs from the JASPAR database (version 2020) in meme format> (identifyTFBindingSites/JASPAR2020_HUMAN_meme.txt). You can clone the repository using:: 
+
+	git clone https://github.com/TeamRegio/ApplicationScenarioExamples.git
+
+Go to http://meme-suite.org/tools/fimo, in the section *Input the motifs* click *choose file* and upload the motifs. Next click at *Ensembl Ab initio Predicted Proteins* in the section*Input the sequences* and select *Upload sequences*.  A field where you can upload the DNA-sequences will appear. To do so, select *Choose file* and upload the fasta file from Step 2. Click *Start search*. Note that it can take some minutes until the calculations are done.
 
