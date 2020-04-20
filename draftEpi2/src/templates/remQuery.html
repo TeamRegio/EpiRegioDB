@@ -91,10 +91,15 @@ input.inputForm{
             <p class="selectionHeader tooltip" id="container_cellTypesHeader">Currently selected <b class="info-icon">&#9432;</b>:<span class="tooltiptext_right">Deselect via button click below</span></p>
             <div class ='selectedButtons' id="container_cellTypes"> </div>
 
-             <div id="threshold_div" style="visibility: hidden;">
-                  <p id="threshold_header" class="tooltip"><b>Set an activity threshold (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:300px;">
-                Only REMs with an activity value above the threshold in ALL of the provided cell types/tissues will be displayed</span></p><br>
-                <input style="width:50px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="1.2" /></div>
+                <div id="threshold_div" style="display: none;" >
+                <p id="threshold_header" class="tooltip"><b>Range for the Cell type score (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:300px;">
+                    Only REMs with a Cell type score [-1,1] in between the set range in ALL of the provided cell types/tissues will be displayed. If you want to filter for the absolute scores, write like this: |0.01, 0.05| </span></p><br>
+                <input style="width:60px; font-size: 16px;" class='inputForm' type="text" id="score_thresh" name="score_thresh" placeholder="E.g. 0,1" />
+                <br>
+                <p id="activ_threshold_header" class="tooltip"><b>Threshold for the Cell type DNase1 signal (optional) <b class="info-icon">&#9432;</b>:</b><span class="tooltiptext_right" style="width:300px;">
+                    Only REMs with a DNase1 signal above the threshold in ALL of the provided cell types/tissues will be displayed</span></p><br>
+                <input style="width:60px; font-size: 16px;" class='inputForm' type="text" id="activ_thresh" name="activ_thresh" placeholder="E.g. 1.2" />
+                </div>
             </td>
         </tr>
 

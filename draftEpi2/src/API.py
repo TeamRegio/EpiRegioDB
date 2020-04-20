@@ -3,6 +3,7 @@
 import os, sys, math
 from django.conf import settings
 import numpy as np
+from pybedtools import BedTool
 
 
 #sys.path.insert(1, r'website/')#tell python the path of the project
@@ -33,12 +34,12 @@ def gProfiler_link(data):
 	try:
 		entry = [x for x in list(data[0].keys()) if x.startswith('geneID') or x.endswith('geneID')][0]
 		gene_list = list(set([x[entry] for x in data]))
-		gene_string = '%0A'.join(gene_list)
+		gene_string = '%0A'.join(gene_list[:90])
 		# print(gene_string)
 		link = "https://biit.cs.ut.ee/gprofiler/gost?organism=hsapiens&query=" + gene_string + "&ordered=false&all_results=false&no_iea=false&combined=false&measure_underrepresentation=false&domain_scope=annotated&significance_threshold_method=g_SCS&user_threshold=0.05&numeric_namespace=ENTREZGENE_ACC&sources=GO:MF,GO:CC,GO:BP,KEGG,TF,REAC,MIRNA,HPA,CORUM,HP,WP&background="
-		return link
+		return link, len(gene_list)
 	except IndexError:
-		return None
+		return None, None
 
 
 # def recreation_link(request):
@@ -66,7 +67,7 @@ def gProfiler_link(data):
 # called, when there are cellTypes given. Another option is to provide a threshold, which excludes all the REMs that
 # have an activity below it. For more than one cellType a REM's activity has to exceed in ALL of them.
 # If no threshold was set, the view returns a 0 as threshold.
-def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
+def API_CellTypesActivity(REM, cellTypes_list=[], score_thresh=['no', -1,1], activ_thresh=0.0):
 
 	try:
 		REMID = REM['REMID']
@@ -76,22 +77,48 @@ def API_CellTypesActivity(REM, cellTypes_list=[], activ_thresh=0.0):
 	try:
 		activ_thresh = float(activ_thresh)
 	except ValueError:
-		activ_thresh = 0
+		activ_thresh = 0.0
 
 	for cellType in cellTypes_list:
-		matching_samples = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).filter(dnase1Log2__gte=activ_thresh).values()
+		matching_samples = REMActivity.objects.filter(REMID=REMID).filter(sampleID__cellTypeID__cellTypeName=cellType).values()
 		activity = 0
-		stand_activity = 0
+		score = 0
 
 		if len(matching_samples) > 0:  # as it's possible that no REM is remaining
 			for sample in matching_samples:
 				activity += sample['dnase1Log2']
-				stand_activity += sample['standDnase1Log2']
+				score += sample['standDnase1Log2']
 			mean_activity = activity/len(matching_samples)
-			mean_stand_activity = stand_activity/len(matching_samples)
-			REM[cellType + '_dnase1Log2'] = mean_activity
-			REM[cellType + '_samplecount'] = len(matching_samples)
-			REM[cellType + '_score'] = abs(mean_stand_activity * REM['regressionCoefficient'])
+			mean_score = score/len(matching_samples)
+
+			if score_thresh != ['no', -1, 1] or activ_thresh != 0.0:  # we only need to check with additional filters if
+				# thresholds were set
+				if score_thresh[0] == 'abs':
+					if abs(score_thresh[1]) <= abs(mean_score) <= abs(score_thresh[2]) and mean_activity >= activ_thresh:
+						# only if the mean score and activity exceeds the  threshold in ALL of the cell types, the REM is
+						# returned. If it doesn't exceed the thresh in one cell type, we return None and thus remove it from
+						# the output
+						REM[cellType + '_dnase1Log2'] = mean_activity
+						REM[cellType + '_samplecount'] = len(matching_samples)
+						REM[cellType + '_score'] = mean_score
+					else:
+						return None
+
+				else:
+					if score_thresh[1] <= mean_score <= score_thresh[2] and mean_activity >= activ_thresh:
+						# only if the mean score and activity exceeds the  threshold in ALL of the cell types, the REM is
+						# returned. If it doesn't exceed the thresh in one cell type, we return None and thus remove it from
+						# the output
+						REM[cellType + '_dnase1Log2'] = mean_activity
+						REM[cellType + '_samplecount'] = len(matching_samples)
+						REM[cellType + '_score'] = mean_score
+					else:
+						return None
+
+			else:  # if there are not thresholds, we can just add the values to the REM
+				REM[cellType + '_dnase1Log2'] = mean_activity
+				REM[cellType + '_samplecount'] = len(matching_samples)
+				REM[cellType + '_score'] = mean_score
 		else:
 			return None  # we return None if there is no match. The Nones are filtered out in the origin function
 
@@ -224,11 +251,10 @@ def API_cellType_activity_per_REM(rem_id):
 	for cell in activity.keys():
 		activity[cell] = np.mean(activity[cell])  # we created a list of all activities we have for this one REMID, now
 		# we get the mean of these activity list and take them as new dict entry
-		mean_stand_activity = np.mean(stand_activity[cell])
-		score[cell] = abs(mean_stand_activity*curr_reg)
+		score[cell] = np.mean(stand_activity[cell])
 
 	rem_id['cellTypeScore'] = score  # we add the score in the same format as the activity
-	rem_id['cellTypeActivity'] = activity
+	rem_id['cellTypeDNase1Signal'] = activity
 	rem_id['geneSymbol'] = geneAnnotation.objects.filter(geneID=rem_id['geneID_id']).values('geneSymbol')[0]['geneSymbol'] # QuerySet
 	return rem_id
 
@@ -251,7 +277,7 @@ def API_REMID_celltype_activity(REMID_list):
 # NINA HIER! EIN OUTPUT MEHR
 ###############################################################
 # The REMID query. Every REM is handled separately.
-def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
+def API_REMID(REMID_list, cellTypes_list=[], score_thresh=['no', -1,1], activ_thresh=0.0):
 
 	try:
 		REMID_list = list(set(REMID_list))  # with use of set, we update our query
@@ -279,7 +305,7 @@ def API_REMID(REMID_list, cellTypes_list=[], activ_thresh=0.0):
 		# if there are cellTypes that should be filtered for, we do it here for every single REM, to directly add it
 		# to the REMs dictionary
 		if len(cellTypes_list) > 0:
-				this_rem = API_CellTypesActivity(this_rem, cellTypes_list, activ_thresh)
+				this_rem = API_CellTypesActivity(this_rem, cellTypes_list, score_thresh, activ_thresh)
 
 		hit_list.append(this_rem)
 
@@ -339,7 +365,7 @@ def API_GeneID_celltype_activity(REMID_list):
 ###############################################################
 # For the GeneID query: given a set of genes, we look up all the REMs for each of them and add
 # the additional information
-def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='symbol_format'):
+def API_ENSGID(gene_list, cellTypes_list=[], score_thresh=['no', -1,1], activ_thresh=0.0, gene_format='symbol_format'):
 
 	try:
 		gene_list = list(set(gene_list))   # with use of set, we update our query
@@ -365,7 +391,7 @@ def API_ENSGID(gene_list, cellTypes_list=[], activ_thresh=0.0, gene_format='symb
 			dataset[n]['geneSymbol'] = geneAnnotation.objects.get(geneID=dataset[n]['geneID_id']).geneSymbol
 
 			if len(cellTypes_list) > 0:
-				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_thresh)
+				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, score_thresh, activ_thresh)
 
 		hit_list = hit_list + dataset
 
@@ -414,7 +440,7 @@ def API_Region_celltype_activity(region_list, overlap=100):
 	except TypeError or ValueError:
 		overlap = 100
 
-	helper = API_Region(region_list, [], overlap)[0]
+	helper = API_RegionBED(region_list, [], overlap)[0]
 	hit_list = []
 	for i in helper:
 		hit_list.append(API_cellType_activity_per_REM(i))
@@ -501,7 +527,7 @@ def API_Region_celltype_activity(region_list, overlap=100):
 # 	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list
 
 
-def API_RegionBED(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
+def API_RegionBED(region_list, cellTypes_list=[], overlap=100, score_thresh=['no', -1,1], activ_thresh=0.0):
 
 	try:
 		region_list = [list(x) for x in set(tuple(row) for row in region_list)]  # with use of set, we update our query
@@ -510,43 +536,47 @@ def API_RegionBED(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 		pass
 
 	hit_list = []
-	no_hit = []  # collecting the regions that are valid as input but do not contain any REMs
+	# no_hit = []  # collecting the regions that are valid as input but do not contain any REMs
 	invalid_list = []  # collect the wrongly formatted inputs
 	REM_bed_file = 'static/REMAnnotation.bed'
+	corr_region_list = []
+
+	for i in region_list:
+		if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
+			try:
+				if int(i[1]) < int(i[2]):
+					corr_region_list.append(i)
+					# no_hit.append(i)
+				else:
+					invalid_list.append(i)
+			except ValueError:  # meaning that start and ends are no ints
+				invalid_list.append(i)
+		else:
+			try:
+				if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
+					# in range and whether start and end are valid ints
+					# no_hit.append(i)
+					corr_region_list.append(i)
+				else:
+					invalid_list.append(i)
+
+			except ValueError:
+				invalid_list.append(i)
 
 	region = ''
-	for i in region_list:
+	for i in corr_region_list:
 		region += '\t'.join(i) + '\n'
+
 	region_bed = BedTool(region, from_string=True)
 	hits = region_bed.intersect(REM_bed_file, F=overlap/100, wb=True)
 	rem_hit_list = [x[6] for x in hits]
 
-	# if len(these_rems) == 0:  # if it is empty it could also be that the input is valid but there is no REM
-	# 	if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
-	# 		try:
-	# 			if int(i[1]) < int(i[2]):
-	# 				no_hit.append(i)
-	# 			else:
-	# 				invalid_list.append(i)
-	# 		except ValueError:  # meaning that start and ends are no ints
-	# 			invalid_list.append(i)
-	# 	else:
-	# 		try:
-	# 			if 0 < int(i[0][3:]) < 23 and int(i[1]) < int(i[2]):  # check whether the chromosome number is
-	# 				# in range and whether start and end are valid ints
-	# 				no_hit.append(i)
-	# 			else:
-	# 				invalid_list.append(i)
-	#
-	# 		except ValueError:
-	# 			invalid_list.append(i)
-
-	# rem_hit_list += these_rems
 	try:
 		# due to the overlap option, we have 4 scenarios. 1. the rems that overlap completely, 2. the ones that
 		# overlap but have a lower start position, 3. with a higher end position and 4. those who stick out to
 		# both ends but still overlap enough
 		dataset = list(REMAnnotation.objects.filter(REMID__in=rem_hit_list).values())
+
 		# check for valid input without a dataset, everything else is considered invalid, meaning start greater
 		# than end or not a valid chr, only necessary if there is no data found, otherwise there would be a result
 		for n in range(len(dataset)):
@@ -554,7 +584,7 @@ def API_RegionBED(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 			dataset[n]['geneSymbol'] = geneAnnotation.objects.get(geneID=dataset[n]['geneID_id']).geneSymbol
 
 			if len(cellTypes_list) > 0:
-				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, activ_tresh)
+				dataset[n] = API_CellTypesActivity(dataset[n], cellTypes_list, score_thresh, activ_thresh)
 		hit_list = hit_list + dataset
 
 	except (ValueError, IndexError, KeyError):  # everything throwing an error now, should be caused by an invalid
@@ -565,4 +595,4 @@ def API_RegionBED(region_list, cellTypes_list=[], overlap=100, activ_tresh=0.0):
 	# we returned None into the list, now we get rid of it
 
 	# hit_list = API_modelScore(hit_list)
-	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list
+	return hit_list, invalid_list  # our list of dictionaries, fitting the query_list

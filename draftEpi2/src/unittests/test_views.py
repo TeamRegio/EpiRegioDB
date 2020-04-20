@@ -96,10 +96,10 @@ class geneQuerySearchTest(TestCase):
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000225880', geneSymbol='LINC00115', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
         # one geneAnnotation without a REM, to test for valid genes we have no data for
         geneAnnotation.objects.create(chr='chr1', start=826206, end=827522, geneID='ENSG00000XXXXXX', geneSymbol='LINCXXXXX', alternativeGeneID='', isTF='Unknown', strand='-', annotationVersion_id='V26')
-        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0000742', regressionCoefficient=-0.0749712, pValue=0.75073, normModelScore=0.5, meanDNase1Signal=2,  sdDNase1Signal=1, version=1, consortium='b')
-        REMActivity.objects.create(REMID_id='REM0000742', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, standDnase1Log2=1.5, version=1)
+        REMAnnotation.objects.create(chr='chr1', start=827246, end=827445, geneID_id='ENSG00000225880', REMID='REM0001970', regressionCoefficient=-0.0749712, pValue=0.75073, normModelScore=0.5, meanDNase1Signal=2,  sdDNase1Signal=1, version=1, consortium='b')
+        REMActivity.objects.create(REMID_id='REM0001970', sampleID_id='R_ENCBS011TVS', dnase1Log2=13.1186, standDnase1Log2=1.5, version=1)
         geneExpression.objects.create(geneID_id='ENSG00000225880', sampleID_id='R_ENCBS011TVS', expressionLog2TPM=0.265575, species='HUMAN')
-        CREMAnnotation.objects.create(REMID_id='REM0000742', CREMID='CREM0000464', chr='chr1', start=826308, end=827500, REMsPerCREM=27, version=1)
+        CREMAnnotation.objects.create(REMID_id='REM0001970', CREMID='CREM0000464', chr='chr1', start=826308, end=827500, REMsPerCREM=27, version=1)
         print('View Test - Gene Query Search')
 
     # ==========================================================================
@@ -114,6 +114,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
 
         # check all the output we should get, based on our test data created above
@@ -125,7 +126,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
@@ -138,7 +139,7 @@ class geneQuerySearchTest(TestCase):
             'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
         })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
@@ -160,6 +161,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
 
         # check all the output we should get, based on our test data created above
@@ -169,7 +171,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
@@ -182,7 +184,7 @@ class geneQuerySearchTest(TestCase):
             'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -204,6 +206,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': 'ENSG00000225880,ENSG00000XXXXXX,ENSGINVALID,',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
 
         # check all the output we should get, based on our test data created above
@@ -213,7 +216,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
@@ -226,7 +229,7 @@ class geneQuerySearchTest(TestCase):
             'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
              })
         self.assertEqual(response.context['invalid_list'], ['ENSGINVALID'])
         self.assertEqual(response.context['no_data'], ['ENSG00000XXXXXX'])
@@ -248,6 +251,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': 'LINC00115,LINCXXXXX,LINCINVALID',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
 
         # check all the output we should get, based on our test data created above
@@ -257,7 +261,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'CREMID': 'CREM0000464',
@@ -270,7 +274,7 @@ class geneQuerySearchTest(TestCase):
             'meanDNase1Signal': 2.0,
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
         })
         self.assertEqual(response.context['invalid_list'], ['LINCINVALID'])
         self.assertEqual(response.context['no_data'], ['LINCXXXXX'])
@@ -292,6 +296,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': 'LINCXXXXX,LINCINVALID',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'empty_data.html')
@@ -359,7 +364,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'version': 1,
@@ -383,7 +388,7 @@ class geneQuerySearchTest(TestCase):
         self.assertTemplateUsed(response, 'navbar.html')
         self.assertTemplateUsed(response, 'footer.html')
         self.assertEqual(response.context['data'][0], {
-            'REMID_id': 'REM0000742',
+            'REMID_id': 'REM0001970',
             'CREMID': 'CREM0000464',
             'chr': 'chr1',
             'start': 826308,
@@ -406,13 +411,14 @@ class geneQuerySearchTest(TestCase):
     def test_region_search_view(self):
         print('Test Views - Region search')
         response = self.client.post('/regionQuery_search/', {
-            'geneRegions': 'chr1:816308-837500, chr2:1369428-2056742, Peter:Hans-Jürgen, ',
+            'geneRegions': 'chr1:816308-837500; chr2:1369428-2056742; Peter:Hans-Jürgen; ',
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
             'csv_upload': '',
             'csvFileRows': '',
-            'overlap': 100,
+            'overlap': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'regionQuery_search.html')
@@ -423,7 +429,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'version': 1,
@@ -435,19 +441,19 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
             'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['Peter:Hans-Jürgen'])
-        self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
-        self.assertEqual(response.context['query_string'], 'chr1:816308-837500, chr2:1369428-2056742, Peter:Hans-Jürgen')
+        # self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
+        self.assertEqual(response.context['query_string'], 'chr1:816308-837500; chr2:1369428-2056742; Peter:Hans-Jürgen')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
         self.assertEqual(response.context['overlap'], 100)
-        self.assertEqual(response.context['export_string'], 'chr1-816308-837500,chr2-1369428-2056742,Peter-Hans-Jürgen')
+        self.assertEqual(response.context['export_string'], 'chr1-816308-837500;chr2-1369428-2056742;Peter-Hans-Jürgen')
 
 
     def test_region_search_view_upload(self):
@@ -457,9 +463,10 @@ class geneQuerySearchTest(TestCase):
             'csvFile': 'chr1, 816308, , 837500, chr2, 1369428, 2056742,, Hildegard, Jutta, Brunhilde ',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
             'csv_upload': 'TestWritingIsSuperFun!.csv',
             'csvFileRows': '3',
-            'overlap': 100,
+            'overlap': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'regionQuery_search.html')
@@ -468,7 +475,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'version': 1,
@@ -481,10 +488,10 @@ class geneQuerySearchTest(TestCase):
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
             'normModelScore': 0.5,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
         })
         self.assertEqual(response.context['invalid_list'], ['chrhildegard:Jutta-Brunhilde'])
-        self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
+        # self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
         self.assertEqual(response.context['query_string'], 'chr1:816308-837500, chr2:1369428-2056742, chrhildegard:Jutta-Brunhilde')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
@@ -500,6 +507,7 @@ class geneQuerySearchTest(TestCase):
         response = self.client.post('/regionQuery_search/', {
             'geneRegions': 'chr2:1369428-2056742, Peter:Hans-Jürgen, ',
             'csvFile': '',
+            'score_thresh': "",
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
             'csv_upload': '',
@@ -510,7 +518,7 @@ class geneQuerySearchTest(TestCase):
         self.assertTemplateUsed(response, 'empty_data.html')
         self.assertEqual(response.context['data'], [])
         self.assertEqual(response.context['invalid_list'], ['Peter:Hans-Jürgen'])
-        self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
+        # self.assertEqual(response.context['no_data'], ['chr2:1369428-2056742'])
         self.assertEqual(response.context['query_string'], 'chr2:1369428-2056742, Peter:Hans-Jürgen')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
@@ -528,10 +536,11 @@ class geneQuerySearchTest(TestCase):
     def test_REM_search_view(self):
         print('Test Views - REM search')
         response = self.client.post('/REMQuery_search/', {
-            'REMIDs': 'REM0000742, Schaqueliene, ',
+            'REMIDs': 'REM0001970, Schaqueliene, ',
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'remQuery_search.html')
@@ -542,7 +551,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'version': 1,
@@ -554,25 +563,26 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
             'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
-        self.assertEqual(response.context['query_string'], ' REM0000742, SCHAQUELIENE')
+        self.assertEqual(response.context['query_string'], ' REM0001970, SCHAQUELIENE')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
-        self.assertEqual(response.context['export_string'], 'REM0000742,SCHAQUELIENE')
+        self.assertEqual(response.context['export_string'], 'REM0001970,SCHAQUELIENE')
 
     def test_REM_search_view_upload(self):
         print('-- upload')
         response = self.client.post('/REMQuery_search/', {
             'REMIDs': '',
-            'csvFile': 'REM0000742, Schaqueliene, ',
+            'csvFile': 'REM0001970, Schaqueliene, ',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'remQuery_search.html')
@@ -581,7 +591,7 @@ class geneQuerySearchTest(TestCase):
             'start': 827246,
             'end': 827445,
             'geneID_id': 'ENSG00000225880',
-            'REMID': 'REM0000742',
+            'REMID': 'REM0001970',
             'regressionCoefficient': -0.0749712,
             'pValue': 0.75073,
             'version': 1,
@@ -593,17 +603,17 @@ class geneQuerySearchTest(TestCase):
             'geneSymbol': 'LINC00115',
             'muscle of leg_dnase1Log2': 13.1186,
             'muscle of leg_samplecount': 1,
-            'muscle of leg_score': 0.1124568,
+            'muscle of leg_score': 1.5,
             'normModelScore': 0.5
         })
         self.assertEqual(response.context['invalid_list'], ['SCHAQUELIENE'])
-        self.assertEqual(response.context['query_string'], ' REM0000742, SCHAQUELIENE')
+        self.assertEqual(response.context['query_string'], ' REM0001970, SCHAQUELIENE')
         self.assertEqual(response.context['activ_thresh'], 0.0)
         self.assertEqual(response.context['cell_types_string'], 'muscle of leg')
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
-        self.assertEqual(response.context['export_string'], 'REM0000742,SCHAQUELIENE')
+        self.assertEqual(response.context['export_string'], 'REM0001970,SCHAQUELIENE')
 
     def test_REM_search_view_empty(self):
         print('-- empty')
@@ -612,6 +622,7 @@ class geneQuerySearchTest(TestCase):
             'csvFile': '',
             'cellTypes': 'muscle of leg, ',  # whitespace and comma to match the format of the html page
             'activ_thresh': 0.0,
+            'score_thresh': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'empty_data.html')

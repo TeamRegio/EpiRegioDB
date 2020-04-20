@@ -1,6 +1,11 @@
 {% include 'navbar.html' %}
 {% load static %}
 {% load rem_template_tags %}
+<style>
+#REMQuery_nav{
+    background:black;
+}
+</style>
 
 <head>
     <title>REM Query results</title>
@@ -33,7 +38,13 @@
 <br>
 {% endif %}
 
-<div class="gProfilerSpan"><button class="gProfilerButton" id="gProfilerButton" onclick="window.location.href = '{{gP_link}}'">
+<div class="gProfilerSpan">
+    {% if num_genes > 90 %}
+        <div id="limit_gProfiler" class="limit_gProfiler">&nbsp;&nbsp;Limit of 90 genes exceeded <b class="info-icon">&#9432;</b><span class="gProfilerLimit_tooltip">
+            Due to the maximum length of a URL, we can't provide links to g:Profiler with more than 90 genes. You have {{num_genes}} genes with matching REMs in your query.
+            The link will perform the analysis for the first 90 genes.</span></div>
+    {% endif %}
+    <button class="gProfilerButton" id="gProfilerButton" onclick="window.location.href = '{{gP_link}}'">
             Functional enrichment analysis<img src="{% static '/Icons/gProfilerLogo.png' %}" style="width: 80px;" alt='gProfiler-Icon'/><span class="gProfiler_tooltip">
                 You will get redirected to the g:Profiler page. The link is adapted to your current query and initiates a functional enrichment analysis of all unique genes in the <b>Gene ID</b> column with default settings.</span></button>
             </div>
@@ -107,7 +118,7 @@
             <th>Predicted function</th>
 
             <th class="tooltip_table" >Model <nobr>score <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: -150px; width: 200px;">
-                Represents the importance of the REM for its associated gene over all cell types</span></th>
+                Represents the importance of the REM for its associated gene over all cell types, normalized for each gene [0,1]</span></th>
 
             <th class="tooltip_table"><nobr>Cluster of REMs</nobr> <nobr>(CREM) ID <b class="info-icon">&#9432;</b></nobr>
                 <span class="tooltiptext_top" style="width:250px;">We define adjacent and overlapping REMs as <b>cluster of REMs (CREMs)</b> with a unique ID</span></th>
@@ -118,9 +129,9 @@
             {% if data|length > 0 %}
                 {% for cellType in cell_types_list_upper %}
             <th class="tooltip_table">{{cellType}} <nobr>score (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b></nobr>
-                    <span class="tooltiptext_top" style="width:220px;">Importance of a REM in a cell type-specific manner averaged over n samples</span></th>
+                    <span class="tooltiptext_top" style="width:220px;">Relative contribution [-1,1] of a REM to its gene's expression in this cell type, averaged over n samples</span></th>
 
-            <th class="tooltip_table">{{cellType}} DNase <nobr>signal (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b></nobr>
+            <th class="tooltip_table">{{cellType}} DNase1 <nobr>signal (n={% get_cellType_attr data.0 cellType "samplecount" %}) <b class="info-icon">&#9432;</b></nobr>
                     <span class="tooltiptext_top" style="margin-left: -180px;">Mean of the DNase1 signal in this cell type averaged over n samples</span></th>
                 {% endfor %}
             {% endif %}

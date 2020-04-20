@@ -27,14 +27,28 @@ def rem_search_view(request):
     query = query.replace(',', ';')
     csv_file = request.POST.get('csvFile').upper()
 
+    score_thresh_input = request.POST.get('score_thresh')
     activ_thresh = request.POST.get('activ_thresh')
-    if len(activ_thresh) > 0:
+    if len(activ_thresh) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
         try:
             activ_thresh = float(activ_thresh)
         except ValueError:
-            activ_thresh = 0
+            activ_thresh = 0.0
     else:
-        activ_thresh = 0
+        activ_thresh = 0.0
+
+    if len(score_thresh_input) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
+        try:
+            if '|' in score_thresh_input:
+                score_thresh = ['abs']
+            else:
+                score_thresh = ['no']
+            score_thresh_input = score_thresh_input.replace("|", "").split(',')
+            score_thresh += [float(x.replace(' ', '')) for x in score_thresh_input]
+        except ValueError or AttributeError:
+            score_thresh = ['no', -1, 1]
+    else:
+        score_thresh = ['no', -1, 1]
 
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
     if len(cell_types) > 0:
@@ -56,7 +70,7 @@ def rem_search_view(request):
     else:
         export_string = query_list_string.replace(" ", '')
 
-    data, invalid_list = API_REMID(query_list, cell_types_list, activ_thresh)
+    data, invalid_list = API_REMID(query_list, cell_types_list, score_thresh, activ_thresh)
     template = 'remQuery_search.html'
     error_msg = ''
 
@@ -65,13 +79,13 @@ def rem_search_view(request):
 
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
-        if activ_thresh == 0:
+        if activ_thresh == 0 and score_thresh == ['no', -1, 1]:
             error_msg = 'No REMs were found that match your query settings.'
-        if activ_thresh != 0:
+        if activ_thresh != 0 or score_thresh != ['no', -1, 1]:
             error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
                     'activity threshold.'
 
-    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+    gP_link, num_genes = gProfiler_link(data)  # use the API function to get the correct link
 
     context = {
         'data': data,
@@ -81,9 +95,11 @@ def rem_search_view(request):
         'cell_types_list': cell_types_list,
         'cell_types_list_upper': cell_types_list_upper,
         'activ_thresh': activ_thresh,
+        'score_thresh': score_thresh,
         'error_msg': error_msg,
         'invalid_list': invalid_list,
         'version': 1,
         'gP_link': gP_link,
+        'num_genes': num_genes
     }
     return render(request, template, context)

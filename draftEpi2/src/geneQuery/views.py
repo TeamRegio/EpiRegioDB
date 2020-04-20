@@ -38,6 +38,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     gene_format = request.POST.get('gene_format')
     csv_file = request.POST.get('csvFile')
 
+    score_thresh_input = request.POST.get('score_thresh')
     activ_thresh = request.POST.get('activ_thresh')
     if len(activ_thresh) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
         try:
@@ -46,6 +47,19 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
             activ_thresh = 0.0
     else:
         activ_thresh = 0.0
+
+    if len(score_thresh_input) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
+        try:
+            if '|' in score_thresh_input:
+                score_thresh = ['abs']
+            else:
+                score_thresh = ['no']
+            score_thresh_input = score_thresh_input.replace("|", "").split(',')
+            score_thresh += [float(x.replace(' ', '')) for x in score_thresh_input]
+        except ValueError or AttributeError:
+            score_thresh = ['no', -1, 1]
+    else:
+        score_thresh = ['no', -1, 1]
 
     if gene_format == 'id_format':
         query = request.POST.get('geneID_numeric')  # if it's numeric, we just want to get the string in the field
@@ -83,7 +97,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         query_list, invalid_list_symbol, doublets_list = API_SymbolToENSG(query_list)  # our API function to convert geneSymbols to ENSG IDs
         invalid_list = invalid_list_symbol  # if symbol format was chosen, we also want to give back the invalid list
         # as symbols
-    data, no_data, invalid_list_ensembl = API_ENSGID(query_list, cell_types_list, activ_thresh, gene_format)  # data are
+    data, no_data, invalid_list_ensembl = API_ENSGID(query_list, cell_types_list, score_thresh, activ_thresh, gene_format)  # data are
     # the hits, meaning the dictionaries, no_data are the genes for which there was no REM in the db
 
     if gene_format == 'id_format':
@@ -92,10 +106,10 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     template = 'geneQuery_search.html'
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
-        if activ_thresh != 0.0:  # if we already have the geneSymbol error we want to keep it
+        if activ_thresh != 0.0 or score_thresh != ['no', -1, 1]:  # if we already have the geneSymbol error we want to keep it
             error_msg = 'No data was found that match your query settings. You might want to try modifying ' \
-                        'the activity threshold.'
-        if activ_thresh == 0.0:
+                        'the thresholds.'
+        if activ_thresh == 0.0 and score_thresh == ['no', -1, 1]:
             error_msg = 'The model did not find putative REMs that are associated with your queried genes.'
 
     for i in range(len(no_data)-1):  # to make it look nice in the template
@@ -104,7 +118,7 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
     for n in range(len(invalid_list)-1):
         invalid_list[n] += ', '
 
-    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+    gP_link, num_genes = gProfiler_link(data)  # use the API function to get the correct link
 
     context = {
         'data': data,
@@ -114,13 +128,15 @@ def gene_search_view(request):  # We grab all the submitted inputs, store them i
         'cell_types_string': cell_types,
         'cell_types_list': cell_types_list,
         'cell_types_list_upper': cell_types_list_upper,
+        'score_thresh': score_thresh,
         'activ_thresh': activ_thresh,
         'error_msg': error_msg,
         'no_data': no_data,
         'invalid_list': invalid_list,
         'doublets_list': doublets_list,
         'version': 1,
-        'gP_link': gP_link
+        'gP_link': gP_link,
+        'num_genes': num_genes
     }
     # print(data)
     return render(request, template, context)
@@ -156,13 +172,14 @@ def search_cellTypes(request):
 def crem_view(request, CREMID):
 
     data = API_CREM_overview([CREMID])
-    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+    gP_link, num_genes = gProfiler_link(data)  # use the API function to get the correct link
 
     context = {
         'data': data,
         'query': CREMID,
         'version': 1,
-        'gP_link': gP_link
+        'gP_link': gP_link,
+        'num_genes': num_genes,
     }
     return render(request, 'linked_crem.html', context)
 

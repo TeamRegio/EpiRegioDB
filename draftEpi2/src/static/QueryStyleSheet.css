@@ -317,10 +317,9 @@ button.gProfilerButton{
     position: relative;
     width: 195px;
     height: 41px;
-    background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+    background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
     border: 1px solid #999;
     border-radius: 2px;
-    background-color: #e9e9e9;
     z-index: 12;
 }
 
@@ -338,6 +337,15 @@ button.gProfilerButton:hover{
   float: right;
 }
 
+.limit_gProfiler{
+    width: 200px;
+    font-weight: bold;
+    font-size: 14px;
+    position: static;
+    top: 188px;
+    left: 290px;
+  float: right;
+}
 
 .tooltip {
   position: relative;
@@ -472,6 +480,32 @@ button.gProfilerButton:hover{
   visibility: visible;
 }
 
+.gProfilerSpan .gProfilerLimit_tooltip{
+  visibility: hidden;
+  font-size: 12px;
+  font-weight: normal;
+  display: block;
+  width: 300px;
+  font-size: 16px;
+  background-color: #002a35;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 99;
+  font-family: Calibri;
+  bottom: 77%;
+  right: 35%;
+  border: 2px solid black;
+}
+/*  margin-left: -240px;
+  bottom: 105%;
+  right: 105%; */
+
+.limit_gProfiler:hover .gProfilerLimit_tooltip{
+  visibility: visible;
+}
 
 /*.tooltip_table .tooltiptext_top::after {
   content: "";

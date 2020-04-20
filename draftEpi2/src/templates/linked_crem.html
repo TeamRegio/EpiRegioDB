@@ -34,7 +34,13 @@ img.CREM_img{
 <!--    <span class="tooltiptext_right" style="margin-left: -300px; width: 200px;">This is only a schema, not the actual cluster you selected</span></p>-->
 <br>
 
-<div class="gProfilerSpan"><button class="gProfilerButton" id="gProfilerButton" onclick="window.location.href = '{{gP_link}}'">
+<div class="gProfilerSpan">
+    {% if num_genes > 90 %}
+        <div id="limit_gProfiler" class="limit_gProfiler">&nbsp;&nbsp;Limit of 90 genes exceeded <b class="info-icon">&#9432;</b><span class="gProfilerLimit_tooltip">
+            Due to the maximum length of a URL, we can't provide links to g:Profiler with more than 90 genes. You have {{num_genes}} genes with matching REMs in your query.
+            The link will perform the analysis for the first 90 genes.</span></div>
+    {% endif %}
+    <button class="gProfilerButton" id="gProfilerButton" onclick="window.location.href = '{{gP_link}}'">
             Functional enrichment analysis<img src="{% static '/Icons/gProfilerLogo.png' %}" style="width: 80px;" alt='gProfiler-Icon'/><span class="gProfiler_tooltip">
                 You will get redirected to the g:Profiler page. The link is adapted to your current query and initiates a functional enrichment analysis of all unique genes in the <b>Gene ID</b> column with default settings.</span></button>
             </div>
@@ -108,7 +114,7 @@ img.CREM_img{
             <th>Predicted function</th>
 
             <th class="tooltip_table" >Model <nobr>score <b class="info-icon">&#9432;</b></nobr><span class="tooltiptext_top" style="margin-left: -150px; width: 200px;">
-                Represents the importance of the REM for its associated gene over all cell types</span></th>
+                Represents the importance of the REM for its associated gene over all cell types, normalized for each gene [0,1]</span></th>
 
         </tr>
     </thead>

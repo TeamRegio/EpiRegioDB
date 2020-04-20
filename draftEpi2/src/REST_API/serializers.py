@@ -46,7 +46,7 @@ class REMQuerySerializer(serializers.Serializer):
 	REMsPerCREM = serializers.CharField()
 	CREMID = serializers.CharField()
 	cellTypeScore = serializers.DictField(child=serializers.FloatField())
-	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+	cellTypeDNase1Signal = serializers.DictField(child=serializers.FloatField())
 
 
 class CREMQuerySerializer(serializers.Serializer):
@@ -64,6 +64,7 @@ class CREMQuerySerializer(serializers.Serializer):
 	REM_End = serializers.IntegerField(source = 'REMID_id__end')
 	REM_RegressionCoefficient = serializers.FloatField(source = 'REMID_id__regressionCoefficient')
 	REM_Pvalue = serializers.FloatField(source = 'REMID_id__pValue')
+	REM_normModelScore = serializers.FloatField(source='REMID_id__normModelScore')
 	version = serializers.IntegerField()
 	
 
@@ -81,7 +82,7 @@ class GeneQuerySerializer(serializers.Serializer):
 	CREMID = serializers.CharField()
 	normModelScore = serializers.FloatField()
 	cellTypeScore = serializers.DictField(child=serializers.FloatField())
-	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+	cellTypeDNase1Signal = serializers.DictField(child=serializers.FloatField())
 
 
 class RegionQuerySerializer(serializers.Serializer):
@@ -98,7 +99,7 @@ class RegionQuerySerializer(serializers.Serializer):
 	REMsPerCREM = serializers.CharField()
 	CREMID = serializers.CharField()
 	cellTypeScore = serializers.DictField(child=serializers.FloatField())
-	cellTypeActivity = serializers.DictField(child=serializers.FloatField())
+	cellTypeDNase1Signal = serializers.DictField(child=serializers.FloatField())
 
 
 class ErrorSerializer(serializers.Serializer):

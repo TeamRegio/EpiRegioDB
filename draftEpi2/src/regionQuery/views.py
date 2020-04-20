@@ -5,6 +5,7 @@ from geneQuery.views import search_cellTypes
 from API import *
 # Works similar to the geneID Query app. The views file there is commented more detailed
 
+
 def regionQuery_view(request):
     return render(request, 'regionQuery.html')
 
@@ -24,20 +25,34 @@ def region_search_view(request):
 
     query = request.POST.get('geneRegions')
     cell_types = request.POST.get('cellTypes')[:-2]  # directly getting rid of the last comma and whitespace
-    activ_thresh = request.POST.get('activ_thresh')
     overlap = request.POST.get('overlap')
 
     csv_file = request.POST.get('csvFile')
     csv_file_name = request.POST.get('csv_upload')
     csv_file_rows = request.POST.get("csvFileRows")
     # print(csv_file)
-    if len(activ_thresh) > 0:
+    score_thresh_input = request.POST.get('score_thresh')
+    activ_thresh = request.POST.get('activ_thresh')
+    if len(activ_thresh) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
         try:
             activ_thresh = float(activ_thresh)
-        except ValueError or TypeError:
+        except ValueError:
             activ_thresh = 0.0
     else:
         activ_thresh = 0.0
+
+    if len(score_thresh_input) > 0:  # everything we get back via POST.get is a string, so we don't have to check if len works
+        try:
+            if '|' in score_thresh_input:
+                score_thresh = ['abs']
+            else:
+                score_thresh = ['no']
+            score_thresh_input = score_thresh_input.replace("|", "").split(',')
+            score_thresh += [float(x.replace(' ', '')) for x in score_thresh_input]
+        except ValueError or AttributeError:
+            score_thresh = ['no', -1, 1]
+    else:
+        score_thresh = ['no', -1, 1]
 
     if len(overlap) > 0:
         try:
@@ -112,14 +127,18 @@ def region_search_view(request):
     else:
         export_string = query_list_string.replace(" ", '')
 
-    data, no_hit, invalid_list = API_RegionBED(query_list, cell_types_list, overlap, activ_thresh)
+    # print(query_list)
+    # print(cell_types_list)
+    # print(score_thresh)
 
-    no_data = []  # for the regions we need to format it into a list of strings, to be consequent with the
+    data, invalid_list = API_RegionBED(query_list, cell_types_list, overlap, score_thresh, activ_thresh)
+
+    # no_data = []  # for the regions we need to format it into a list of strings, to be consequent with the
     # chrX:start-end format
-    if len(no_hit) >= 1:
-        for i in range(len(no_hit)-1):
-            no_data.append(no_hit[i][0]+':'+str(no_hit[i][1])+'-'+str(no_hit[i][2])+', ')
-        no_data.append(no_hit[-1][0]+':'+str(no_hit[-1][1])+'-'+str(no_hit[-1][2]))
+    # if len(no_hit) >= 1:
+    #     for i in range(len(no_hit)-1):
+    #         no_data.append(no_hit[i][0]+':'+str(no_hit[i][1])+'-'+str(no_hit[i][2])+', ')
+    #     no_data.append(no_hit[-1][0]+':'+str(no_hit[-1][1])+'-'+str(no_hit[-1][2]))
 
     invalid_string_list = []
     if len(invalid_list) >= 1:
@@ -131,13 +150,13 @@ def region_search_view(request):
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
         if activ_thresh != 0.0 and overlap == 100:
-            error_msg = 'No REMs were found that match your query settings. You might want to try lowering the ' \
-                        'activity threshold, change the overlap or modifying the region boundaries.'
+            error_msg = 'No REMs were found that match your query settings. You might want to try changing the ' \
+                        'thresholds, change the overlap or modifying the region boundaries.'
         if activ_thresh == 0.0 and overlap == 100:
             error_msg = 'No REMs were found in your selected regions. You might want to try ' \
                         'changing the overlap or modifying the region boundaries.'
 
-    gP_link = gProfiler_link(data)  # use the API function to get the correct link
+    gP_link, num_genes = gProfiler_link(data)  # use the API function to get the correct link
     # print(list(data[0].keys()))
     context = {
         'data': data,
@@ -148,12 +167,14 @@ def region_search_view(request):
         'cell_types_list': cell_types_list,
         'cell_types_list_upper': cell_types_list_upper,
         'activ_thresh': activ_thresh,
-        'no_data': no_data,
+        'score_thresh': score_thresh,
+        # 'no_data': no_data,
         'invalid_list': invalid_string_list,
         "overlap": int(overlap),
         'version': 1,
-        'gP_link': gP_link
+        'gP_link': gP_link,
+        'num_genes': num_genes
     }
-
+    # print(context)
     return render(request, template, context)
 

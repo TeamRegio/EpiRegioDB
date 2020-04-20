@@ -67,10 +67,10 @@ function display_threshold(){
     current = container.length;
     thresh_div = document.getElementById("threshold_div");
     if (current === 0){
-        thresh_div.style.visibility = "hidden";
+        thresh_div.style.display = "none";
     }
     if (current !== 0){
-        thresh_div.style.visibility = "visible";
+        thresh_div.style.display = "inline-block";
     }
 }
 
