@@ -192,7 +192,7 @@ STITCHIT identifies REMs by interpreting differential gene expression, meaning t
 
 Model score
 ~~~~~~~
-The *Model score* is the normalized absolute binary logarithm of the p-value for the association between a REM and its target gene. It serves as an indicator on how important a REM is for the expression prediction of its target gene. The closer the score is to 1, the more impact the REM is supposed to have. This value is not cell type specific as it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
+The *Model score* is the normalized absolute binary logarithm of the p-value (range [0, 1]) for the association between a REM and its target gene. It serves as an indicator on how important a REM is for the expression prediction of its target gene. The closer the score is to 1, the more impact the REM is supposed to have. This value is not cell type specific as it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
 
 Cluster of REMs (CREM) ID
 ~~~~~~~
