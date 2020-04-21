@@ -35,7 +35,7 @@ The way STITCHIT identifies REMs results in REMs that are mapped to one gene. Th
 
 Future releases
 ===============================
-We will continuously update and expand EpiRegio. Besides of adding more functionalities and analyses, we will also update the underlying dataset if we can make improvements by including new datasets or by tweaking processes of STITCHIT. Right now, version 1 is available. Every file you export contains the current day and the version number. All dataset versions are available at our `Zenodo repository <https://zenodo.org/record/3752510#.XpcWES2B06U>`_, so that you can still reproduce all your analyses even after a version upgrade. We also upload the source code of every release on `Zenodo <https://zenodo.org/record/3753196#.XphMH1MzbOQ>`_.
+We will continuously update and expand EpiRegio. Besides of adding more functionalities and analyses, we will also update the underlying dataset if we can make improvements by including new datasets or by tweaking processes of STITCHIT. Right now, version 1 is available. Every file you export contains the current day and the version number. All dataset versions are available at our `Zenodo repository <https://zenodo.org/record/3758494#.Xp6JVi2w2Rt>`_, so that you can still reproduce all your analyses even after a version upgrade. We also upload the source code of every release on `Zenodo <https://zenodo.org/record/3753196#.XphMH1MzbOQ>`_.
 
 Cite Us
 =======
