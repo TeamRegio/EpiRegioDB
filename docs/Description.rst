@@ -18,10 +18,18 @@ Overview of possible queries
 
 Learning of Regulatory EleMents (REMs)
 ===============================
-EpiRegio is based on STITCHIT, a method which was previously developed in our group. It is a peak-calling free approach to identify gene-specific REMs by analyzing epigenetic signal of diverse human cell-types with regard to gene expression of a certain gene. In order to identify REMs, a large genomic area around a gene of interest is partitioned into distinct regions, which show variation in their epigenetic profile correlating with changes in gene expression.
-STITCHIT is applied to large collections of paired, uniformly processed DNase1-seq and RNA-seq samples from Roadmap, ENCODE and Blueprint. STITCHIT was shown to outperform peak based approaches e.g. GeneEnhancer and UnifiedPeaks regarding the accuracy and resolution. Furthermore, we validated results from STITCHIT with external data such as ChIA-PET and Promoter-Capture Hi-C data. To show the functional advantage of STITCHIT, various analyses were performed, like the rediscovery of known enhancers and the partitioning of larger regulatory elements into smaller regions. Additionally, CRISPR-Cas9 experiments were done to illustrate the reliability of STITCHIT[2]. 
+EpiRegio is based on *STITCHIT*, a method which was previously developed in our group. It is a peak-calling free approach to identify gene-specific REMs by analyzing epigenetic signal of diverse human cell-types with regard to gene expression of a certain gene. In order to identify REMs, a large genomic area around a gene of interest is partitioned into distinct regions, which show variation in their epigenetic profile correlating with changes in gene expression.
+*STITCHIT* is applied to large collections of paired, uniformly processed DNase1-seq and RNA-seq samples from Roadmap, ENCODE and Blueprint. *STITCHIT* was shown to outperform peak based approaches e.g. GeneEnhancer and UnifiedPeaks regarding the accuracy and resolution. Furthermore, we validated results from *STITCHIT* with external data such as ChIA-PET and Promoter-Capture Hi-C data. To show the functional advantage of *STITCHIT*, various analyses were performed, like the rediscovery of known enhancers and the partitioning of larger regulatory elements into smaller regions. Additionally, CRISPR-Cas9 experiments were done to illustrate the reliability of *STITCHIT* [2]. 
 
 For more information, a detailed explanation of the computational method and the evaluation of the results, please have a look at our `bioRxiv <http://dx.doi.org/10.1101/585125>`_ preprint.
+
+Data preprocessing 
+===============================
+The data hosted by the web server EpiRegio was generated with *STITCHIT*. 
+*STITCHIT* was applied to human paired DNase1-seq and RNA-seq data, namely *110* samples from the Roadmap consortium and *56* samples from the Blueprint consortium.
+The considered samples comprise of *46* different tissues and cell types. While the Blueprint data set consists of various primary cell types and disease related samples associated to the haematopoietic system, Roadmap data provides a broader diversity of cell and tissue types. All data sets have been uniformly preprocessed. DNase1-seq was adjusted to sequencing depth and gene expression is quantified in transcripts per million.
+For every gene, *STICHIT* inspects a user-defined region around the gene to determine putative associated REMs. For the data provided in EpiRegio, we consider a window of *100,000* bp upstream of a gene's transcription start site, the entire gene body and the window of *100,000* bp downstream of a gene's transcription termination site. Hence, even distant REMs are taken into account.
+*EpiRegio* contains a total of *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. The average length of a REM is *229* bp. For each REM, the regression coefficient and the corresponding p-value obtained from the OLS model of STITCHIT is reported (for more detailed information see Section *Material and Methods* in [1] ).\\
 
 Cluster of regulatory elements
 ===============================
