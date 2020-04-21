@@ -47,7 +47,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
 
 1. Go to the *Region Query* tab. 
 
-2. You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap and by this define how much of the REM has to overlap with your selected regions to be shown in the output. For example, with an overlap of 50% only the REMs that overlap by at least half of their length with your selected regions will be returned.
+2. You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap and by this define how much your selected region has to overlap with a REM to be shown in the output. For example, with an overlap of 50% only the REMs that overlap by at least half of a region's length will be returned.
 
 .. image:: ./images/0804RegionQueryForm.png
   :width: 400
