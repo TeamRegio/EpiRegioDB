@@ -40,7 +40,7 @@ For every gene, *STICHIT* inspects a user-defined region around the gene to dete
 In total *EpiRegio* contains *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. Together, they form *365,286* distinct CREMs. In the follwoing table quantitative characteristics of REMs and CREMsa are summarized.
 
 .. image:: ./images/characteristicsREMsCREMs.png
-  :width: 400
+  :width: 500
   :alt: quantitaive characteristics
 
 Future releases
