@@ -216,16 +216,14 @@ Cell type score
 The  regression  coefficient  (β)  describes  the  association between a REM and its gene’s expression. The DNase1 signal is  log-transformed  and  standardized  for  each  REM  over  all cell types (mean=0, standard deviation=1) and represents how active  a  REM  is  in  a  cell  typec. *R* is  defined  as  the  set  of all  REMs  associated  to  a  given  gene,  thus R={r1,...,rn}. The *Cell type score* normalizes the contribution of REM r to its gene’s expression in this specific cell type as predicted by the linear model of STITCHIT. Notice, that the sum of the absolut value of the *Cell type score* of REMs associated to a gene for one cell type c, adds up to 1. So, we do not expect to observe *Cell type scores* to be 1 or close to 1, as for the *Model score*. 
 A positive *Cell type score* indicates an expected increase of the gene's expression in comparison to the other considered cell types and a positive value an expected decreasing effect. There are two scenarios to observe a positive cell type score. 
 
-.. hlist::
-
-  * The REM has a positive regression coeffiecient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). This means that the REM is an activator and the chromatin is  open, so the REM likely enhance the gene’s expression in comparisons to cell types, where the chromatin is more closed.
-  * The REM has a negative regression coefficient and the cell type’s DNase1 signal is lower than the mean over all considered cell types (negative value). In other words, the REM is a repressor of the gene, but the chromatin is rather closed, so the REM can most likely not regulate the gene’s expression. This leads to an higher gene’s expression in comparison to cell types where the chromatin is more open.
+  1) The REM has a positive regression coeffiecient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). This means that the REM is an activator and the chromatin is  open, so the REM likely enhance the gene’s expression in comparisons to cell types, where the chromatin is more closed.
+  
+  2) The REM has a negative regression coefficient and the cell type’s DNase1 signal is lower than the mean over all considered cell types (negative value). In other words, the REM is a repressor of the gene, but the chromatin is rather closed, so the REM can most likely not regulate the gene’s expression. This leads to an higher gene’s expression in comparison to cell types where the chromatin is more open.
+  
 There are also two scenarios to observe a negative cell type score: 
 
-.. hlist::
-
-  * The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed, thus, the REM can most likely not regulate the expression of the gene. Consequently, the gene's expression is decresed in comparsion to a cell type where the chromatin is more open. 
-  * The REM has a negative regression coefficient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). Therefore, the REM is an repressor and the chromatin is rather open. This leads to a decreasing gene expression in comparsion to a cell type where the chroamtin is more closed. 
+  1) The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed, thus, the REM can most likely not regulate the expression of the gene. Consequently, the gene's expression is decresed in comparsion to a cell type where the chromatin is more open. 
+  2)  The REM has a negative regression coefficient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). Therefore, the REM is an repressor and the chromatin is rather open. This leads to a decreasing gene expression in comparsion to a cell type where the chroamtin is more closed. 
  
 The following table summarizes how to interpret the *Cell type score*:
 
