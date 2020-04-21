@@ -113,8 +113,8 @@ Interactive tables
 
 All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. Each *Gene ID* in the tables is a link that gets you to the entry of this gene from the `Ensembl genome browser <https://www.ensembl.org/index.html>`_ from the Ensembl release 91. The original annotation that the model was trained on is `GENCODE V27 <https://www.gencodegenes.org/human/release_27.html>`_. The entries in *Gene symbol* creates a new table with all the REMs that are associated to the clicked gene. Further, you can click on the chromosome value in a row to view the REM's region inside of the `UCSC Genome Browser <https://genome.ucsc.edu/>`_. The values in the column *Cluster of REMs (CREM) ID* redirect you to a new table with all the REM contained in this cluster. In addition, the button 'Functional enrichment analysis' runs an analysis on all the genes currently in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. With more than 90 unique genes, the link exceed the maximum character possible for URLs. You will get a warning if that happens (see below). You can still use the link, but it will only contain the first 90 unique genes of your query.
 
-.. image:: ./images/2104gProfilerLimir.png
-  :alt: REM Query output  
+.. image:: ./images/2104gProfilerLimit.png
+  :alt: gProfiler limit  
   :width: 400
 
 Available cell and tissue types
