@@ -223,6 +223,7 @@ A positive *Cell type score* indicates an expected increase of the gene's expres
 There are also two scenarios to observe a negative cell type score: 
 
   1) The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed, thus, the REM can most likely not regulate the expression of the gene. Consequently, the gene's expression is decresed in comparsion to a cell type where the chromatin is more open. 
+  
   2)  The REM has a negative regression coefficient and the cell type’s DNase1 signal is higher than the mean over all considered cell types (positive value). Therefore, the REM is a repressor and the chromatin is rather open. This leads to a decreasing gene expression in comparsion to a cell type where the chroamtin is more closed. 
  
 The following table summarizes how to interpret the *Cell type score*:
