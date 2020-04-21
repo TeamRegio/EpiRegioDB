@@ -2,8 +2,7 @@ About `EpiRegio <https://epiregio.de/>`_ Web Server
 ===================================================
 The field of research on gene regulation has considerably grown during the last years
 and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
-One of the key players are non-coding DNA regions, which regulate gene expression
-by remodelling the accessibility of chromatin. They are able to support or repress the expression of their associated genes.
+One of the key players are non-coding DNA regions, which regulate gene expression. They are able to enhance or repress the expression of their associated genes.
 These Regulatory EleMents (REMs) can be located far away from their associated genes.
 Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence.
 Different computational approaches are being used, combining various kinds of genomics data to annotate REMs. An even
@@ -30,7 +29,7 @@ Cluster of regulatory elements
   :width: 600
   :alt: CREM schema
   
-The way STITCHIT identifies REMs results in REMs that are mapped to one gene. This does not mean that we assume each separate regulatory region in the genome to be associated to just one gene. Genomic locations are not exclusive to REMs, other REMs can overlap with them. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other or that are adjacent to each other without any break in between (see the schema above). A CREM ends when there is no neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes and we know which part of it links to which gene.
+The way STITCHIT identifies REMs results in REMs that are mapped to one gene. Genomic locations are not exclusive to REMs, hence REMs associated to different genes can overlap which each other. Consequently the overlapping region is linked to more than one gene. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other or that are adjacent to each other without any break in between (see the schema above). A CREM ends when there is no neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes, where it is known which part is links to which gene.
 
 
 Future releases
