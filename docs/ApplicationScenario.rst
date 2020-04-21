@@ -24,7 +24,7 @@ Unzip the file using e.g.::
   :alt: Region Query
  
 
-**Step 3:** Click the bottom *Functional enrichment analysis g:Profiler* in the upper left corner, to perform a GO term enrichment analysis using g:Profiler (default parameters) of the resulting REMs. Notice, if the resulting genes are more than 90, the maximal possible length of an url is exceed. Therefore the *90* top most ranked entries are considered.
+**Step 3:** Click the bottom *Functional enrichment analysis g:Profiler* in the upper left corner, to perform a GO term enrichment analysis using g:Profiler (default parameters) of the resulting REMs. Notice, if the resulting genes are more than 90, the maximal possible length of an url is exceed. Therefore the first *90* genes are considered.
 TODO: add screenshot
 
 If you want to perform the analysis with all identified genes, please download the result by clicking *Download Excel*, open the excel file and copy the column named *Gene ID*. Go to https://biit.cs.ut.ee/gprofiler/gost and past the copied gene IDs in the field over the *Run query* bottom then select *Run query*. Duplicated gene IDs will only be considered once. 
