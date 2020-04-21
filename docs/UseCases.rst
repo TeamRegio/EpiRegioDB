@@ -1,6 +1,6 @@
 Query Guide
 ---------
-Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Example Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at :ref:`Results in detail` to get an explanation of all the output parameters. 
+Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Example Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at :ref:`Results in detail` to get an explanation of all the output parameters. In addition, we provide an example file for each possible file upload in the Supplemenary of our paper (currently under revision).
 
 Gene Query
 =================
@@ -21,14 +21,17 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 3. When you have multiple IDs or symbols to search, separate them by comma in the input field or create a csv- or txt-file and upload it. All of the commonly used separators are being recognized. A combination of both, the input field and the uploaded file, is not implemented.
 
-4. Choosing cell types/tissues: Start typing in the field *Filter for cell types/tissues:* the cell types of your interest, and suggesstions of available cell types matching your query will appear. To select a cell type, click on the button on the right. Cell types you write but do not select via a button click will not be considered for the query. To deselect click again on the button below *Currently selected:*. If your cell type does not appear, have a look at the :ref:`Available cell and tissue types` section and see whether you can find it there. Once you selected a cell type, two new input fields will appear, which give the option to choose thresholds. The thresholds refer to the *Cell type score* and the *Cell type DNase1 signal* of the REMs in the cell types/tissues. Only REMs that exceed the thresholds in **ALL** of the cell types you selected will be shown in the output table. The threshold for the *Cell type score* requires a range (e.g. 0-1). Leave the fields empty to get back all REMs independent of their score and DNase1 signal. 
+4. Choosing cell types/tissues: Start typing in the field *Filter for cell types/tissues:* the cell types of your interest, and suggesstions of available cell types matching your query will appear. To select a cell type, click on the button on the right. Cell types you write but do not select via a button click will not be considered for the query. To deselect click again on the button below *Currently selected:*. If your cell type does not appear, have a look at the :ref:`Available cell and tissue types` section and see whether you can find it there. 
 
 .. image:: ./images/geneQuery_cellTypes.png
   :width: 800
   :alt: Cell type/tissue selection
+  
+Once you selected a cell type, two new input fields will appear, which give the option to choose thresholds. The thresholds refer to the *Cell type score* and the *Cell type DNase1 signal* of the REMs in the cell types/tissues. Only REMs that exceed the thresholds in **ALL** of the cell types you selected will be shown in the output table. The threshold for the *Cell type score* requires a range (e.g. 0-1). It is possible to set just one or both thresholds. Leave the fields empty to get back all REMs independent of their score and DNase1 signal.  
+TODO: maybe add screenshot?
 
 
-5. The result page shows the information based on your query settings. All the REMs associated to your queried genes are listed with their location, their *Predicted function*, the *Model score*, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* [0,1] indicates how important a REM is for its associated gene over all cell types. The closer the value is to 1, the more important the REM is. The next column *Cluster of REMs (CREM) ID* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that are directly adjacent with no base pair in between or that overlap with each other. Click on a CREM ID to get to a table with all REMs of this CREM. We provide a more detailed description of CREMs `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_. If you selected cell types in your query, the *Cell type score* and the *Cell type DNase1 signal* of the REMs in these cell types will be shown as average over all the samples n in the database (for each cell type separately, not averaged over all cell types). The *Cell type score* [-1,1] is the normalized product of the regression coefficient and the standardized DNase1 activity, indicating the relative contribution of a REM to its target gene's expression in this cell type. If the score is close to 1, the REM has one of the highest activating effects on the gene's expression in this cell type among all REMs that are associated to that gene. The other way around, a score close to -1 indicates that a REM is among the most suppressing REMs for a gene in a cell type. *Cell type Dnase1 signal* is the DNase1 signal, indicating the chromatin accessibility in the REM region. If you need some more information on the genes themselves, click on the *Gene ID* to get to the respective Ensembl web page. By clicking on the *Gene symbol* you will receive a table with all REMs that are associated to the clicked gene. To see the REM region in the `UCSC Genome Browser <https://genome.ucsc.edu/>`_ click on the chromosome entry. Another option is to use the 'Functional enrichment analysis' button to perform an analysis of all genes in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. You can export the table as xls- or csv-file. The downloaded file's name is adapted to your query and contains the date as well as the current version of the website. 
+5. The result page shows the information based on your query settings. All the REMs associated to your queried genes are listed with their location, their *Predicted function*, the *Model score*, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* [0,1] indicates how important a REM is for its associated gene over all cell types. The closer the value is to 1, the more important the REM is. The next column *Cluster of REMs (CREM) ID* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that are directly adjacent with no base pair in between or that overlap with each other. Click on a CREM ID to get to a table with all REMs of this CREM. We provide a more detailed description of CREMs `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_. If you selected cell types in your query, the *Cell type score* and the *Cell type DNase1 signal* of the REMs in these cell types will be shown as average over all the samples n in the database (for each cell type separately, not averaged over all cell types). The *Cell type score* [-1,1] is the normalized product of the regression coefficient and the standardized DNase1 activity, indicating the relative contribution of a REM to its target gene's expression in this cell type. For more detailed informations about the *Cell type score* see here <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#model-score>`_. *Cell type Dnase1 signal* is the DNase1 signal, indicating the chromatin accessibility in the REM region. If you need some more information on the genes themselves, click on the *Gene ID* to get to the respective Ensembl web page. By clicking on the *Gene symbol* you will receive a table with all REMs that are associated to the clicked gene. To see the REM region in the `UCSC Genome Browser <https://genome.ucsc.edu/>`_ click on the chromosome entry. Another option is to use the 'Functional enrichment analysis' button to perform an analysis of all genes in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. You can export the table as xls- or csv-file. The downloaded file's name is adapted to your query and contains the date as well as the current version of the website. 
 
 .. image:: ./images/0804GeneQueryOutput.png
   :alt: Gene Query output
@@ -47,7 +50,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
 
 1. Go to the *Region Query* tab. 
 
-2. You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap and by this define how much your selected region has to overlap with a REM to be shown in the output. For example, with an overlap of 50% only the REMs that overlap by at least half of a region's length will be returned. Per default only REMs that are located completely within your regions are reported.
+2.  You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap and by this define how much your selected region has to overlap with a REM to be shown in the output. For example, with an overlap of 50% only the REMs that overlap by at least half of a region's length will be returned. Per default only REMs that are located completely within your regions are reported.
 
 .. image:: ./images/0804RegionQueryForm.png
   :width: 400
@@ -66,10 +69,10 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   :alt: Exemplary region query upload file tab separated
   
 
-4. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :href:`Gene Query` at point 4.
+4. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :ref:`Gene Query` at point 4.
   
   
-5. The output is very similar for all queries. Have a look at point 5 of the :href:`Gene Query` or at the :href:`Results in detail`. Below you can see how the output of the Region query looks like.
+5. The output is very similar for all queries. Have a look at point 5 of the :ref:`Gene Query` or at the :ref:`Results in detail`. Below you can see how the output of the Region query looks like.
 
 .. image:: ./images/0804RegionQueryOutput.png
   :alt: Region Query output
@@ -95,10 +98,10 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
   :alt: REMQuery form
 
 
-3. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :href:`Gene Query` at point 4.
+3. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :ref:`Gene Query` at point 4.
 
 
-4. The output is very similar for all queries. Have a look at point 5 of the :href:`Gene Query` or at the :href:`Results in detail`. Below you can see how the output of the REM query looks like.
+4. The output is very similar for all queries. Have a look at point 5 of the :ref:`Gene Query` or at the :ref:`Results in detail`. Below you can see how the output of the REM query looks like.
 
 .. image:: ./images/0804REMQueryOutput.png
   :alt: REM Query output  
@@ -192,11 +195,11 @@ STITCHIT identifies REMs by interpreting differential gene expression, meaning t
 
 Model score
 ~~~~~~~
-The *Model score* is the normalized absolute binary logarithm of the p-value (range [0, 1]) for the association between a REM and its target gene. It serves as an indicator on how important a REM is for the expression prediction of its target gene. The closer the score is to 1, the more impact the REM is supposed to have. This value is not cell type specific as it is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
+The *Model score* is the absolute binary logarithm of the p-value of the regression coefficient for the association between a REM and its target gene. To normalize the model score in the range [0, 1], we diveded the values by the maximal one. Consequently, at least on REM out of the REMs associated to a gene, has the highest value 1. The *Model score* serves as an indicator on how important a REM is for the expression prediction of its target gene in relation to the other REMs associated to that gene. The closer the score is to 1, the more impact the REM is supposed to have. This value is not cell type specific as it is based on the regression coefficient, which is calculated over all cell types. It allows for a comparison in between the REMs but not in between cell types. For a cell type-specific comparison, have a look at the *Cell type score*.
 
 Cluster of REMs (CREM) ID
 ~~~~~~~
-As STITCHIT determine REMs for each gene seperately and not the other way around, the identified regions can overlap. A *REM cluster* is a region of neighbouring REMs that are directly adjacent or that overlap with each other. There has to be a minimum of two neighbouring REMs to be called a CREM. Each *REM cluster* is assigned to a unique *CREM ID*. We start counting from CREM0000001 ascending. By clicking on the *Cluster of REMs (CREM) ID* you get forwareded to a table with all REMs inside of this cluster. We show a schema of a CREM `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_.
+As STITCHIT determine REMs for each gene seperately, the identified REMs for different genes can overlap. A *REM cluster* is a region of neighbouring REMs that are directly adjacent or that overlap with each other. There has to be a minimum of two neighbouring REMs to be called a CREM. Each *REM cluster* is assigned to a unique *CREM ID*. We start counting from CREM0000001 ascending. By clicking on the *Cluster of REMs (CREM) ID* you get forwareded to a table with all REMs inside of this cluster. We show a schema of a CREM `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_.
 
 Number of REMs per CREM
 ~~~~~~~
@@ -204,11 +207,32 @@ Shows how many REMs are contained in the CREM to which the REM belongs to. If th
 
 Cell type score
 ~~~~~~~
-*Cell type score* is the normalized absolute product of the regression coefficient (:math:`{\beta}`) and the standardized DNase1 signal in a REM, representing the relative contribution of a REM (:math:`r`) to its gene's expression in a cell type-specific manner (:math:`c`). Per gene, it ranks the REMs between -1 and 1 according to their impact on the gene's expression in a cell type. A negative value indicates a repressing effect and a positive value an activating effect. A positive value for a REM can be caused by a positive regression coefficient combined with a positive DNase1 signal, meaning that a REM enhances gene expression and is also active. A negative regression coefficient and a negative DNase1 activity also results in a positive *Cell type score*, as it would indicate a suppressing REM that is not active in a cell type, meaning that the gene's expression is estimated to be increased. The score is averaged over all available samples for each cell type. The *Cell type score* can be used to rank REMs according to their importance between cell types for the same gene or to rank REMs within one cell type.
+*Cell type score* is  a normalized quantity in range [−1,1], which represents the relative contribution of a REM (:math:`r`) to its gene's expression in a cell type-specific manner (:math:`c`). We defined the *Cell type score* as following:
 
 .. image:: ./images/CellTypeScoreFormula.png
   :alt: Cell type score formula  
   :width: 400
+  
+The  regression  coefficient  (β)  describes  the  association between a REM and its gene’s expression. The DNase1 signal is  log-transformed  and  standardized  for  each  REM  over  all cell types (mean=0, standard deviation=1) and represents how active  a  REM  is  in  a  cell  typec. *R* is  defined  as  the  set  of all  REMs  associated  to  a  given  gene,  thus R={r1,...,rn}. The *Cell type score* normalizes the contribution of REM r to its gene’s expression in this specific cell type as predicted by the linear model of STITCHIT. Notice, that the sum of the absolut value of the *Cell type score* of REMs associated to a gene for one cell type c, adds up to 1. So, we do not expect to observe *Cell type scores* to be 1 or close to 1, as for the *Model score*. 
+A positive *Cell type score* indicates an expected increase of the gene's expression in comparison to the other considered cell types and a positive value an expected decreasing effect. There are two scenarios to observe a positive cell type score. 
+
+.. hlist::
+
+  * The REM has a positive regression coeffiecient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). This means that the REM is an activator and the chromatin is  open, so the REM likely enhance the gene’s expression in comparisons to cell types, where the chromatin is more closed.
+  * The REM has a negative regression coefficient and the cell type’s DNase1 signal is lower than the mean over all considered cell types (negative value). In other words, the REM is a repressor of the gene, but the chromatin is rather closed, so the REM can most likely not regulate the gene’s expression. This leads to an higher gene’s expression in comparison to cell types where the chromatin is more open.
+There are also two scenarios to observe a negative cell type score: 
+
+.. hlist::
+
+  * The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed, thus, the REM can most likely not regulate the expression of the gene. Consequently, the gene's expression is decresed in comparsion to a cell type where the chromatin is more open. 
+  * The REM has a negative regression coefficient and the cell type’s DNase1 signal higher than the mean over all considered cell types (positive value). Therefore, the REM is an repressor and the chromatin is rather open. This leads to a decreasing gene expression in comparsion to a cell type where the chroamtin is more closed. 
+ 
+The following table summarizes how to interpret the *Cell type score*:
+
+
+The *Cell type score* can be used to rank REMs according to their importance between cell types for the same gene or to rank REMs within one cell type.
+
+
 
 
 Cell type DNase1 signal
