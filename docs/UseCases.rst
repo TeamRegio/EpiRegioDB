@@ -15,7 +15,7 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 2. You can choose to search either with *gene symbol* or *ensembl ID*. The version number of Ensembl IDs is not required. When entering gene symbols, you can add them from the suggestions appearing on the right by clicking on the buttons. Selected buttons will be listed underneath *Currently selected:*. Deselect your choices by reclicking on those buttons. We use the human genome assembly version GRCh38.p10.
 
-.. image:: ./images/0804GeneQueryForm.png
+.. image:: ./images/2104GeneQueryForm.png
   :width: 400
   :alt: Gene Query form
 
@@ -23,17 +23,17 @@ Do you wish to search for Regulatory Elements (REMs) related to a specific gene?
 
 4. Choosing cell types/tissues: Start typing in the field *Filter for cell types/tissues:* the cell types of your interest, and suggesstions of available cell types matching your query will appear. To select a cell type, click on the button on the right. Cell types you write but do not select via a button click will not be considered for the query. To deselect click again on the button below *Currently selected:*. If your cell type does not appear, have a look at the :ref:`Available cell and tissue types` section and see whether you can find it there. 
 
-.. image:: ./images/geneQuery_cellTypes.png
+.. image:: ./images/2104cellTypeFilter.png
   :width: 800
   :alt: Cell type/tissue selection
   
-Once you selected a cell type, two new input fields will appear, which give the option to choose thresholds. The thresholds refer to the *Cell type score* and the *Cell type DNase1 signal* of the REMs in the cell types/tissues. Only REMs that exceed the thresholds in **ALL** of the cell types you selected will be shown in the output table. The threshold for the *Cell type score* requires a range (e.g. 0-1). It is possible to set just one or both thresholds. Leave the fields empty to get back all REMs independent of their score and DNase1 signal.  
+Once you selected a cell type, two new input fields will appear, which give the option to choose thresholds. The thresholds refer to the *Cell type score* and the *Cell type DNase1 signal* of the REMs in the cell types/tissues. Only REMs that exceed the thresholds in **ALL** of the cell types you selected will be shown in the output table. The threshold for the *Cell type score* requires a range (e.g. 0-1). You can filter for the absolute *Cell type scores* if you write it like |0.5,1|. It is possible to set just one or both thresholds. Leave the fields empty to get back all REMs independent of their score and DNase1 signal.  
 TODO: maybe add screenshot?
 
 
-5. The result page shows the information based on your query settings. All the REMs associated to your queried genes are listed with their location, their *Predicted function*, the *Model score*, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* [0,1] indicates how important a REM is for its associated gene over all cell types. The closer the value is to 1, the more important the REM is. The next column *Cluster of REMs (CREM) ID* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that are directly adjacent with no base pair in between or that overlap with each other. Click on a CREM ID to get to a table with all REMs of this CREM. We provide a more detailed description of CREMs `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_. If you selected cell types in your query, the *Cell type score* and the *Cell type DNase1 signal* of the REMs in these cell types will be shown as average over all the samples n in the database (for each cell type separately, not averaged over all cell types). The *Cell type score* [-1,1] is the normalized product of the regression coefficient and the standardized DNase1 activity, indicating the relative contribution of a REM to its target gene's expression in this cell type. For more detailed informations about the *Cell type score* see here <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#model-score>`_. *Cell type Dnase1 signal* is the DNase1 signal, indicating the chromatin accessibility in the REM region. If you need some more information on the genes themselves, click on the *Gene ID* to get to the respective Ensembl web page. By clicking on the *Gene symbol* you will receive a table with all REMs that are associated to the clicked gene. To see the REM region in the `UCSC Genome Browser <https://genome.ucsc.edu/>`_ click on the chromosome entry. Another option is to use the 'Functional enrichment analysis' button to perform an analysis of all genes in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. You can export the table as xls- or csv-file. The downloaded file's name is adapted to your query and contains the date as well as the current version of the website. 
+5. The result page shows the information based on your query settings. All the REMs associated to your queried genes are listed with their location, their *Predicted function*, the *Model score*, the REM cluster they are belonging to and their activity in the cell types you selected. The *Model score* [0,1] indicates how important a REM is for its associated gene over all cell types. The closer the value is to 1, the more important the REM is. The next column *Cluster of REMs (CREM) ID* contains the ID of the cluster this REM is contained in. A cluster of REMs consists of all the REMs that are directly adjacent with no base pair in between or that overlap with each other. Click on a CREM ID to get to a table with all REMs of this CREM. We provide a more detailed description of CREMs `here <https://epiregiodb.readthedocs.io/en/latest/Description.html#cluster-of-regulatory-elements>`_. If you selected cell types in your query, the *Cell type score* and the *Cell type DNase1 signal* of the REMs in these cell types will be shown as average over all the samples n in the database (for each cell type separately, not averaged over all cell types). The *Cell type score* [-1,1] is the normalized product of the regression coefficient and the standardized DNase1 activity, indicating the relative contribution of a REM to its target gene's expression in this cell type. The higher the value, the higher is the REM region expected to have an activating effect on its gene's expression in this cell type. This does not necessarily mean that the REM is an activator. The REM could also be a repressor but the chromatin is closed at its location. For more detailed informations about the *Cell type score* see here <https://epiregiodb.readthedocs.io/en/latest/UseCases.html#model-score>`_. *Cell type Dnase1 signal* is the DNase1 signal, indicating the chromatin accessibility in the REM region. If you need some more information on the genes themselves, click on the *Gene ID* to get to the respective Ensembl web page. By clicking on the *Gene symbol* you will receive a table with all REMs that are associated to the clicked gene. To see the REM region in the `UCSC Genome Browser <https://genome.ucsc.edu/>`_ click on the chromosome entry. Another option is to use the 'Functional enrichment analysis' button to perform an analysis of all genes in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. The limit for genes You can export the table as xls- or csv-file. The downloaded file's name is adapted to your query and contains the date as well as the current version of the website. 
 
-.. image:: ./images/0804GeneQueryOutput.png
+.. image:: ./images/2104GeneQueryOutput.png
   :alt: Gene Query output
   :width: 800
 
@@ -52,7 +52,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
 
 2.  You can enter a region by choosing a chromosome, the start and the end point and then clicking on the *Select* button. Add as many regions as you like. Deselect your choices by reclicking on the added buttons. Only REMs that are located in your chosen regions will be given as output. You can select the percentage of overlap and by this define how much your selected region has to overlap with a REM to be shown in the output. For example, with an overlap of 50% only the REMs that overlap by at least half of a region's length will be returned. Per default only REMs that are located completely within your regions are reported.
 
-.. image:: ./images/0804RegionQueryForm.png
+.. image:: ./images/2104RegionQueryForm.png
   :width: 400
   :alt: Region Query form
 
@@ -74,7 +74,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   
 5. The output is very similar for all queries. Have a look at point 5 of the :ref:`Gene Query` or at the :ref:`Results in detail`. Below you can see how the output of the Region query looks like.
 
-.. image:: ./images/0804RegionQueryOutput.png
+.. image:: ./images/2104RegionQueryOutput.png
   :alt: Region Query output
   :width: 800
 
@@ -93,7 +93,7 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 
 2. Enter the IDs of your REMs of interest. Sepearte multiple ones by comma. You can upload a csv-file containing REM IDs. A combination of both, input field and uploaded file, is not implemented.
 
-.. image:: ./images/0804REMQueryForm.png
+.. image:: ./images/2104REMQueryForm.png
   :width: 400
   :alt: REMQuery form
 
@@ -103,7 +103,7 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 
 4. The output is very similar for all queries. Have a look at point 5 of the :ref:`Gene Query` or at the :ref:`Results in detail`. Below you can see how the output of the REM query looks like.
 
-.. image:: ./images/0804REMQueryOutput.png
+.. image:: ./images/2104REMQueryOutput.png
   :alt: REM Query output  
   :width: 800
 
