@@ -111,8 +111,11 @@ Do you wish to search for Regulatory Elements (REMs) by their ID?
 Interactive tables
 =================
 
-All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. Each *Gene ID* in the tables is a link that gets you to the entry of this gene from the `Ensembl genome browser <https://www.ensembl.org/index.html>`_ from the Ensembl release 91. The original annotation that the model was trained on is `GENCODE V27 <https://www.gencodegenes.org/human/release_27.html>`_. The entries in *Gene symbol* creates a new table with all the REMs that are associated to the clicked gene. Further, you can click on the chromosome value in a row to view the REM's region inside of the `UCSC Genome Browser <https://genome.ucsc.edu/>`_. The values in the column *Cluster of REMs (CREM) ID* redirect you to a new table with all the REM contained in this cluster. In addition, the button 'Functional enrichment analysis' runs an analysis on all the genes currently in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. 
+All result tables possess additional functionalities like the possibility to filter for certain values or to sort the table by a selected column. Moreover, there are several links included. Each *Gene ID* in the tables is a link that gets you to the entry of this gene from the `Ensembl genome browser <https://www.ensembl.org/index.html>`_ from the Ensembl release 91. The original annotation that the model was trained on is `GENCODE V27 <https://www.gencodegenes.org/human/release_27.html>`_. The entries in *Gene symbol* creates a new table with all the REMs that are associated to the clicked gene. Further, you can click on the chromosome value in a row to view the REM's region inside of the `UCSC Genome Browser <https://genome.ucsc.edu/>`_. The values in the column *Cluster of REMs (CREM) ID* redirect you to a new table with all the REM contained in this cluster. In addition, the button 'Functional enrichment analysis' runs an analysis on all the genes currently in the table with `g:Profiler <https://biit.cs.ut.ee/gprofiler/gost>`_ on default settings. With more than 90 unique genes, the link exceed the maximum character possible for URLs. You will get a warning if that happens (see below). You can still use the link, but it will only contain the first 90 unique genes of your query.
 
+.. image:: ./images/2104gProfilerLimir.png
+  :alt: REM Query output  
+  :width: 400
 
 Available cell and tissue types
 =================
@@ -213,22 +216,22 @@ Cell type score
   :alt: Cell type score formula  
   :width: 400
   
-The  regression  coefficient  (β)  describes  the  association between a REM and its gene’s expression. The DNase1 signal is  log-transformed  and  standardized  for  each  REM  over  all cell types (mean=0, standard deviation=1) and represents how active  a  REM  is  in  a  cell  type *c*. *R* is  defined  as  the  set  of all  REMs  associated  to  a  given  gene,  thus R={r1,...,rn}. The *Cell type score* normalizes the contribution of REM r to its gene’s expression in this specific cell type as predicted by the linear model of STITCHIT. Notice, that the sum of the absolut value of the *Cell type score* of REMs associated to a gene for one cell type c, adds up to 1. So, we do not expect to observe *Cell type scores* to be 1 or close to 1, as we do for the *Model score*. 
-A positive *Cell type score* indicates an expected increase of the gene's expression in comparison to the other considered cell types and a negative value has a decreasing effect. There are two scenarios to observe a positive cell type score: 
+The  regression  coefficient  (β)  describes  the  association between a REM and its gene’s expression. The DNase1 signal is  log-transformed  and  standardized  for  each  REM  over  all cell types (mean=0, standard deviation=1) and represents how active  a  REM  is  in  a  cell  type *c*. *R* is  defined  as  the  set  of all  REMs  associated  to  a  given  gene,  thus R={r1,...,rn}. The *Cell type score* normalizes the contribution of REM r to its gene’s expression in this specific cell type as predicted by the linear model of STITCHIT. Notice, that the sum of the absolute value of the *Cell type score* of REMs associated to a gene for one cell type c, adds up to 1. So, we do not expect to observe *Cell type scores* to be 1 or close to 1, as we do for the *Model score*. 
+A positive *Cell type score* indicates an expected increase of the gene's expression in comparison to the other considered cell types and a negative value has a decreasing effect. There are two possible scenarios when observing a positive cell type score: 
 
-  1) The REM has a positive regression coeffiecient and the cell type’s DNase1 signal is higher than the mean over all considered cell types (positive value). This means that the REM is an activator and the chromatin is open, so the REM likely enhance the gene’s expression in comparisons to cell types, where the chromatin is more closed.
+  1) The REM has a positive regression coeffiecient and the cell type’s DNase1 signal is higher than the mean over all considered cell types (positive value). This means that the REM is an activator and the chromatin is open, so the REM is likely to enhance the gene’s expression in comparisons to cell types, where the chromatin is more closed.
   
-  2) The REM has a negative regression coefficient and the cell type’s DNase1 signal is lower than the mean over all considered cell types (negative value). In other words, the REM is a repressor of the gene, but the chromatin is rather closed, so the REM can most likely not regulate the gene’s expression. This leads to an higher gene’s expression in comparison to cell types where the chromatin is more open.
+  2) The REM has a negative regression coefficient and the cell type’s DNase1 signal is lower than the mean over all considered cell types (negative value). In other words, the REM is a repressor of the gene, but the chromatin is rather closed, so the REM is most likely not able to regulate the gene’s expression. This leads to a higher gene expression in comparison to cell types where the chromatin is more open.
   
 There are also two scenarios to observe a negative cell type score: 
 
-  1) The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed, thus, the REM can most likely not regulate the expression of the gene. Consequently, the gene's expression is decresed in comparsion to a cell type where the chromatin is more open. 
+  1) The REM has a positive regression coefficient and the cell type's DNase1 signal is lower than the mean over all considered cell types (negative value). This means that the REM is interpreted as an activator, but the chromatin is closed. Thus, the REM is most likely not able to regulate the expression of the gene. Consequently, the gene expression is decreased in comparsion to a cell type where the chromatin is more open. 
   
   2)  The REM has a negative regression coefficient and the cell type’s DNase1 signal is higher than the mean over all considered cell types (positive value). Therefore, the REM is a repressor and the chromatin is rather open. This leads to a decreasing gene expression in comparsion to a cell type where the chroamtin is more closed. 
  
 The following table summarizes how to interpret the *Cell type score*:
 
-..In arbeit ..
+..Under maintenance ..
 
 The *Cell type score* can be used to rank REMs according to their importance between cell types for the same gene or to rank REMs within one cell type.
 
