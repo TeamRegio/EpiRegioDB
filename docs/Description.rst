@@ -23,14 +23,6 @@ EpiRegio is based on *STITCHIT*, a method which was previously developed in our 
 
 For more information, a detailed explanation of the computational method and the evaluation of the results, please have a look at our `bioRxiv <http://dx.doi.org/10.1101/585125>`_ preprint.
 
-Data preprocessing for the EpiRegio webserver
-===============================
-The data hosted by the web server EpiRegio was generated with *STITCHIT*. 
-*STITCHIT* was applied to human paired DNase1-seq and RNA-seq data, namely *110* samples from the Roadmap consortium and *56* samples from the Blueprint consortium.
-The considered samples comprise of *46* different tissues and cell types. While the Blueprint data set consists of various primary cell types and disease related samples associated to the haematopoietic system, Roadmap data provides a broader diversity of cell and tissue types. All data sets have been uniformly preprocessed. DNase1-seq was adjusted to sequencing depth and gene expression is quantified in transcripts per million.
-For every gene, *STICHIT* inspects a user-defined region around the gene to determine putative associated REMs. For the data provided in EpiRegio, we consider a window of *100,000* bp upstream of a gene's transcription start site, the entire gene body and the window of *100,000* bp downstream of a gene's transcription termination site. Hence, even distant REMs are taken into account.
-*EpiRegio* contains a total of *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. The average length of a REM is *229* bp. For each REM, the regression coefficient and the corresponding p-value obtained from the OLS model of STITCHIT is reported (for more detailed information see Section *Material and Methods* in [1] ).\\
-
 Cluster of regulatory elements
 ===============================
 .. image:: ./images/crem_schema3.png
@@ -39,6 +31,17 @@ Cluster of regulatory elements
   
 The way STITCHIT identifies REMs results in REMs that are mapped to one gene. Genomic locations are not exclusive to REMs, hence REMs associated to different genes can overlap which each other. Consequently the overlapping region is linked to more than one gene. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other or that are adjacent to each other without any break in between (see the schema above). A CREM ends when there is no neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes, where it is known which part is links to which gene.
 
+Data preprocessing for the EpiRegio webserver
+===============================
+The data hosted by the web server EpiRegio was generated with *STITCHIT*. 
+*STITCHIT* was applied to human paired DNase1-seq and RNA-seq data, namely *110* samples from the Roadmap consortium and *56* samples from the Blueprint consortium.
+The considered samples comprise of *46* different tissues and cell types. While the Blueprint data set consists of various primary cell types and disease related samples associated to the haematopoietic system, Roadmap data provides a broader diversity of cell and tissue types. All data sets have been uniformly preprocessed. DNase1-seq was adjusted to sequencing depth and gene expression is quantified in transcripts per million.
+For every gene, *STICHIT* inspects a user-defined region around the gene to determine putative associated REMs. For the data provided in EpiRegio, we consider a window of *100,000* bp upstream of a gene's transcription start site, the entire gene body and the window of *100,000* bp downstream of a gene's transcription termination site. Hence, even distant REMs are taken into account. 
+In total *EpiRegio* contains *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. Together, they form *365,286* distinct CREMs. In the follwoing table quantitative characteristics of REMs and CREMsa are summarized.
+
+.. image:: ./images/characteristicsREMsCREMs.png
+  :width: 600
+  :alt: quantitaive characteristics
 
 Future releases
 ===============================
