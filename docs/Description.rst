@@ -23,7 +23,7 @@ EpiRegio is based on *STITCHIT*, a method which was previously developed in our 
 
 For more information, a detailed explanation of the computational method and the evaluation of the results, please have a look at our `bioRxiv <http://dx.doi.org/10.1101/585125>`_ preprint.
 
-Data preprocessing 
+Data preprocessing for the EpiRegio webserver
 ===============================
 The data hosted by the web server EpiRegio was generated with *STITCHIT*. 
 *STITCHIT* was applied to human paired DNase1-seq and RNA-seq data, namely *110* samples from the Roadmap consortium and *56* samples from the Blueprint consortium.
