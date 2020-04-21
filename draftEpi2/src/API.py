@@ -28,6 +28,7 @@ for cellTypes (if any cellTypes given) and for adding the CREM information are c
 added to the dictionaries.
 """
 
+
 # Function to get the link to the gProfiler analysis with the genes that are associated to the REMs in the query result.
 def gProfiler_link(data):
 
@@ -527,7 +528,7 @@ def API_Region_celltype_activity(region_list, overlap=100):
 # 	return hit_list, no_hit, invalid_list  # our list of dictionaries, fitting the query_list
 
 
-def API_RegionBED(region_list, cellTypes_list=[], overlap=100, score_thresh=['no', -1,1], activ_thresh=0.0):
+def API_RegionBED(region_list, cellTypes_list=[], overlap='F', score_thresh=['no', -1,1], activ_thresh=0.0):
 
 	try:
 		region_list = [list(x) for x in set(tuple(row) for row in region_list)]  # with use of set, we update our query
@@ -542,7 +543,7 @@ def API_RegionBED(region_list, cellTypes_list=[], overlap=100, score_thresh=['no
 	corr_region_list = []
 
 	for i in region_list:
-		if i[0][3:] in ['X', 'Y']:  # first check the 'string' chromosomes
+		if i[0][3:] in ['X', 'Y', 'x', 'y']:  # first check the 'string' chromosomes
 			try:
 				if int(i[1]) < int(i[2]):
 					corr_region_list.append(i)
@@ -568,7 +569,10 @@ def API_RegionBED(region_list, cellTypes_list=[], overlap=100, score_thresh=['no
 		region += '\t'.join(i) + '\n'
 
 	region_bed = BedTool(region, from_string=True)
-	hits = region_bed.intersect(REM_bed_file, F=overlap/100, wb=True)
+	if overlap == 'F':  # if there was no overlap chosen, we report only REMs that lie completely within the regions
+		hits = region_bed.intersect(REM_bed_file, F=1, wb=True)
+	else:
+		hits = region_bed.intersect(REM_bed_file, f=overlap/100, wb=True)
 	rem_hit_list = [x[6] for x in hits]
 
 	try:

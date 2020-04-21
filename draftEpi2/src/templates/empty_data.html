@@ -25,7 +25,11 @@
     <td>Cell types/tissues:</td><td>{{cell_types_string}}</td> </tr>
 {% if overlap %}
 <tr>
-    <td>Overlap:</td><td>{{overlap}}%</td>
+    {% ifequal overlap "F" %}
+        <td>Overlap:</td><td>100% of REM</td>
+    {% else %}
+    <td>Overlap:</td><td>{{overlap}}</td>
+    {% endifequal %}
 </tr>
 {% endif %}
 <tr>

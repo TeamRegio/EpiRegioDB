@@ -58,9 +58,9 @@ def region_search_view(request):
         try:
             overlap = float(overlap)
         except ValueError or TypeError:
-            overlap = 100
+            overlap = 'F'
     else:
-        overlap = 100
+        overlap = 'F'
 
     if len(csv_file) > 0:
         query = ''  # if we have a csv-file we discard any selected regions
@@ -149,10 +149,10 @@ def region_search_view(request):
     template = 'regionQuery_search.html'
     if len(data) == 0:
         template = 'empty_data.html'  # we switch the template if there is no data
-        if activ_thresh != 0.0 and overlap == 100:
+        if activ_thresh != 0.0 and overlap == "F":
             error_msg = 'No REMs were found that match your query settings. You might want to try changing the ' \
                         'thresholds, change the overlap or modifying the region boundaries.'
-        if activ_thresh == 0.0 and overlap == 100:
+        if activ_thresh == 0.0 and overlap == "F":
             error_msg = 'No REMs were found in your selected regions. You might want to try ' \
                         'changing the overlap or modifying the region boundaries.'
 
@@ -170,7 +170,7 @@ def region_search_view(request):
         'score_thresh': score_thresh,
         # 'no_data': no_data,
         'invalid_list': invalid_string_list,
-        "overlap": int(overlap),
+        "overlap": overlap,
         'version': 1,
         'gP_link': gP_link,
         'num_genes': num_genes

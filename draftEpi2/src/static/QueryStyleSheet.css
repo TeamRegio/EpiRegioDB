@@ -341,9 +341,9 @@ button.gProfilerButton:hover{
     width: 200px;
     font-weight: bold;
     font-size: 14px;
-    position: static;
-    top: 188px;
-    left: 290px;
+    position: relative;
+    top: 0px;
+    left: 0px;
   float: right;
 }
 
@@ -495,8 +495,8 @@ button.gProfilerButton:hover{
   position: absolute;
   z-index: 99;
   font-family: Calibri;
-  bottom: 77%;
-  right: 35%;
+  bottom: 20px;
+  left: 4px;
   border: 2px solid black;
 }
 /*  margin-left: -240px;

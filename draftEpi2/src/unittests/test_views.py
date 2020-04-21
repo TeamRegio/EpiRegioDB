@@ -452,7 +452,7 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
-        self.assertEqual(response.context['overlap'], 100)
+        self.assertEqual(response.context['overlap'], "F")
         self.assertEqual(response.context['export_string'], 'chr1-816308-837500;chr2-1369428-2056742;Peter-Hans-Jürgen')
 
 
@@ -498,7 +498,7 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_list'], ['muscle of leg'])
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], '')
-        self.assertEqual(response.context['overlap'], 100)
+        self.assertEqual(response.context['overlap'], "F")
         self.assertEqual(response.context['export_string'], 'chr1-816308-837500,chr2-1369428-2056742,chrhildegard-Jutta-Brunhilde')
 
 
@@ -512,7 +512,7 @@ class geneQuerySearchTest(TestCase):
             'activ_thresh': 0.0,
             'csv_upload': '',
             'csvFileRows': '',
-            'overlap': 100,
+            'overlap': "",
         })
         # check all the output we should get, based on our test data created above
         self.assertTemplateUsed(response, 'empty_data.html')
@@ -526,7 +526,7 @@ class geneQuerySearchTest(TestCase):
         self.assertEqual(response.context['cell_types_list_upper'], ['Muscle of leg'])
         self.assertEqual(response.context['error_msg'], 'No REMs were found in your selected regions. You might want to try changing the overlap or modifying the region boundaries.')
         self.assertEqual(response.context['export_string'], 'chr2-1369428-2056742,Peter-Hans-Jürgen')
-        self.assertEqual(response.context['overlap'], 100)
+        self.assertEqual(response.context['overlap'], "F")
 
 
     # ==========================================================================
