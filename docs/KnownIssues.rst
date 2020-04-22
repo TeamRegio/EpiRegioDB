@@ -14,6 +14,9 @@ We discuss here some of the known issues, and what you can do to rectify it. All
 +-------------+--------+------+---------+-------+
 
 
+Layout issues
+------------------
+If you find elements on the website overlapping with each other, you could try clearing the cache of your browser or try it in private mode. If it still overlaps, try updating to a newer version of your browser. We developed our website in the newest browser version in private mode.
 
 
 Server Error (500)
