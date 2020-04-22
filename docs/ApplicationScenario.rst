@@ -24,7 +24,7 @@ Unzip the file using e.g.::
   :alt: Region Query
  
 
-**Step 3:** Click the bottom *Functional enrichment analysis g:Profiler* in the upper left corner, to perform a GO term enrichment analysis using g:Profiler (default parameters) of the resulting REMs. Notice, if the resulting genes are more than 90, the maximal possible length of an url is exceed. Therefore the first *90* genes are considered.
+**Step 3:** Click the bottom *Functional enrichment analysis g:Profiler* in the upper left corner, to perform a GO term enrichment analysis using g:Profiler (default parameters) of the resulting REMs. Notice, if the resulting genes are more than 90, the maximal possible length of an url is exceed. Therefore, the first *90* genes are considered.
 
 .. image:: ./images/AS_RegionQuery2.png
   :width: 400
