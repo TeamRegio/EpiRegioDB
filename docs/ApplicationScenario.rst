@@ -55,14 +55,17 @@ data set from Glaser et al. (doi.org/10.1073/pnas.1913481117), where Human Umbil
   :width: 400
   :alt: Gene Query 1
 
-**Step 2:**   To apply *PASTAA*, we need a ranking of the resulting REMs. Therefore, we sort them in descending order based on the column *heart score*. To do so, click on the arrows next to *heart score*. Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
+**Step 2:** Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
 
+.. image:: ./images/AS_GeneQuery2.png
+  :width: 400
+  :alt: Gene Query 2
+  
 **Step 3:** Next, we determine the DNA-sequence of the identified REMs using *bedtools* and run *PASTAA* to perform the motif enrichment analysis. In our GitHub repository we provide a workflow to run the analysis and a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow the following command can be used:: 
 
   bash <pathToClonedRepo>identifyEnrichedTFs/workflow.sh <Motifs> <pathToClonedRepo> <pathToGenome> <REMs> <outputDir> <pvalue>,
 
-where *<pathToClonedRepo>* represents the path to the cloned repository and *<Motifs>* the path to the TF motif file. You can either use the motif file we provide in our repository (ApplicationScenarioExamples/identifyEnrichedTFs/JASPAR2020_HUMAN_transfac.txt) or a defined one. The motifs should be in TRANSFAC format. *<pathToGenome>* represents the path to the fasta file of the human genome, *<REMs>* the path to the downloaded csv-file, and *<output>* the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA is smaller or equal the parameter *<pvalue>* the motif is assumed to be significant enriched. For this example, set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt.  TODO: Add screenshot from result.
-
+where *<pathToClonedRepo>* represents the path to the cloned repository and *<Motifs>* the path to the TF motif file. You can either use the motif file we provide in our repository (ApplicationScenarioExamples/identifyEnrichedTFs/JASPAR2020_HUMAN_transfac.txt) or a defined one. The motifs should be in TRANSFAC format. *<pathToGenome>* represents the path to the fasta file of the human genome, *<REMs>* the path to the downloaded csv-file, and *<output>* the path to a user-defined output folder. If the Benjamini-Hochberg adjusted p-value from PASTAA is smaller or equal the parameter *<pvalue>* the motif is assumed to be significant enriched. For this example, set the *<pvalue>* to 0.05. The resulting significant enriched TF motifs are stored in <outputDir>/PASTAA_result.txt. 
 
 How to use EpiRegio to identify TF-binding sites within REMs of a gene of interest
 =================
