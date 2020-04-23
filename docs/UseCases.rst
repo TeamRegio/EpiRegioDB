@@ -1,6 +1,6 @@
 Query Guide
 ---------
-Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Example Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at :ref:`Results in detail` to get an explanation of all the output parameters. In addition, we provide an example file for each possible file upload in the Supplemenary of our paper (currently under revision).
+Here we provide a step-by-step guide for every query available, including an explanation of the output. Every query has an *Example Query* button at the  bottom of the page. Try it out to see how a valid query would look like. Have a look at :ref:`Results in detail` to get an explanation of all the output parameters. In addition, we provide an example file for each possible file upload, see :ref:`Examples file upload`.
 
 Gene Query
 =================
@@ -116,6 +116,21 @@ All result tables possess additional functionalities like the possibility to fil
 .. image:: ./images/2104gProfilerLimit.png
   :alt: gProfiler limit  
   :width: 400
+
+Examples file upload
+=================
+It is also possible to upload a csv-, txt- or bed-file for the different queries. A combination of both, input field and uploaded file, is not implemented. All of the commonly used separators are being recognized, however files with empty fields will not be read correctly. 
+For the region query it is important that the order of chromosome, start position and end position is correct. If a bed-file is provided for the this query, the columns have to be in the order chromsome, start position and end position as well. All additional columns beside of those first three ones will be ignored. 
+
+In the following you can download an example for each query:
+  
+.. hlist::
+  :columns: 1
+  
+  * :download:`Gene query <doc/ExampleFile_GeneQuery>`
+  * :download:`Region query <doc/ExampleFile_RegionQuery>`
+  * :download:`REM query <doc/ExampleFile_REMQuery>`
+  
 
 Available cell and tissue types
 =================
