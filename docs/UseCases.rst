@@ -232,8 +232,8 @@ There are also two scenarios to observe a negative cell type score:
 The following table summarizes how to interpret the *Cell type score*:
 
 .. image:: ./images/CellTypeScoreDetails.png
-  :alt: Cell type score formula  
-  :width: 400
+  :alt: Cell type score details
+  :width: 600
 
 The *Cell type score* can be used to rank REMs according to their importance between cell types for the same gene or to rank REMs within one cell type.
 
