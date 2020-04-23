@@ -56,7 +56,7 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   :width: 400
   :alt: Region Query form
 
-3. You can also upload a csv-, txt- or bed-file with your regions of interest, see :ref: `Examples file upload`.  
+3. You can also upload a csv-, txt- or bed-file with your regions of interest, see :ref:`Examples file upload`.  
   
 4. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :ref:`Gene Query` at point 4.
   
@@ -116,9 +116,9 @@ In the following you can download an example for each query:
 .. hlist::
   :columns: 1
   
-  * :download:`Gene query <./files/ExampleFile_GeneQuery>`
-  * :download:`Region query <./files/ExampleFile_RegionQuery>`
-  * :download:`REM query <./files/ExampleFile_REMQuery>`
+  * :download: `Gene query <./files/ExampleFile_GeneQuery>`
+  * :download: `Region query <./files/ExampleFile_RegionQuery>`
+  * :download: `REM query <./files/ExampleFile_REMQuery>`
   
 
 Available cell and tissue types
