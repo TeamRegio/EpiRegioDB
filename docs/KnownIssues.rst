@@ -1,7 +1,7 @@
 Known Issues
 ============
 
-We discuss here some of the known issues, and what you can do to rectify it. All issues we discuss here are what we have learned from our testing on the browsers/OS listed below.
+Here we discuss some of the known issues, and what you can do to rectify it. All issues we discuss here are what we have learned from our testing on the browsers/OS listed below.
 
 +-------------+--------+------+---------+-------+
 |OS/Browser   | Chrome | Edge |	Firefox | Safari|
