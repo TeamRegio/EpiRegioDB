@@ -1,4 +1,4 @@
-EpiRegio: Analysis and retrieval of regulatory elements linked to genes
+`EpiRegio <https://epiregio.de/>`_: Analysis and retrieval of regulatory elements linked to genes
 ===========================================================================
 .. toctree::
       :maxdepth: 2
