@@ -127,9 +127,9 @@ In the following you can download an example for each query:
 .. hlist::
   :columns: 1
   
-  * :download:`Gene query <doc/ExampleFile_GeneQuery>`
-  * :download:`Region query <doc/ExampleFile_RegionQuery>`
-  * :download:`REM query <doc/ExampleFile_REMQuery>`
+  * :download:`Gene query <files/ExampleFile_GeneQuery>`
+  * :download:`Region query <files/ExampleFile_RegionQuery>`
+  * :download:`REM query <files/ExampleFile_REMQuery>`
   
 
 Available cell and tissue types
