@@ -4,11 +4,11 @@ The field of research on gene regulation has considerably grown during the last 
 and the acknowledgement of its importance in orchestrating the genetic landscape has expanded.
 One of the key players are non-coding DNA regions, which regulate gene expression. They are able to enhance or repress the expression of their associated genes.
 These Regulatory EleMents (REMs) can be located far away from their associated genes.
-Identifying REMs is difficult, as there is no method yet to get a clear readout of their sequence.
+Identifying REMs is difficult, as there is no method yet to determine them with abolute certainty.
 Different computational approaches are being used, combining various kinds of genomics data to annotate REMs. An even
 more challenging task is to link the putative REMs to their associated gene.
 
-Here we present the `EpiRegio <https://epiregio.de/>`_ web server, a resource of REMs, providing information about their associated gene, their relevance for its gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
+Here we present the `EpiRegio <https://epiregio.de/>`_ web server, a resource of REMs, providing information about their associated gene, their relevance for their gene's expression and their activity in different cell types and tissues. With EpiRegio users are enabled to look into regions of interest, analyze the genomic locations that impact the expression of specific genes and access details about the regulatory elements.
 
 Overview of possible queries 
 ===============================================
@@ -29,7 +29,7 @@ Cluster of regulatory elements
   :width: 600
   :alt: CREM schema
   
-The way STITCHIT identifies REMs results in REMs that are mapped to one gene. Genomic locations are not exclusive to REMs, hence REMs associated to different genes can overlap which each other. Consequently the overlapping region is linked to more than one gene. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other or that are adjacent to each other without any break in between (see the schema above). A CREM ends when there is no neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes, where it is known which part is links to which gene.
+The way STITCHIT identifies REMs results in REMs that are mapped to one gene. Genomic locations are not exclusive to REMs, hence REMs associated to different genes can overlap which each other. Consequently the overlapping region is linked to more than one gene. To account for these overlapping REMs, we introduce the term Cluster of Regulatory EleMents (CREM). One CREM consists of all REMs that overlap with each other or that are adjacent to each other without any break in between (see the schema above). A CREM ends when there is no neighbouring REM to either side of it. Each CREM is composed of a minimum of two REMs and is assigned to a unique ID. In other words, a CREM can be considered as one coherent regulatory region that is potentially associated to multiple genes, where it is known which part links to which gene.
 
 Data preprocessing for the EpiRegio webserver
 ===============================
@@ -37,7 +37,7 @@ The data hosted by the web server EpiRegio was generated with *STITCHIT*.
 *STITCHIT* was applied to human paired DNase1-seq and RNA-seq data, namely *110* samples from the Roadmap consortium and *56* samples from the Blueprint consortium.
 The considered samples comprise of *46* different tissues and cell types. While the Blueprint data set consists of various primary cell types and disease related samples associated to the haematopoietic system, Roadmap data provides a broader diversity of cell and tissue types. All data sets have been uniformly preprocessed. DNase1-seq was adjusted to sequencing depth and gene expression is quantified in transcripts per million.
 For every gene, *STICHIT* inspects a user-defined region around the gene to determine putative associated REMs. For the data provided in EpiRegio, we consider a window of *100,000* bp upstream of a gene's transcription start site, the entire gene body and the window of *100,000* bp downstream of a gene's transcription termination site. Hence, even distant REMs are taken into account. 
-In total *EpiRegio* contains *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. Together, they form *365,286* distinct CREMs. In the follwoing table quantitative characteristics of REMs and CREMsa are summarized.
+In total *EpiRegio* contains *2,404,861* REMs associated to *35,379* protein-coding and non-protein coding genes. Together, they form *365,286* distinct CREMs. In the following table quantitative characteristics of REMs and CREMs are summarized.
 
 .. image:: ./images/characteristicsREMsCREMs.png
   :width: 500
