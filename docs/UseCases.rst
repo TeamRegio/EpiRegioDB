@@ -56,19 +56,8 @@ Do you wish to search for Regulatory Elements (REMs) being located in a specific
   :width: 400
   :alt: Region Query form
 
-3. You can also upload a csv-, txt- or bed-file with your regions of interest in which the first value has to be the chromosome, followed by the start and the end position. A combination of both, input field and uploaded file, is not implemented. You can see the format of exemplary upload files below (comma-separated and tab-separated). All of the commonly used separators are being recognized, as long as the order of chromosome, start position and end position is correct. For the bed-files, the columns have to be in the order chromsome, start position and end position as well. All additional columns beside of those first three ones will be ignored. Files with empty fields will not be read correctly. 
-
-.. image:: ./images/ExampleCSVRegionCS2.png
-  :width: 400
-  :alt: Exemplary region query upload file comma separated
+3. You can also upload a csv-, txt- or bed-file with your regions of interest, see :ref: `Examples file upload`.  
   
-
-  
-.. image:: ./images/ExampleCSVRegionTS2.png
-  :width: 250
-  :alt: Exemplary region query upload file tab separated
-  
-
 4. Choosing cell types/tissues: The selection of cell types functions in the same way as described above in the :ref:`Gene Query` at point 4.
   
   
@@ -127,9 +116,9 @@ In the following you can download an example for each query:
 .. hlist::
   :columns: 1
   
-  * :download:`Gene query <files/ExampleFile_GeneQuery>`
-  * :download:`Region query <files/ExampleFile_RegionQuery>`
-  * :download:`REM query <files/ExampleFile_REMQuery>`
+  * :download:`Gene query <./files/ExampleFile_GeneQuery>`
+  * :download:`Region query <./files/ExampleFile_RegionQuery>`
+  * :download:`REM query <./files/ExampleFile_REMQuery>`
   
 
 Available cell and tissue types
