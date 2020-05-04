@@ -109,6 +109,7 @@ Examples file upload
 =================
 It is also possible to upload a csv-, txt- or bed-file for the different queries. A combination of both, input field and uploaded file, is not implemented. All of the commonly used separators are being recognized, however files with empty fields will not be read correctly. 
 For the region query it is important that the order of chromosome, start position and end position is correct. If a bed-file is provided for the this query, the columns have to be in the order chromsome, start position and end position as well. All additional columns beside of those first three ones will be ignored. 
+For the gene query you still need to specifiy the *gene nomenclature*, either *gene name* or *ensembl id* according to the one used in your uploaded file. 
 
 In the following you can download an example for each query:
   
