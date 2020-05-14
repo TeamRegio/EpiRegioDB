@@ -102,6 +102,6 @@ Requests is straightforward to use, pass an URL to the requests.get() function a
                 if api_call.status_code != 200:  # In case the page does not work properly.
                         print("Page Error")
                 for hit in api_call.json():
-                        important_results.append([hit['REMID'], hit['chr'], hit['start'], hit['end'], hit['cellTypeActivity']['left kidney']])
+                        important_results.append([hit['REMID'], hit['chr'], hit['start'], hit['end'], hit['cellTypeScore']['left kidney']])
 
         
