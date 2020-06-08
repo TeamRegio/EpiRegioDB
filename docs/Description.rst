@@ -51,5 +51,5 @@ Cite Us
 =======
 If you use this webserver, please cite the following:
 
-1. Baumgarten et. al., Analysis and retrieval of regulatory elements linked to genes with EpiRegio
+1. Nina Baumgarten, Dennis Hecker, Sivarajan Karunanithi, Florian Schmidt, Markus List, Marcel H Schulz, EpiRegio: analysis and retrieval of regulatory elements linked to genes, Nucleic Acids Research, , gkaa382, https://doi.org/10.1093/nar/gkaa382
 2. Schmidt et. al., `Integrative analysis of epigenetics data identifies gene-specific regulatory elements <http://dx.doi.org/10.1101/585125>`_
