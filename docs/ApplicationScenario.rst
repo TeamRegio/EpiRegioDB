@@ -43,7 +43,7 @@ The application scenario is based on the section *Identify enriched transcriptio
 In the repository the TRAP version, a script used by PASTAA, is slightly changed. We normalized the resulting TRAP affinities by the TF binding motif length.
 Next go to the src folder in the cloned repository and compile PASTAA via::
 
-	cd ApplicationScenariosExamples/src/
+	cd ApplicationScenarioExamples/src/
 	make
 
 As an example, we consider a set of differential expressed genes based on a single-cell RNAseq
