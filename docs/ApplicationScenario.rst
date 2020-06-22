@@ -55,7 +55,7 @@ data set from Glaser et al. (doi.org/10.1073/pnas.1913481117), where Human Umbil
   :width: 400
   :alt: Gene Query 1
 
-**Step 2:** Download the resulting table by clicking on the bottom *CSV*. TODO: add screenshot
+**Step 2:** Download the resulting table by clicking on the bottom *CSV*.
 
 .. image:: ./images/AS_GeneQuery2.png
   :width: 400
