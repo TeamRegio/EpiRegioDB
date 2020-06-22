@@ -58,7 +58,7 @@ data set from Glaser et al. (doi.org/10.1073/pnas.1913481117), where Human Umbil
 **Step 2:** Download the resulting table by clicking on the bottom *CSV*.
 
 .. image:: ./images/AS_GeneQuery2.png
-  :width: 400
+  :width: 600
   :alt: Gene Query 2
   
 **Step 3:** Next, we determine the DNA-sequence of the identified REMs using *bedtools* and run *PASTAA* to perform the motif enrichment analysis. In our GitHub repository we provide a workflow to run the analysis and a set of TF binding motifs downloaded from the JASPAR database (version 2020). To run the workflow the following command can be used:: 
