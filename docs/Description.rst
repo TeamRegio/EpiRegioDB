@@ -16,7 +16,11 @@ DAS IST EIN TEST
 
 .. raw:: html
 
-<th> <a href="images/411_BaumgartenNina_RegSys.mp4">grrrr</a></th>
+<video width="320" height="240" controls>
+  <source src="./images/411_BaumgartenNina_RegSys.mp4" type="video/mp4">
+... ahhhh.... 
+</video>
+
    
 Overview of possible queries 
 ===============================================
