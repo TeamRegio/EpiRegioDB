@@ -14,7 +14,7 @@ Here we present the `EpiRegio <https://epiregio.de/>`_ web server, a resource of
 
 DAS IST EIN TEST
 
-.. video:: ./image/411_BaumgartenNina_RegSys.mp4
+.. video:: ./images/411_BaumgartenNina_RegSys.mp4
    :width: 500
    :height: 300
    :autoplay:
