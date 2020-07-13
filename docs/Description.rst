@@ -12,7 +12,7 @@ Here we present the `EpiRegio <https://epiregio.de/>`_ web server, a resource of
 
 .. raw:: html
 
-    <iframe width="560" height="315" src="./image/..." frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="./image/411_BaumgartenNina_RegSys.mp4" frameborder="0" allowfullscreen></iframe>
 
 
 
