@@ -16,7 +16,7 @@ DAS IST EIN TEST
 
 .. raw:: html
 
-<video width="320" height="240" controls>
+<video>
   <source src="./images/411_BaumgartenNina_RegSys.mp4" type="video/mp4">
 ... ahhhh.... 
 </video>
