@@ -12,9 +12,9 @@ Here we present the `EpiRegio <https://epiregio.de/>`_ web server, a resource of
 
 
 DAS IST EIN TEST
-.. raw:: html
 
-    <video controls src="./image/411_BaumgartenNina_RegSys.mp4"></video> 
+.. raw:: html
+    <video controls src="_static/411_BaumgartenNina_RegSys.mp4"></video> 
 
 Overview of possible queries 
 ===============================================
