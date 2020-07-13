@@ -35,8 +35,7 @@ import sphinx_rtd_theme
 extensions = ['sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'sphinx.ext.autosectionlabel',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.video']
+    'sphinx.ext.githubpages']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
