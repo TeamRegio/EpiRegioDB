@@ -46,8 +46,8 @@ templates_path = ['_templates']
 # source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
 
-# The master toctree document.
-master_doc = 'index'
+# The main toctree document.
+main_doc = 'index'
 
 # General information about the project.
 project = 'EpiRegioDB'
@@ -148,7 +148,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'EpiRegioDB.tex', 'EpiRegioDB Supplemental Material',
+    (main_doc, 'EpiRegioDB.tex', 'EpiRegioDB Supplemental Material',
      'Nina Baumgarten, Dennis Hecker, Sivarajan Karunanithi, and Marcel Schulz','manual'),
 ]
 
@@ -161,7 +161,7 @@ latex_elements = {
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'EpiRegioDB', 'EpiRegioDB Documentation',
+    (main_doc, 'EpiRegioDB', 'EpiRegioDB Documentation',
      [author], 1)
 ]
 
@@ -172,7 +172,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'EpiRegioDB', 'EpiRegioDB Supplemental Material',
+    (main_doc, 'EpiRegioDB', 'EpiRegioDB Supplemental Material',
      author, 'EpiRegioDB', 'Analysis and retrieval of regulatory elements linked to genes with EpiRegio',
      'Miscellaneous'),
 ]
