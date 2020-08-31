@@ -28,9 +28,10 @@ Solution: If you are using Chrome, please try to clear the cache in your browser
 
 We are aware of issues causing a Server Error 500 if the input list is too large. We are working on solving this issue. In the meantime, unfortunately, you might have to try to provide your input in smaller chunks.
 
-No unique gene – ensembl id mapping
+The issue with the gene name – ensembl id mapping
 ------------------
-In general, we advise to use the ensembl ids of the genes of interest instead of the gene name. Especially, if you are interested in the gene Y_RNA, please stick to the ensembl id to avoid any confusions. EpiRegio stores REMs for roughly 300 genes with the gene name Y_RNA (according the gencode.v26.annotation.gtf file). However, all of them have a different ensembl id to identify them uniquely.  
+In general, we advise to use the ensembl ids of the genes of interest instead of the gene name, since EpiRegio does not store all gene name aliases. 
+If you are interested in the gene Y_RNA, please stick to the ensembl id to avoid any confusions. EpiRegio stores REMs for roughly 300 genes with the gene name Y_RNA (according the gencode.v26.annotation.gtf file). However, all of them have a different ensembl id to identify them uniquely.  
 
 If you face other problems, please let us know through `GitHub issues <https://github.com/TeamRegio/EpiRegioDB/issues>`_!
 
